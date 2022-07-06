@@ -16,30 +16,30 @@ Parse.initialize(
 
 // Request the Log in passing the email and password
 app.post('/users/login', async(req, res) => {
-    const payload = req.body;
+    const body = req.body;
     
     try{
-      const user = await Parse.User.logIn(payload.usernameLogin, payload.passwordLogin)
-      res.send({ message: "User logged!", status: "success",  payload: payload });
+      const user = await Parse.User.logIn(body.usernameLogin, body.passwordLogin)
+      res.send({ message: "User logged!", status: "success",  payload: user });
     } catch (error){
-      res.send({ message: error.message, status: "danger",  payload: payload});
+      res.send({ message: error.message, status: "danger",  payload: user});
     }
   });
 
 // Register the user passing the username, password and email
 app.post('/users/register', async(req, res) => {
-    const payload = req.body;    
+    const body = req.body;    
     const user = new Parse.User();
   
-    user.set("username", payload.usernameRegister);
-    user.set("password", payload.passwordRegister);
-    user.set("email", payload.emailRegister);
+    user.set("username", body.usernameRegister);
+    user.set("password", body.passwordRegister);
+    user.set("email", body.emailRegister);
   
     try{
       await user.signUp();
-      res.send({ message: "User created!", status: "success",  payload: payload});
+      res.send({ message: "User created!", status: "success",  payload: body});
     } catch (error) {
-      res.send({ message: error.message, status: "danger",  payload: payload});
+      res.send({ message: error.message, status: "danger",  payload: body});
     }
   });
 
