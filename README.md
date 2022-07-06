@@ -1,6 +1,8 @@
 # Meet-Place
 Meet Place is an event manager platform where you can add friends and invite them to your events
 
+![MEET PLACE-02](https://user-images.githubusercontent.com/72105206/177616527-3e65ff8b-db15-4b52-9807-f507a565e548.png)
+
 **Core Features**
 - Database design
 - Sign up and authentication.
