@@ -20,9 +20,9 @@ app.post('/users/login', async(req, res) => {
     
     try{
       let user = await Parse.User.logIn(infoUser.usernameLogin, infoUser.passwordLogin)
-      res.send({ loginMessage: "User logged!", RegisterMessage: '', typeStatus: "success",  infoUser: infoUser });
+      res.send({ message: "User logged!", status: "success",  infoUser: infoUser });
     } catch (error){
-      res.send({ loginMessage: error.message, RegisterMessage: '', typeStatus: "danger",  infoUser: infoUser});
+      res.send({ message: error.message, status: "danger",  infoUser: infoUser});
     }
   });
 
@@ -37,9 +37,9 @@ app.post('/users/register', async(req, res) => {
   
     try{
       await user.signUp();
-      res.send({ loginMessage : '', RegisterMessage: "User created!", typeStatus: "success",  infoUser: infoUser});
+      res.send({ message: "User created!", status: "success",  infoUser: infoUser});
     } catch (error) {
-      res.send({ loginMessage : '', RegisterMessage: error.message, typeStatus: "danger",  infoUser: infoUser});
+      res.send({ message: error.message, status: "danger",  infoUser: infoUser});
     }
   });
 
