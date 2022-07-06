@@ -1,6 +1,33 @@
 # Meet-Place
 Meet Place is an event manager platform where you can add friends and invite them to your events
 
+**Core Features**
+- Database design
+- Sign up and authentication.
+- Basic React Components
+  - Top Nav Bar
+  - Main Container
+  - Logo
+  - Title
+- Calendar Page
+  - Display Calendar
+  - Connect to Google API
+- Add / Remove friends
+- Create new events
+  - Basic data (name, description, date, time)
+  - Adding friends
+  - Recommend date and time based on your friends availability
+  - Events Status (private, public)
+  - Event invitations (accepted, pending, declined)
+- Profile Page
+- News feed
+
+Stretch feature list
+- What other features could you build if you have time?
+- Show trending events in the feed
+- Send emails with event reminder
+- Event category (social, work, sports…)
+
 
 `Week 2 - User Stories`
 
