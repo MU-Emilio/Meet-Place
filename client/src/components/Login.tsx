@@ -41,8 +41,7 @@ const Login = () => {
         passwordLogin: values.password,
       })
       .then((response) => {
-        console.log(response.data);
-        setSubmitMessage(response.data.status);
+        setSubmitMessage(response.data.message);
       })
       .catch((error) => {
         console.error(error);
