@@ -1,59 +1,95 @@
-import React from 'react'
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import { Formik, Field, Form, FormikHelpers } from 'formik';
+import React from "react";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { Formik, Field, Form, FormikHelpers } from "formik";
+
+import Logo from "./Logo";
+
+// Styles
+
+const styles = {
+  formContainer: {
+    height: "max-content",
+    width: "max-content",
+    margin: "100px auto",
+    padding: "15px",
+  },
+
+  form: {
+    display: "block",
+    margin: "20px",
+  },
+  field: {
+    display: "block",
+  },
+};
 
 interface Values {
-    username: string;
-    password: string;
-  }
+  username: string;
+  password: string;
+}
 
 const Login = () => {
+  const [submitError, setSubmitError] = useState("");
 
-    const [submitError, setSubmitError] = useState('');
-    
   return (
-    <div>
-      <h1>Signup</h1>
+    <div className="block bg-primary rounded-lg" style={styles.formContainer}>
+      <Logo />
+      <h1 className="text-center">Signup</h1>
       <Formik
         initialValues={{
-          username: '',
-          password: '',
+          username: "",
+          password: "",
         }}
         onSubmit={(
           values: Values,
           { setSubmitting }: FormikHelpers<Values>
         ) => {
-            axios.post(`http://localhost:3001/users/login`, {
-                usernameLogin: values.username,
-                passwordLogin: values.password
-              })
-              .then(function (response) {
-                console.log(response);
-              })
-              .catch(function (error) {
-                console.log(error);
-              });
+          axios
+            .post(`http://localhost:3001/users/login`, {
+              usernameLogin: values.username,
+              passwordLogin: values.password,
+            })
+            .then(function (response) {
+              console.log(response);
+            })
+            .catch(function (error) {
+              console.log(error);
+            });
         }}
       >
-        <Form>
-          <label htmlFor="username">Username</label>
-          <Field id="username" name="username" placeholder="Username" />
+        <Form style={styles.form}>
+          <div style={styles.field}>
+            <label className="block" htmlFor="username">
+              Username
+            </label>
+            <Field
+              className="block mb-5"
+              id="username"
+              name="username"
+              placeholder="Username"
+            />
+          </div>
 
-          <label htmlFor="password">Password</label>
-          <Field
-            id="password"
-            name="password"
-            placeholder="Password"
-            type="password"
-          />
+          <div className="block mb-5" style={styles.field}>
+            <label htmlFor="password">Password</label>
+            <Field
+              className="block"
+              id="password"
+              name="password"
+              placeholder="Password"
+              type="password"
+            />
+          </div>
 
-          <button type="submit">Submit</button>
+          <button className="bg-white px-3" type="submit">
+            Submit
+          </button>
         </Form>
       </Formik>
     </div>
-  )
-}
+  );
+};
 
-export default Login
+export default Login;
