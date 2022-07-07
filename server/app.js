@@ -25,7 +25,9 @@ app.post("/users/login", async (req, res) => {
     const user = await Parse.User.logIn(body.username, body.password);
     res.send({ message: "User logged!", status: "success", payload: user });
   } catch (error) {
-    res.send({ message: error.message, status: "danger", payload: body });
+    res
+      .status(400)
+      .send({ message: error.message, status: "danger", payload: body });
   }
 });
 
@@ -36,13 +38,25 @@ app.post("/users/register", async (req, res) => {
 
   user.set("username", body.username);
   user.set("password", body.password);
+  if (body.email == null) {
+    res.status(400).send({
+      message: "Cannot register with empty email",
+      status: "danger",
+      payload: body,
+    });
+    return;
+  }
   user.set("email", body.email);
 
   try {
     await user.signUp();
-    res.send({ message: "User created!", status: "success", payload: body });
+    res
+      .status(200)
+      .send({ message: "User created!", status: "success", payload: body });
   } catch (error) {
-    res.send({ message: error.message, status: "danger", payload: body });
+    res
+      .status(400)
+      .send({ message: error.message, status: "danger", payload: body });
   }
 });
 

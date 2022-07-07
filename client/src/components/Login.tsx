@@ -42,12 +42,10 @@ const Login = () => {
       })
       .then((response) => {
         setSubmitMessage(response.data.message);
-        if (response.data.status === "success") {
-          callback();
-        }
+        callback();
       })
       .catch((error) => {
-        console.error(error);
+        setSubmitMessage(error.response.data.message);
       });
   };
 
