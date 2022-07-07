@@ -34,7 +34,7 @@ const Login = () => {
   const [submitMessage, setSubmitMessage] = useState(null);
 
   // Handlers
-  const handleLogin = (values: any) => {
+  const handleLogin = (values: any, callback: () => void) => {
     axios
       .post(`http://localhost:3001/users/login`, {
         usernameLogin: values.username,
@@ -42,6 +42,9 @@ const Login = () => {
       })
       .then((response) => {
         setSubmitMessage(response.data.message);
+        if (response.data.status === "success") {
+          callback();
+        }
       })
       .catch((error) => {
         console.error(error);
@@ -58,8 +61,7 @@ const Login = () => {
           password: "",
         }}
         onSubmit={(values: Values, { resetForm }) => {
-          handleLogin(values);
-          resetForm();
+          handleLogin(values, () => resetForm());
         }}
       >
         <Form style={styles.form}>

@@ -35,7 +35,7 @@ const Register = () => {
   const [submitMessage, setSubmitMessage] = useState(null);
 
   // Handlers
-  const handleRegister = (values: any) => {
+  const handleRegister = (values: any, callback: () => void) => {
     axios
       .post(`http://localhost:3001/users/register`, {
         emailRegister: values.email,
@@ -44,6 +44,9 @@ const Register = () => {
       })
       .then((response) => {
         setSubmitMessage(response.data.message);
+        if (response.data.status === "success") {
+          callback();
+        }
       })
       .catch((error) => {
         console.error(error);
@@ -61,8 +64,7 @@ const Register = () => {
           email: "",
         }}
         onSubmit={(values: Values, { resetForm }) => {
-          handleRegister(values);
-          resetForm();
+          handleRegister(values, () => resetForm());
         }}
       >
         <Form style={styles.form}>
