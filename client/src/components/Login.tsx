@@ -2,7 +2,7 @@ import React from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { Formik, Field, Form, FormikHelpers } from "formik";
+import { Formik, Field, Form } from "formik";
 
 import Logo from "./Logo";
 
@@ -33,6 +33,22 @@ interface Values {
 const Login = () => {
   const [submitMessage, setSubmitMessage] = useState(null);
 
+  // Handlers
+  const handleLogin = (values: any) => {
+    axios
+      .post(`http://localhost:3001/users/login`, {
+        usernameLogin: values.username,
+        passwordLogin: values.password,
+      })
+      .then((response) => {
+        console.log(response.data);
+        setSubmitMessage(response.data.status);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+
   return (
     <div className="block bg-primary rounded-lg" style={styles.formContainer}>
       <Logo />
@@ -42,22 +58,9 @@ const Login = () => {
           username: "",
           password: "",
         }}
-        onSubmit={(
-          values: Values,
-          { setSubmitting }: FormikHelpers<Values>
-        ) => {
-          axios
-            .post(`http://localhost:3001/users/login`, {
-              usernameLogin: values.username,
-              passwordLogin: values.password,
-            })
-            .then((response) => {
-              console.log(response.data);
-              setSubmitMessage(response.data.status);
-            })
-            .catch((error) => {
-              console.error(error);
-            });
+        onSubmit={(values: Values, { resetForm }) => {
+          handleLogin(values);
+          resetForm();
         }}
       >
         <Form style={styles.form}>
