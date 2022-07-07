@@ -38,9 +38,9 @@ const Register = () => {
   const handleRegister = (values: any, callback: () => void) => {
     axios
       .post(`http://localhost:3001/users/register`, {
-        emailRegister: values.email,
-        usernameRegister: values.username,
-        passwordRegister: values.password,
+        email: values.email,
+        username: values.username,
+        password: values.password,
       })
       .then((response) => {
         setSubmitMessage(response.data.message);

@@ -37,8 +37,8 @@ const Login = () => {
   const handleLogin = (values: any, callback: () => void) => {
     axios
       .post(`http://localhost:3001/users/login`, {
-        usernameLogin: values.username,
-        passwordLogin: values.password,
+        username: values.username,
+        password: values.password,
       })
       .then((response) => {
         setSubmitMessage(response.data.message);
