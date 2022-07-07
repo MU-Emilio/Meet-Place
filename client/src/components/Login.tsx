@@ -31,12 +31,12 @@ interface Values {
 }
 
 const Login = () => {
-  const [submitError, setSubmitError] = useState("");
+  const [submitMessage, setSubmitMessage] = useState(null);
 
   return (
     <div className="block bg-primary rounded-lg" style={styles.formContainer}>
       <Logo />
-      <h1 className="text-center">Signup</h1>
+      <h1 className="text-center">Login</h1>
       <Formik
         initialValues={{
           username: "",
@@ -51,11 +51,12 @@ const Login = () => {
               usernameLogin: values.username,
               passwordLogin: values.password,
             })
-            .then(function (response) {
-              console.log(response);
+            .then((response) => {
+              console.log(response.data);
+              setSubmitMessage(response.data.status);
             })
-            .catch(function (error) {
-              console.log(error);
+            .catch((error) => {
+              console.error(error);
             });
         }}
       >
@@ -88,6 +89,7 @@ const Login = () => {
           </button>
         </Form>
       </Formik>
+      {submitMessage && <p>{submitMessage}</p>}
     </div>
   );
 };
