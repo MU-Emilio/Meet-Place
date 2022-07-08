@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Formik, Field, Form } from "formik";
+import Parse from "parse/node";
 
 import Logo from "./Logo";
+import { response } from "../../../server/app";
+import { SESSION_KEY } from "../lib/constants";
 
 // Styles
 
@@ -32,6 +35,7 @@ interface Values {
 
 const Login = () => {
   const [submitMessage, setSubmitMessage] = useState(null);
+  const navigate = useNavigate();
 
   // Handlers
   const handleLogin = (values: any, callback: () => void) => {
@@ -42,7 +46,9 @@ const Login = () => {
       })
       .then((response) => {
         setSubmitMessage(response.data.message);
+        localStorage.setItem(SESSION_KEY, response.data.payload.sessionToken);
         callback();
+        navigate("/home");
       })
       .catch((error) => {
         setSubmitMessage(error.response.data.message);
@@ -92,6 +98,10 @@ const Login = () => {
         </Form>
       </Formik>
       {submitMessage && <p>{submitMessage}</p>}
+      <p>Need an account?</p>
+      <p className=" underline" onClick={() => navigate("/register")}>
+        Sign up
+      </p>
     </div>
   );
 };
