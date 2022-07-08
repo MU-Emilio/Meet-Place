@@ -7,7 +7,7 @@ import Login from "./components/Login";
 import "./App.css";
 import Register from "./components/Register";
 import Home from "./components/Home";
-import Parse from "parse";
+import Logout from "./components/Logout";
 
 function App() {
   const fetchData = async () => {
@@ -24,6 +24,7 @@ function App() {
 
   return (
     <div className="App">
+      <Logout />
       <BrowserRouter>
         <main>
           <Routes>
