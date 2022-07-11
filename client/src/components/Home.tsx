@@ -5,7 +5,6 @@ import { UserContext } from "./UserContext";
 
 const Home = () => {
   const { user, setUser } = useContext(UserContext);
-  const { userID, setUserID } = useContext(UserContext);
 
   const fetchData = async () => {
     const response = await axios.get("http://localhost:3001/viewer", {
@@ -13,14 +12,14 @@ const Home = () => {
         authorization: localStorage.getItem(SESSION_KEY) || false,
       },
     });
-    setUserID(response.data);
+    setUser(response.data);
   };
 
   useEffect(() => {
     fetchData();
   }, []);
 
-  return <div>Welcome {userID}</div>;
+  return <div>Welcome {user?.username}</div>;
 };
 
 export default Home;
