@@ -6,12 +6,9 @@ import "./App.css";
 import Logout from "./components/Logout";
 import UserProvider from "./components/UserContext";
 
+const queryClient = new QueryClient();
+
 function App() {
-  const [user, setUser] = useState(null);
-  const [userID, setUserID] = useState(null);
-
-  const queryClient = new QueryClient();
-
   return (
     <div className="App">
       <QueryClientProvider client={queryClient}>

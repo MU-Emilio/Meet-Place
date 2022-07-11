@@ -7,7 +7,7 @@ import Home from "./Home";
 import { UserContext } from "./UserContext";
 
 const RoutesAvailable = () => {
-  const { user, setUser } = useContext(UserContext);
+  const { user } = useContext(UserContext);
 
   if (!user) {
     return (

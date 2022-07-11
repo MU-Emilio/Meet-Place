@@ -1,25 +1,31 @@
 import { useContext, useEffect, useMemo, useState } from "react";
 import axios from "axios";
 import { SESSION_KEY } from "../lib/constants";
-import { UserContext } from "./UserContext";
+import { useQuery } from "react-query";
+
+interface User {
+  username: string;
+  objectId: string;
+}
 
 const Home = () => {
-  const { user, setUser } = useContext(UserContext);
-
   const fetchData = async () => {
-    const response = await axios.get("http://localhost:3001/viewer", {
+    const response = await axios.get("http://localhost:3001/vieer", {
       headers: {
         authorization: localStorage.getItem(SESSION_KEY) || false,
       },
     });
-    setUser(response.data);
+    return response.data;
   };
 
-  useEffect(() => {
-    fetchData();
-  }, []);
+  const { isLoading, error, data } = useQuery<User | null>(["user"], fetchData);
 
-  return <div>Welcome {user?.username}</div>;
+  if (isLoading) return <p>Loading...</p>;
+
+  if (error instanceof Error)
+    return <p>{`An error has occurred: ${error.message}`}</p>;
+
+  return <div>Welcome {data?.username}</div>;
 };
 
 export default Home;
