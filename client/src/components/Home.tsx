@@ -1,8 +1,26 @@
-import React from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 import axios from "axios";
+import { SESSION_KEY } from "../lib/constants";
+import { UserContext } from "./UserContext";
 
 const Home = () => {
-  return <div>Home</div>;
+  const { user, setUser } = useContext(UserContext);
+  const { userID, setUserID } = useContext(UserContext);
+
+  const fetchData = async () => {
+    const response = await axios.get("http://localhost:3001/viewer", {
+      headers: {
+        authorization: localStorage.getItem(SESSION_KEY) || false,
+      },
+    });
+    setUserID(response.data);
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  return <div>Welcome {userID}</div>;
 };
 
 export default Home;

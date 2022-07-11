@@ -3,10 +3,10 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Formik, Field, Form } from "formik";
-import Parse from "parse/node";
+import { useContext } from "react";
+import { UserContext } from "./UserContext";
 
 import Logo from "./Logo";
-import { response } from "../../../server/app";
 import { SESSION_KEY } from "../lib/constants";
 
 // Styles
@@ -36,6 +36,7 @@ interface Values {
 const Login = () => {
   const [submitMessage, setSubmitMessage] = useState(null);
   const navigate = useNavigate();
+  const { setUser } = useContext(UserContext);
 
   // Handlers
   const handleLogin = (values: any, callback: () => void) => {
@@ -47,6 +48,7 @@ const Login = () => {
       .then((response) => {
         setSubmitMessage(response.data.message);
         localStorage.setItem(SESSION_KEY, response.data.payload.sessionToken);
+        setUser(response.data.payload.sessionToken);
         callback();
         navigate("/home");
       })

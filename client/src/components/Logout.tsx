@@ -1,13 +1,19 @@
-import React from "react";
+import React, { useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import { UserContext } from "./UserContext";
 
 const Logout = () => {
   const handleLogout = () => {
     localStorage.removeItem("session_key");
-    console.log(localStorage.getItem("session_key"));
+    setUser(null);
   };
+
+  const { setUser } = useContext(UserContext);
   return (
     <div>
-      <button onClick={handleLogout}>Logout</button>
+      <a href="/login">
+        <button onClick={handleLogout}>Logout</button>
+      </a>
     </div>
   );
 };

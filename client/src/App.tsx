@@ -1,40 +1,27 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import { SESSION_KEY } from "./lib/constants";
-import axios from "axios";
-
-import Login from "./components/Login";
+import { QueryClient, QueryClientProvider, useQuery } from "react-query";
+import RoutesAvailable from "./components/RoutesAvailable";
 import "./App.css";
-import Register from "./components/Register";
-import Home from "./components/Home";
 import Logout from "./components/Logout";
+import UserProvider from "./components/UserContext";
 
 function App() {
-  const fetchData = async () => {
-    const response = await axios.get("http://localhost:3001/viewer", {
-      headers: {
-        authorization: localStorage.getItem(SESSION_KEY) || false,
-      },
-    });
-    console.log(response.data);
-  };
-  useEffect(() => {
-    fetchData();
-  }, []);
+  const [user, setUser] = useState(null);
+  const [userID, setUserID] = useState(null);
+
+  const queryClient = new QueryClient();
 
   return (
     <div className="App">
-      <Logout />
-      <BrowserRouter>
-        <main>
-          <Routes>
-            <Route path="/" element={<Navigate to="/login" />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/home" element={<Home />} />
-          </Routes>
-        </main>
-      </BrowserRouter>
+      <QueryClientProvider client={queryClient}>
+        <Logout />
+        <UserProvider>
+          <BrowserRouter>
+            <RoutesAvailable />
+          </BrowserRouter>
+        </UserProvider>
+      </QueryClientProvider>
     </div>
   );
 }
