@@ -10,7 +10,7 @@ interface User {
 
 const Home = () => {
   const fetchData = async () => {
-    const response = await axios.get("http://localhost:3001/vieer", {
+    const response = await axios.get("http://localhost:3001/viewer", {
       headers: {
         authorization: localStorage.getItem(SESSION_KEY) || false,
       },
