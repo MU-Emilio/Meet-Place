@@ -15,12 +15,14 @@ const RoutesAvailable = () => {
         <Route path="/" element={<Navigate to="/login" />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/*" element={<Login />} />
       </Routes>
     );
   } else {
     return (
       <Routes>
         <Route path="/home" element={<Home />} />
+        <Route path="/*" element={<Home />} />
       </Routes>
     );
   }
