@@ -1,11 +1,10 @@
 import { startOfMonth, startOfWeek, format } from "date-fns";
 import React from "react";
-
 import takeMonth from "../utils/calendar_utils";
+import CalendarDate from "./CalendarDate";
 
 const Calendar = () => {
   const selectedDate = new Date();
-
   const startDate = startOfWeek(startOfMonth(selectedDate));
 
   const monthGenerator = takeMonth(startDate);
@@ -20,7 +19,8 @@ const Calendar = () => {
         week.map((day, day_index) => {
           days.push(
             <React.Fragment key={`${week_index}${day_index}`}>
-              <p>{format(day, "MMMMMM/dd/yyyy")}</p>
+              {/* <p>{format(day, "MMMMMM/dd/yyyy")}</p> */}
+              <CalendarDate date={day} />
             </React.Fragment>
           );
         });
