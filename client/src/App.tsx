@@ -1,22 +1,24 @@
-import { useState } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-
-import Login from "./components/Login";
+import { QueryClient, QueryClientProvider, useQuery } from "react-query";
+import RoutesAvailable from "./components/RoutesAvailable";
 import "./App.css";
-import Register from "./components/Register";
+import Logout from "./components/Logout";
+import UserProvider from "./components/UserContext";
+
+const queryClient = new QueryClient();
 
 function App() {
   return (
     <div className="App">
-      <BrowserRouter>
-        <main>
-          <Routes>
-            <Route path="/" element={<Navigate to="/login" />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
-          </Routes>
-        </main>
-      </BrowserRouter>
+      <QueryClientProvider client={queryClient}>
+        <Logout />
+        <UserProvider>
+          <BrowserRouter>
+            <RoutesAvailable />
+          </BrowserRouter>
+        </UserProvider>
+      </QueryClientProvider>
     </div>
   );
 }

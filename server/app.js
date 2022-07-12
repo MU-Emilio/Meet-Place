@@ -25,7 +25,9 @@ app.post("/users/login", async (req, res) => {
     const user = await Parse.User.logIn(body.username, body.password);
     res.send({ message: "User logged!", status: "success", payload: user });
   } catch (error) {
-    res.send({ message: error.message, status: "danger", payload: body });
+    res
+      .status(400)
+      .send({ message: error.message, status: "danger", payload: body });
   }
 });
 
@@ -36,13 +38,50 @@ app.post("/users/register", async (req, res) => {
 
   user.set("username", body.username);
   user.set("password", body.password);
+  if (body.email == null) {
+    res.status(400).send({
+      message: "Cannot register with empty email",
+      status: "danger",
+      payload: body,
+    });
+    return;
+  }
   user.set("email", body.email);
 
   try {
     await user.signUp();
-    res.send({ message: "User created!", status: "success", payload: body });
+    res
+      .status(200)
+      .send({ message: "User created!", status: "success", payload: body });
   } catch (error) {
-    res.send({ message: error.message, status: "danger", payload: body });
+    res
+      .status(400)
+      .send({ message: error.message, status: "danger", payload: body });
+  }
+});
+
+app.use("/viewer", async (req, res, next) => {
+  const myToken = req.headers.authorization;
+  const query = new Parse.Query(Parse.Object.extend("User"));
+
+  try {
+    const user = await query.first("sessionToken", myToken);
+    req.userID = user.id;
+    next();
+  } catch (error) {
+    res.status(404).send({ message: error.message });
+  }
+});
+
+app.get("/viewer", async (req, res) => {
+  const userID = req.userID;
+  const query = new Parse.Query(Parse.User);
+  try {
+    query.equalTo("objectId", userID);
+    const userObject = await query.first({ objectId: userID });
+    res.send(userObject);
+  } catch (error) {
+    res.status(404).send({ message: error.message });
   }
 });
 
