@@ -3,7 +3,6 @@ const Parse = require("parse/node");
 const express = require("express");
 const app = express();
 const cors = require("cors");
-// const { SESSION_KEY } = require("../client/src/lib/constants");
 app.use(express.json());
 const APP_ID = process.env.APP_ID;
 const JS_KEY = process.env.JS_KEY;
@@ -19,20 +18,6 @@ Parse.initialize(
 );
 
 // Request the Log in passing the email and password
-app.post("/users/login", async (req, res) => {
-  const body = req.body;
-
-  try {
-    const user = await Parse.User.logIn(body.username, body.password);
-    res.send({ message: "User logged!", status: "success", payload: user });
-  } catch (error) {
-    res
-      .status(400)
-      .send({ message: error.message, status: "danger", payload: body });
-  }
-});
-
-// Erase currrent sessionToken from localstorage
 app.post("/users/login", async (req, res) => {
   const body = req.body;
 
@@ -81,7 +66,6 @@ app.use("/viewer", async (req, res, next) => {
 
   try {
     const user = await query.first("sessionToken", myToken);
-    // res.send(user.id);
     req.userID = user.id;
     next();
   } catch (error) {

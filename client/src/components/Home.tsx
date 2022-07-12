@@ -20,10 +20,13 @@ const Home = () => {
 
   const { isLoading, error, data } = useQuery<User | null>(["user"], fetchData);
 
-  if (isLoading) return <p>Loading...</p>;
+  if (isLoading) {
+    return <p>Loading...</p>;
+  }
 
-  if (error instanceof Error)
+  if (error instanceof Error) {
     return <p>{`An error has occurred: ${error.message}`}</p>;
+  }
 
   return <div>Welcome {data?.username}</div>;
 };

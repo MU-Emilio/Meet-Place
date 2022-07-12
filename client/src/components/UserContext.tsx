@@ -13,7 +13,6 @@ interface User {
 
 export const UserContext = createContext<UserContext>({} as UserContext);
 
-import React from "react";
 import { SESSION_KEY } from "../lib/constants";
 
 const UserProvider = ({ children }) => {
