@@ -23,9 +23,26 @@ const Calendar = () => {
     };
   };
 
-  const tw = takeWeek(startDate);
-  console.log(tw());
-  console.log(tw());
+  const takeMonth = (start: Date) => {
+    let month: Date[][] = [];
+    let date = start;
+
+    return () => {
+      const weekGenerator = takeWeek(startOfMonth(date));
+      const endDate = startOfDay(endOfWeek(endOfMonth(date)));
+      month.push(weekGenerator());
+
+      while (month[month.length - 1][6] < endDate) {
+        month.push(weekGenerator());
+      }
+
+      return month;
+    };
+  };
+
+  const monthGenerator = takeMonth(startDate);
+
+  console.log(monthGenerator());
 
   return (
     <div>
