@@ -1,21 +1,19 @@
 import { createContext } from "react";
 import { useState } from "react";
+import { SESSION_KEY } from "../lib/constants";
 
 interface UserContext {
   user: string | null;
   setUser: (sessionToken: string | null) => null;
 }
 
-interface User {
-  username: string;
-  objectId: string;
+interface Props {
+  children: React.ReactNode;
 }
 
 export const UserContext = createContext<UserContext>({} as UserContext);
 
-import { SESSION_KEY } from "../lib/constants";
-
-const UserProvider = ({ children }) => {
+const UserProvider = ({ children }: Props) => {
   const [user, setUser] = useState(localStorage.getItem(SESSION_KEY));
   return (
     //@ts-ignore

@@ -2,6 +2,7 @@ import { useContext, useEffect, useMemo, useState } from "react";
 import axios from "axios";
 import { SESSION_KEY } from "../lib/constants";
 import { useQuery } from "react-query";
+import Calendar from "./Calendar";
 
 interface User {
   username: string;
@@ -28,7 +29,12 @@ const Home = () => {
     return <p>{`An error has occurred: ${error.message}`}</p>;
   }
 
-  return <div>Welcome {data?.username}</div>;
+  return (
+    <div>
+      <h1>Welcome {data?.username}</h1>
+      <Calendar />
+    </div>
+  );
 };
 
 export default Home;
