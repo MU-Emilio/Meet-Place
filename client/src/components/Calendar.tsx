@@ -1,15 +1,37 @@
-import { addDays, format, startOfDay } from "date-fns";
+import {
+  startOfMonth,
+  startOfWeek,
+  endOfMonth,
+  endOfWeek,
+  startOfDay,
+  addDays,
+} from "date-fns";
 
 const Calendar = () => {
-  const date = new Date();
-  const tomorrow = addDays(date, 1);
-  const start = startOfDay(date);
+  const selectedDate = new Date();
 
-  console.log(date);
-  console.log(tomorrow);
-  console.log(start);
+  const startDate = startOfWeek(startOfMonth(selectedDate));
+  const endDate = endOfMonth(endOfWeek(selectedDate));
 
-  return <div>Calendar</div>;
+  const takeWeek = (start: Date) => {
+    let date = startOfWeek(startOfDay(start));
+
+    return () => {
+      const week = [...Array(7)].map((_, i) => addDays(date, i));
+      date = addDays(week[6], 1);
+      return week;
+    };
+  };
+
+  const tw = takeWeek(startDate);
+  console.log(tw());
+  console.log(tw());
+
+  return (
+    <div>
+      <h1>Calendar</h1>
+    </div>
+  );
 };
 
 export default Calendar;
