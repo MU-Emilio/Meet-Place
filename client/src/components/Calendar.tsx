@@ -1,52 +1,42 @@
-import {
-  startOfMonth,
-  startOfWeek,
-  endOfMonth,
-  endOfWeek,
-  startOfDay,
-  addDays,
-} from "date-fns";
+import { startOfMonth, startOfWeek, format } from "date-fns";
+import React from "react";
+
+import takeMonth from "../utils/calendar_utils";
 
 const Calendar = () => {
   const selectedDate = new Date();
 
   const startDate = startOfWeek(startOfMonth(selectedDate));
-  const endDate = endOfMonth(endOfWeek(selectedDate));
-
-  const takeWeek = (start: Date) => {
-    let date = startOfWeek(startOfDay(start));
-
-    return () => {
-      const week = [...Array(7)].map((_, i) => addDays(date, i));
-      date = addDays(week[6], 1);
-      return week;
-    };
-  };
-
-  const takeMonth = (start: Date) => {
-    let month: Date[][] = [];
-    let date = start;
-
-    return () => {
-      const weekGenerator = takeWeek(startOfMonth(date));
-      const endDate = startOfDay(endOfWeek(endOfMonth(date)));
-      month.push(weekGenerator());
-
-      while (month[month.length - 1][6] < endDate) {
-        month.push(weekGenerator());
-      }
-
-      return month;
-    };
-  };
 
   const monthGenerator = takeMonth(startDate);
 
-  console.log(monthGenerator());
+  const renderMonth = (number_of_months: number) => {
+    const month_days: any = [];
+
+    for (let i = 0; i < number_of_months; i++) {
+      const days: any = [];
+
+      monthGenerator().map((week, week_index) => {
+        week.map((day, day_index) => {
+          days.push(
+            <React.Fragment key={`${week_index}${day_index}`}>
+              <p>{format(day, "MMMMMM/dd/yyyy")}</p>
+            </React.Fragment>
+          );
+        });
+      });
+
+      month_days.push(days);
+    }
+    return month_days;
+  };
 
   return (
     <div>
       <h1>Calendar</h1>
+      <p>Today: {format(selectedDate, "MM/dd/yyyy'")}</p>
+      {renderMonth(12)}
+      {renderMonth(1)}
     </div>
   );
 };
