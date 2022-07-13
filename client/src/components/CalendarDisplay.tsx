@@ -29,29 +29,28 @@ const CalendarDisplay = ({
   calendarDate,
   setCalendarDate,
 }: Props) => {
-  const renderMonth = (number_of_months: number, calendarDate: Date) => {
+  const renderMonth = (calendarDate: Date) => {
     const monthGenerator = generateMonth(calendarDate);
 
     const month_days: React.ReactNode[][] = [];
 
-    for (let i = 0; i < number_of_months; i++) {
-      const days: React.ReactNode[] = [];
+    const days: React.ReactNode[] = [];
 
-      monthGenerator().map((week, week_index) => {
-        week.map((day, day_index) => {
-          days.push(
-            <React.Fragment key={`${week_index}-${day_index}`}>
-              <CalendarDate date={day} startDate={startDate} />
-            </React.Fragment>
-          );
-        });
+    monthGenerator().map((week, week_index) => {
+      week.map((day, day_index) => {
+        days.push(
+          <React.Fragment key={`${week_index}-${day_index}`}>
+            <CalendarDate date={day} startDate={startDate} />
+          </React.Fragment>
+        );
       });
+    });
 
-      month_days.push(days);
-    }
+    month_days.push(days);
+
     return month_days;
   };
-  return <div style={styles.calendar}>{renderMonth(1, calendarDate)}</div>;
+  return <div style={styles.calendar}>{renderMonth(calendarDate)}</div>;
 };
 
 export default CalendarDisplay;
