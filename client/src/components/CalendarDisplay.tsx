@@ -41,7 +41,7 @@ const CalendarDisplay = ({
         week.map((day, day_index) => {
           days.push(
             <React.Fragment key={`${week_index}-${day_index}`}>
-              <CalendarDate date={day} />
+              <CalendarDate date={day} startDate={startDate} />
             </React.Fragment>
           );
         });

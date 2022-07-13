@@ -1,6 +1,7 @@
 import { startOfDay, format } from "date-fns";
 interface Props {
   date: Date;
+  startDate: Date;
 }
 
 const styles = {
@@ -12,14 +13,13 @@ const styles = {
   },
 };
 
-const CalendarDate = ({ date }: Props) => {
+const CalendarDate = ({ date, startDate }: Props) => {
   return (
     <div>
       <p
         className="border h-20 px-1"
         style={
-          format(date, "MM/dd/yyyy") ==
-          format(startOfDay(new Date()), "MM/dd/yyyy")
+          format(date, "MM/dd/yyyy") == format(startDate, "MM/dd/yyyy")
             ? styles.today
             : styles.notToday
         }
