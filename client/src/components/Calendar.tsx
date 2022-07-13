@@ -23,15 +23,15 @@ const Calendar = () => {
   // Functions
 
   const renderMonth = (number_of_months: number) => {
-    const month_days: any = [];
+    const month_days: React.ReactNode[][] = [];
 
     for (let i = 0; i < number_of_months; i++) {
-      const days: any = [];
+      const days: React.ReactNode[] = [];
 
       monthGenerator().map((week, week_index) => {
         week.map((day, day_index) => {
           days.push(
-            <React.Fragment key={`${week_index}${day_index}`}>
+            <React.Fragment key={`${week_index}-${day_index}`}>
               <CalendarDate date={day} />
             </React.Fragment>
           );

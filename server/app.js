@@ -62,11 +62,11 @@ app.post("/users/register", async (req, res) => {
 
 app.use("/viewer", async (req, res, next) => {
   const myToken = req.headers.authorization;
-  const query = new Parse.Query(Parse.Object.extend("User"));
+  const query = new Parse.Query(Parse.Session);
 
   try {
-    const user = await query.first("sessionToken", myToken);
-    req.userID = user.id;
+    const user = await query.first({ sessionToken: myToken });
+    req.userID = user.get("user").id;
     next();
   } catch (error) {
     res.status(404).send({ message: error.message });
@@ -78,7 +78,7 @@ app.get("/viewer", async (req, res) => {
   const query = new Parse.Query(Parse.User);
   try {
     query.equalTo("objectId", userID);
-    const userObject = await query.first({ objectId: userID });
+    const userObject = await query.first();
     res.send(userObject);
   } catch (error) {
     res.status(404).send({ message: error.message });
