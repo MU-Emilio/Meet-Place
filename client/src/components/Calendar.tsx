@@ -1,6 +1,6 @@
 import { startOfMonth, startOfWeek, format } from "date-fns";
 import React, { useState } from "react";
-import takeMonth from "../utils/calendar_utils";
+import generateMonth from "../utils/calendar_utils";
 import CalendarDate from "./CalendarDate";
 
 // Styles
@@ -18,7 +18,7 @@ const Calendar = () => {
   const selectedDate = new Date();
   const startDate = selectedDate;
 
-  const monthGenerator = takeMonth(startDate);
+  const monthGenerator = generateMonth(startDate);
 
   // Functions
 

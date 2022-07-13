@@ -21,7 +21,7 @@ const generateMonth = (start: Date = new Date()) => {
   let month: Date[][] = [];
   let date = start;
 
-  const lastDayOfRange = (range: any) => {
+  const lastDayOfRange = (range: Date[][]) => {
     return range[range.length - 1][6];
   };
 
