@@ -8,7 +8,7 @@ interface Props {
 const CalendarDate = ({ date }: Props) => {
   return (
     <div>
-      <p className="border h-20 px-1">{format(date, "MMMMMM/dd/yyyy")}</p>
+      <p className="border h-20 px-1">{format(date, "dd")}</p>
     </div>
   );
 };
