@@ -5,11 +5,9 @@ import {
   endOfWeek,
   startOfDay,
   addDays,
-  format,
-  endOfDay,
 } from "date-fns";
 
-const takeWeek = (start: Date = new Date()) => {
+const generateWeek = (start: Date = new Date()) => {
   let date = startOfWeek(startOfDay(start));
 
   return () => {
@@ -19,7 +17,7 @@ const takeWeek = (start: Date = new Date()) => {
   };
 };
 
-const takeMonth = (start: Date = new Date()) => {
+const generateMonth = (start: Date = new Date()) => {
   let month: Date[][] = [];
   let date = start;
 
@@ -28,7 +26,7 @@ const takeMonth = (start: Date = new Date()) => {
   };
 
   return () => {
-    const weekGenerator = takeWeek(startOfMonth(date));
+    const weekGenerator = generateWeek(startOfMonth(date));
     const endDate = startOfDay(endOfWeek(endOfMonth(date)));
     month.push(weekGenerator());
 
@@ -44,4 +42,4 @@ const takeMonth = (start: Date = new Date()) => {
   };
 };
 
-export default takeMonth;
+export default generateMonth;

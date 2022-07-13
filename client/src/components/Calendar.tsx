@@ -3,15 +3,15 @@ import React, { useState } from "react";
 import takeMonth from "../utils/calendar_utils";
 import CalendarDate from "./CalendarDate";
 
-const Calendar = () => {
-  // Styles
-  const styles = {
-    calendar: {
-      display: "grid",
-      gridTemplateColumns: "repeat(7, 200px)",
-    },
-  };
+// Styles
+const styles = {
+  calendar: {
+    display: "grid",
+    gridTemplateColumns: "repeat(7, 200px)",
+  },
+};
 
+const Calendar = () => {
   // States
   const [month, setMonth] = useState("July");
 
