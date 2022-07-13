@@ -1,13 +1,26 @@
 import { startOfMonth, startOfWeek, format } from "date-fns";
-import React from "react";
+import React, { useState } from "react";
 import takeMonth from "../utils/calendar_utils";
 import CalendarDate from "./CalendarDate";
 
 const Calendar = () => {
+  // Styles
+  const styles = {
+    calendar: {
+      display: "grid",
+      gridTemplateColumns: "repeat(7, 200px)",
+    },
+  };
+
+  // States
+  const [month, setMonth] = useState("July");
+
   const selectedDate = new Date();
-  const startDate = startOfWeek(startOfMonth(selectedDate));
+  const startDate = selectedDate;
 
   const monthGenerator = takeMonth(startDate);
+
+  // Functions
 
   const renderMonth = (number_of_months: number) => {
     const month_days: any = [];
@@ -19,7 +32,6 @@ const Calendar = () => {
         week.map((day, day_index) => {
           days.push(
             <React.Fragment key={`${week_index}${day_index}`}>
-              {/* <p>{format(day, "MMMMMM/dd/yyyy")}</p> */}
               <CalendarDate date={day} />
             </React.Fragment>
           );
@@ -33,10 +45,9 @@ const Calendar = () => {
 
   return (
     <div>
-      <h1>Calendar</h1>
+      <h1>Calendar {month}</h1>
       <p>Today: {format(selectedDate, "MM/dd/yyyy'")}</p>
-      {renderMonth(12)}
-      {renderMonth(1)}
+      <div style={styles.calendar}>{renderMonth(1)}</div>
     </div>
   );
 };

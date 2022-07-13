@@ -6,9 +6,10 @@ import {
   startOfDay,
   addDays,
   format,
+  endOfDay,
 } from "date-fns";
 
-const takeWeek = (start: Date) => {
+const takeWeek = (start: Date = new Date()) => {
   let date = startOfWeek(startOfDay(start));
 
   return () => {
@@ -18,7 +19,7 @@ const takeWeek = (start: Date) => {
   };
 };
 
-const takeMonth = (start: Date) => {
+const takeMonth = (start: Date = new Date()) => {
   let month: Date[][] = [];
   let date = start;
 

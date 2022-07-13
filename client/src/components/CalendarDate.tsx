@@ -6,8 +6,11 @@ interface Props {
 }
 
 const CalendarDate = ({ date }: Props) => {
-  console.log(date);
-  return <div>{format(date, "MMMMMM/dd/yyyy")}</div>;
+  return (
+    <div>
+      <p className="border h-20 px-1">{format(date, "MMMMMM/dd/yyyy")}</p>
+    </div>
+  );
 };
 
 export default CalendarDate;
