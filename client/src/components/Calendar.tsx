@@ -17,23 +17,20 @@ const Calendar = () => {
   // States
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [startDate, setStartDate] = useState(selectedDate);
-  let [calendarDate, setCalendarDate] = useState(selectedDate);
+  const [calendarDate, setCalendarDate] = useState(selectedDate);
 
   // Functions
 
   const nextMonth = () => {
     setCalendarDate(addMonths(calendarDate, 1));
-    return;
   };
 
   const lastMonth = () => {
     setCalendarDate(subMonths(calendarDate, 1));
-    return;
   };
 
   const resetDate = () => {
     setCalendarDate(selectedDate);
-    return;
   };
 
   return (

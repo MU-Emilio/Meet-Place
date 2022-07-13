@@ -1,4 +1,4 @@
-import { startOfDay, format } from "date-fns";
+import { startOfDay, format, isEqual } from "date-fns";
 interface Props {
   date: Date;
   startDate: Date;
@@ -19,7 +19,7 @@ const CalendarDate = ({ date, startDate }: Props) => {
       <p
         className="border h-20 px-1"
         style={
-          format(date, "MM/dd/yyyy") == format(startDate, "MM/dd/yyyy")
+          isEqual(startOfDay(date), startOfDay(startDate))
             ? styles.today
             : styles.notToday
         }
