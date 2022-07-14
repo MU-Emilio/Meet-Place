@@ -69,10 +69,10 @@ const Calendar = () => {
       </button>
 
       <div>
-        <button onClick={addToDate} style={styles.button}>
+        <button onClick={subToDate} style={styles.button}>
           {"<"}
         </button>
-        <button onClick={subToDate} style={styles.button}>
+        <button onClick={addToDate} style={styles.button}>
           {">"}
         </button>
       </div>

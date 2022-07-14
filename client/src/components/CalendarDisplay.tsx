@@ -1,7 +1,7 @@
 import React, { useMemo } from "react";
-import { generateMonth, generateWeek } from "../utils/calendar_utils";
 import { WEEK_DAYS } from "../utils/constats";
-import CalendarDate from "./CalendarDate";
+import { MonthContainer } from "./MonthContainer";
+import { WeekContainer } from "./WeekContainer";
 
 // Styles
 const styles = {
@@ -18,44 +18,6 @@ interface Props {
 }
 
 const CalendarDisplay = ({ startDate, monthView, calendarDate }: Props) => {
-  const renderMonth = (monthDate: Date) => {
-    const monthGenerator = generateMonth(monthDate);
-
-    const month_days: React.ReactNode[][] = [];
-
-    const days: React.ReactNode[] = [];
-
-    monthGenerator().map((week: Date[], week_index: number) => {
-      week.map((day, day_index) => {
-        days.push(
-          <React.Fragment key={`${week_index}-${day_index}`}>
-            <CalendarDate date={day} startDate={startDate} />
-          </React.Fragment>
-        );
-      });
-    });
-
-    month_days.push(days);
-
-    return month_days;
-  };
-
-  const renderWeek = (weekDate: Date) => {
-    const weekGenerator = generateWeek(weekDate);
-
-    const week_days: React.ReactNode[] = [];
-
-    weekGenerator().map((day: Date, day_index: number) => {
-      week_days.push(
-        <React.Fragment key={`${day_index}`}>
-          <CalendarDate date={day} startDate={startDate} />
-        </React.Fragment>
-      );
-    });
-
-    return week_days;
-  };
-
   const renderDayNames = () => {
     const day_names: React.ReactNode[] = [];
 
@@ -71,9 +33,13 @@ const CalendarDisplay = ({ startDate, monthView, calendarDate }: Props) => {
 
   const calendar = useMemo(() => {
     if (monthView) {
-      return renderMonth(calendarDate);
+      return (
+        <MonthContainer startDate={startDate} calendarDate={calendarDate} />
+      );
     } else {
-      return renderWeek(calendarDate);
+      return (
+        <WeekContainer startDate={startDate} calendarDate={calendarDate} />
+      );
     }
   }, [calendarDate, monthView]);
 
