@@ -12,26 +12,12 @@ const styles = {
 };
 
 interface Props {
-  selectedDate: Date;
-  setSelectedDate: (date: Date) => void;
   startDate: Date;
-  setStartDate: (date: Date) => void;
-  monthDate: Date;
-  setMonthDate: (date: Date) => void;
   monthView: boolean;
-  weekDate: Date;
+  calendarDate: Date;
 }
 
-const CalendarDisplay = ({
-  selectedDate,
-  setSelectedDate,
-  startDate,
-  setStartDate,
-  monthDate,
-  setMonthDate,
-  monthView,
-  weekDate,
-}: Props) => {
+const CalendarDisplay = ({ startDate, monthView, calendarDate }: Props) => {
   const renderMonth = (monthDate: Date) => {
     const monthGenerator = generateMonth(monthDate);
 
@@ -85,11 +71,11 @@ const CalendarDisplay = ({
 
   const calendar = useMemo(() => {
     if (monthView) {
-      return renderMonth(monthDate);
+      return renderMonth(calendarDate);
     } else {
-      return renderWeek(weekDate);
+      return renderWeek(calendarDate);
     }
-  }, [monthDate, monthView, weekDate]);
+  }, [calendarDate, monthView]);
 
   const dayNames = useMemo(() => {
     return renderDayNames();
