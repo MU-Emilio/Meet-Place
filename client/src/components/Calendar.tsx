@@ -1,53 +1,59 @@
 import { startOfMonth, startOfWeek, format } from "date-fns";
+import { addMonths, subMonths } from "date-fns/esm";
 import React, { useState } from "react";
 import generateMonth from "../utils/calendar_utils";
 import CalendarDate from "./CalendarDate";
+import CalendarDisplay from "./CalendarDisplay";
 
-// Styles
 const styles = {
-  calendar: {
-    display: "grid",
-    gridTemplateColumns: "repeat(7, 200px)",
+  button: {
+    backgroundColor: "#EA574A",
+    padding: "0.5rem 1.25rem",
+    margin: "1rem",
   },
 };
 
 const Calendar = () => {
   // States
-  const [month, setMonth] = useState("July");
-
-  const selectedDate = new Date();
-  const startDate = selectedDate;
-
-  const monthGenerator = generateMonth(startDate);
+  const [selectedDate, setSelectedDate] = useState(new Date());
+  const [startDate, setStartDate] = useState(selectedDate);
+  const [calendarDate, setCalendarDate] = useState(selectedDate);
 
   // Functions
 
-  const renderMonth = (number_of_months: number) => {
-    const month_days: React.ReactNode[][] = [];
+  const nextMonth = () => {
+    setCalendarDate(addMonths(calendarDate, 1));
+  };
 
-    for (let i = 0; i < number_of_months; i++) {
-      const days: React.ReactNode[] = [];
+  const lastMonth = () => {
+    setCalendarDate(subMonths(calendarDate, 1));
+  };
 
-      monthGenerator().map((week, week_index) => {
-        week.map((day, day_index) => {
-          days.push(
-            <React.Fragment key={`${week_index}-${day_index}`}>
-              <CalendarDate date={day} />
-            </React.Fragment>
-          );
-        });
-      });
-
-      month_days.push(days);
-    }
-    return month_days;
+  const resetDate = () => {
+    setCalendarDate(selectedDate);
   };
 
   return (
     <div>
-      <h1>Calendar {month}</h1>
+      <h1>Calendar {format(calendarDate, "MMMMMM yyyy")}</h1>
       <p>Today: {format(selectedDate, "MM/dd/yyyy'")}</p>
-      <div style={styles.calendar}>{renderMonth(1)}</div>
+      <button onClick={lastMonth} style={styles.button}>
+        Back
+      </button>
+      <button onClick={nextMonth} style={styles.button}>
+        Next
+      </button>
+      <button onClick={resetDate} style={styles.button}>
+        Today
+      </button>
+      <CalendarDisplay
+        selectedDate={selectedDate}
+        setSelectedDate={setSelectedDate}
+        startDate={startDate}
+        setStartDate={setStartDate}
+        calendarDate={calendarDate}
+        setCalendarDate={setCalendarDate}
+      />
     </div>
   );
 };
