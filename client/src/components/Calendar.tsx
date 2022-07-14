@@ -1,7 +1,6 @@
-import { startOfMonth, startOfWeek, format } from "date-fns";
-import { addMonths, subMonths } from "date-fns/esm";
-import React, { useState } from "react";
-import CalendarDate from "./CalendarDate";
+import { startOfWeek, format, addWeeks } from "date-fns";
+import { addMonths, subMonths, subWeeks } from "date-fns/esm";
+import { useState } from "react";
 import CalendarDisplay from "./CalendarDisplay";
 
 const styles = {
@@ -18,19 +17,37 @@ const Calendar = () => {
   const [startDate, setStartDate] = useState(selectedDate);
   const [calendarDate, setCalendarDate] = useState(selectedDate);
   const [monthView, setMonthView] = useState(true);
+  const [weekDate, setWeekDate] = useState(selectedDate);
 
   // Functions
 
   const nextMonth = () => {
+    setWeekDate(addMonths(calendarDate, 1));
     setCalendarDate(addMonths(calendarDate, 1));
   };
 
   const lastMonth = () => {
+    setWeekDate(subMonths(calendarDate, 1));
     setCalendarDate(subMonths(calendarDate, 1));
+  };
+
+  const nextWeek = () => {
+    setCalendarDate(startOfWeek(addWeeks(weekDate, 1)));
+    setWeekDate(startOfWeek(addWeeks(weekDate, 1)));
+    console.log(weekDate);
+    console.log(calendarDate);
+  };
+
+  const lastWeek = () => {
+    setCalendarDate(startOfWeek(subWeeks(weekDate, 1)));
+    setWeekDate(startOfWeek(subWeeks(weekDate, 1)));
+    console.log(weekDate);
+    console.log(calendarDate);
   };
 
   const resetDate = () => {
     setCalendarDate(selectedDate);
+    setWeekDate(selectedDate);
   };
 
   const changeDisplay = () => {
@@ -39,16 +56,35 @@ const Calendar = () => {
 
   return (
     <div>
-      <h1>Calendar {format(calendarDate, "MMMMMM yyyy")}</h1>
+      <h1 className=" text-3xl">
+        Calendar{" "}
+        {monthView
+          ? format(calendarDate, "MMMMMM yyyy")
+          : format(weekDate, "MMMMMM yyyy")}
+      </h1>
       <p>Today: {format(selectedDate, "MM/dd/yyyy'")}</p>
-      <button onClick={lastMonth} style={styles.button}>
-        Back
-      </button>
-      <button onClick={nextMonth} style={styles.button}>
-        Next
-      </button>
+      {monthView ? (
+        <div>
+          <button onClick={lastMonth} style={styles.button}>
+            Last Month
+          </button>
+          <button onClick={nextMonth} style={styles.button}>
+            Next Month
+          </button>
+        </div>
+      ) : (
+        <div>
+          <button onClick={lastWeek} style={styles.button}>
+            Last Week
+          </button>
+          <button onClick={nextWeek} style={styles.button}>
+            Next Week
+          </button>
+        </div>
+      )}
+
       <button onClick={resetDate} style={styles.button}>
-        Today
+        Go Today
       </button>
       <button onClick={changeDisplay} style={styles.button}>
         {monthView ? "Week View" : "Month View"}
@@ -61,6 +97,7 @@ const Calendar = () => {
         calendarDate={calendarDate}
         setCalendarDate={setCalendarDate}
         monthView={monthView}
+        weekDate={weekDate}
       />
     </div>
   );

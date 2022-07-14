@@ -21,6 +21,7 @@ interface Props {
   calendarDate: Date;
   setCalendarDate: (date: Date) => void;
   monthView: boolean;
+  weekDate: Date;
 }
 
 const CalendarDisplay = ({
@@ -31,6 +32,7 @@ const CalendarDisplay = ({
   calendarDate,
   setCalendarDate,
   monthView,
+  weekDate,
 }: Props) => {
   const renderMonth = (calendarDate: Date) => {
     const monthGenerator = generateMonth(calendarDate);
@@ -54,8 +56,8 @@ const CalendarDisplay = ({
     return month_days;
   };
 
-  const renderWeek = (calendarDate: Date) => {
-    const weekGenerator = generateWeek(calendarDate);
+  const renderWeek = (weekDate: Date) => {
+    const weekGenerator = generateWeek(weekDate);
 
     const week_days: React.ReactNode[] = [];
 
@@ -78,9 +80,9 @@ const CalendarDisplay = ({
     if (monthView) {
       return renderMonth(calendarDate);
     } else {
-      return renderWeek(calendarDate);
+      return renderWeek(weekDate);
     }
-  }, [calendarDate, monthView]);
+  }, [calendarDate, monthView, weekDate]);
 
   return <div style={styles.calendar}>{month}</div>;
 };
