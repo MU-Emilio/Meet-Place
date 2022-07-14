@@ -1,7 +1,6 @@
 import { startOfMonth, startOfWeek, format } from "date-fns";
 import { addMonths, subMonths } from "date-fns/esm";
 import React, { useState } from "react";
-import generateMonth from "../utils/calendar_utils";
 import CalendarDate from "./CalendarDate";
 import CalendarDisplay from "./CalendarDisplay";
 
@@ -18,6 +17,7 @@ const Calendar = () => {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [startDate, setStartDate] = useState(selectedDate);
   const [calendarDate, setCalendarDate] = useState(selectedDate);
+  const [monthView, setMonthView] = useState(true);
 
   // Functions
 
@@ -33,6 +33,10 @@ const Calendar = () => {
     setCalendarDate(selectedDate);
   };
 
+  const changeDisplay = () => {
+    setMonthView(!monthView);
+  };
+
   return (
     <div>
       <h1>Calendar {format(calendarDate, "MMMMMM yyyy")}</h1>
@@ -46,6 +50,9 @@ const Calendar = () => {
       <button onClick={resetDate} style={styles.button}>
         Today
       </button>
+      <button onClick={changeDisplay} style={styles.button}>
+        {monthView ? "Week View" : "Month View"}
+      </button>
       <CalendarDisplay
         selectedDate={selectedDate}
         setSelectedDate={setSelectedDate}
@@ -53,6 +60,7 @@ const Calendar = () => {
         setStartDate={setStartDate}
         calendarDate={calendarDate}
         setCalendarDate={setCalendarDate}
+        monthView={monthView}
       />
     </div>
   );

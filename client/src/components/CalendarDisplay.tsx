@@ -1,7 +1,8 @@
 import { startOfMonth, startOfWeek, format } from "date-fns";
 import { addMonths } from "date-fns/esm";
 import React, { useState, useMemo } from "react";
-import generateMonth from "../utils/calendar_utils";
+import { generateMonth, generateWeek } from "../utils/calendar_utils";
+// import generateWeek from "../utils/calendar_utils";
 import CalendarDate from "./CalendarDate";
 
 // Styles
@@ -19,6 +20,7 @@ interface Props {
   setStartDate: (date: Date) => void;
   calendarDate: Date;
   setCalendarDate: (date: Date) => void;
+  monthView: boolean;
 }
 
 const CalendarDisplay = ({
@@ -28,6 +30,7 @@ const CalendarDisplay = ({
   setStartDate,
   calendarDate,
   setCalendarDate,
+  monthView,
 }: Props) => {
   const renderMonth = (calendarDate: Date) => {
     const monthGenerator = generateMonth(calendarDate);
@@ -36,7 +39,7 @@ const CalendarDisplay = ({
 
     const days: React.ReactNode[] = [];
 
-    monthGenerator().map((week, week_index) => {
+    monthGenerator().map((week: Date[], week_index: number) => {
       week.map((day, day_index) => {
         days.push(
           <React.Fragment key={`${week_index}-${day_index}`}>
@@ -51,9 +54,33 @@ const CalendarDisplay = ({
     return month_days;
   };
 
+  const renderWeek = (calendarDate: Date) => {
+    const weekGenerator = generateWeek(calendarDate);
+
+    const week_days: React.ReactNode[] = [];
+
+    const days: React.ReactNode[] = [];
+
+    weekGenerator().map((day: Date, day_index: number) => {
+      days.push(
+        <React.Fragment key={`${day_index}`}>
+          <CalendarDate date={day} startDate={startDate} />
+        </React.Fragment>
+      );
+    });
+
+    week_days.push(days);
+
+    return week_days;
+  };
+
   const month = useMemo(() => {
-    return renderMonth(calendarDate);
-  }, [calendarDate]);
+    if (monthView) {
+      return renderMonth(calendarDate);
+    } else {
+      return renderWeek(calendarDate);
+    }
+  }, [calendarDate, monthView]);
 
   return <div style={styles.calendar}>{month}</div>;
 };
