@@ -1,7 +1,9 @@
 import { startOfWeek, format, addWeeks, startOfMonth } from "date-fns";
 import { addMonths, subMonths, subWeeks } from "date-fns/esm";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CalendarDisplay from "./CalendarDisplay";
+import { useQuery } from "react-query";
+import axios from "axios";
 
 const styles = {
   button: {
@@ -54,6 +56,32 @@ const Calendar = () => {
     setMonthView(!monthView);
   };
 
+  const [events, setEvents]: any = useState({});
+
+  const fetchEvents = async () => {
+    const response = await axios.get("http://localhost:3001/events");
+    const events_json = manageEvents(response.data);
+    return events_json;
+  };
+
+  const { isLoading, error, data } = useQuery<any>(["events"], fetchEvents);
+
+  const manageEvents = (data: any) => {
+    const events_json: any = {};
+    if (data) {
+      data.map((event: any) => {
+        const date = event.date.iso.split("T")[0];
+        const dateSplit = date.split("-");
+        if (events_json[dateSplit]) {
+          events_json[dateSplit] = [...events_json[dateSplit], event];
+        } else {
+          events_json[dateSplit] = [event];
+        }
+      });
+    }
+    return events_json;
+  };
+
   return (
     <div>
       <h1 className=" text-3xl">
@@ -77,11 +105,16 @@ const Calendar = () => {
         </button>
       </div>
 
-      <CalendarDisplay
-        startDate={startDate}
-        monthView={monthView}
-        calendarDate={calendarDate}
-      />
+      {!isLoading && data != null ? (
+        <CalendarDisplay
+          startDate={startDate}
+          monthView={monthView}
+          calendarDate={calendarDate}
+          events={data}
+        />
+      ) : (
+        <p>Loading...</p>
+      )}
     </div>
   );
 };

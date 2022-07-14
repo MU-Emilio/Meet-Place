@@ -1,7 +1,11 @@
 import { startOfDay, format, isEqual } from "date-fns";
+import { insert } from "formik";
+import React, { useMemo } from "react";
+import Event from "./Event";
 interface Props {
   date: Date;
   startDate: Date;
+  events: any;
 }
 
 const styles = {
@@ -13,7 +17,32 @@ const styles = {
   },
 };
 
-const CalendarDate = ({ date, startDate }: Props) => {
+const CalendarDate = ({ date, startDate, events }: Props) => {
+  const isToday = (event: any) => {
+    const event_date = new Date(event.date.iso);
+    return isEqual(startOfDay(date), startOfDay(event_date));
+  };
+
+  const insertEvent = () => {
+    const day_events: React.ReactNode[] = [];
+    Object.keys(events).map((item: any, index: any) => {
+      events[item].map((event: any, event_index: number) => {
+        if (isToday(event)) {
+          day_events.push(
+            <React.Fragment key={`${item}-${event_index}`}>
+              <Event event={event} />
+            </React.Fragment>
+          );
+        }
+      });
+    });
+    return day_events;
+  };
+
+  // const day_events = useMemo(() => {
+  //   return insertEvent();
+  // }, [events]);
+
   return (
     <div>
       <p
@@ -25,6 +54,7 @@ const CalendarDate = ({ date, startDate }: Props) => {
         }
       >
         {format(date, "dd")}
+        {insertEvent()}
       </p>
     </div>
   );

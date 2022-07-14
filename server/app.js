@@ -85,4 +85,15 @@ app.get("/viewer", async (req, res) => {
   }
 });
 
+app.get("/events", async (req, res) => {
+  const Event = Parse.Object.extend("Event");
+  const query = new Parse.Query(Event);
+  try {
+    const events = await query.find();
+    res.send(events);
+  } catch (error) {
+    res.status(404).send({ message: error.message });
+  }
+});
+
 module.exports = app;
