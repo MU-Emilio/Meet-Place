@@ -25,34 +25,34 @@ const Calendar = () => {
   // States
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [startDate, setStartDate] = useState(selectedDate);
-  const [calendarDate, setCalendarDate] = useState(selectedDate);
+  const [monthDate, setMonthDate] = useState(selectedDate);
   const [monthView, setMonthView] = useState(true);
   const [weekDate, setWeekDate] = useState(selectedDate);
 
   // Functions
 
   const nextMonth = () => {
-    setWeekDate(addMonths(calendarDate, 1));
-    setCalendarDate(addMonths(calendarDate, 1));
+    setWeekDate(addMonths(monthDate, 1));
+    setMonthDate(addMonths(monthDate, 1));
   };
 
   const lastMonth = () => {
-    setWeekDate(subMonths(calendarDate, 1));
-    setCalendarDate(subMonths(calendarDate, 1));
+    setWeekDate(subMonths(monthDate, 1));
+    setMonthDate(subMonths(monthDate, 1));
   };
 
   const nextWeek = () => {
-    setCalendarDate(startOfWeek(addWeeks(weekDate, 1)));
+    setMonthDate(startOfWeek(addWeeks(weekDate, 1)));
     setWeekDate(startOfWeek(addWeeks(weekDate, 1)));
   };
 
   const lastWeek = () => {
-    setCalendarDate(startOfWeek(subWeeks(weekDate, 1)));
+    setMonthDate(startOfWeek(subWeeks(weekDate, 1)));
     setWeekDate(startOfWeek(subWeeks(weekDate, 1)));
   };
 
   const resetDate = () => {
-    setCalendarDate(selectedDate);
+    setMonthDate(selectedDate);
     setWeekDate(selectedDate);
   };
 
@@ -65,7 +65,7 @@ const Calendar = () => {
       <h1 className=" text-3xl">
         Calendar{" "}
         {monthView
-          ? format(calendarDate, "MMMMMM yyyy")
+          ? format(monthDate, "MMMMMM yyyy")
           : format(weekDate, "MMMMMM yyyy")}
       </h1>
       <p>Today: {format(selectedDate, "MM/dd/yyyy'")}</p>
@@ -102,8 +102,8 @@ const Calendar = () => {
         setSelectedDate={setSelectedDate}
         startDate={startDate}
         setStartDate={setStartDate}
-        calendarDate={calendarDate}
-        setCalendarDate={setCalendarDate}
+        monthDate={monthDate}
+        setMonthDate={setMonthDate}
         monthView={monthView}
         weekDate={weekDate}
       />

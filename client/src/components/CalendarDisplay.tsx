@@ -16,8 +16,8 @@ interface Props {
   setSelectedDate: (date: Date) => void;
   startDate: Date;
   setStartDate: (date: Date) => void;
-  calendarDate: Date;
-  setCalendarDate: (date: Date) => void;
+  monthDate: Date;
+  setMonthDate: (date: Date) => void;
   monthView: boolean;
   weekDate: Date;
 }
@@ -27,13 +27,13 @@ const CalendarDisplay = ({
   setSelectedDate,
   startDate,
   setStartDate,
-  calendarDate,
-  setCalendarDate,
+  monthDate,
+  setMonthDate,
   monthView,
   weekDate,
 }: Props) => {
-  const renderMonth = (calendarDate: Date) => {
-    const monthGenerator = generateMonth(calendarDate);
+  const renderMonth = (monthDate: Date) => {
+    const monthGenerator = generateMonth(monthDate);
 
     const month_days: React.ReactNode[][] = [];
 
@@ -85,11 +85,11 @@ const CalendarDisplay = ({
 
   const calendar = useMemo(() => {
     if (monthView) {
-      return renderMonth(calendarDate);
+      return renderMonth(monthDate);
     } else {
       return renderWeek(weekDate);
     }
-  }, [calendarDate, monthView, weekDate]);
+  }, [monthDate, monthView, weekDate]);
 
   const dayNames = useMemo(() => {
     return renderDayNames();
