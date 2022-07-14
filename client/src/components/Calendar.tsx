@@ -9,6 +9,16 @@ const styles = {
     padding: "0.5rem 1.25rem",
     margin: "1rem",
   },
+  greenButton: {
+    backgroundColor: "rgb(134 239 172)",
+    padding: "0.5rem 1.25rem",
+    margin: "1rem",
+  },
+  blueButton: {
+    backgroundColor: "rgb(147 197 253",
+    padding: "0.5rem 1.25rem",
+    margin: "1rem",
+  },
 };
 
 const Calendar = () => {
@@ -34,15 +44,11 @@ const Calendar = () => {
   const nextWeek = () => {
     setCalendarDate(startOfWeek(addWeeks(weekDate, 1)));
     setWeekDate(startOfWeek(addWeeks(weekDate, 1)));
-    console.log(weekDate);
-    console.log(calendarDate);
   };
 
   const lastWeek = () => {
     setCalendarDate(startOfWeek(subWeeks(weekDate, 1)));
     setWeekDate(startOfWeek(subWeeks(weekDate, 1)));
-    console.log(weekDate);
-    console.log(calendarDate);
   };
 
   const resetDate = () => {
@@ -83,10 +89,10 @@ const Calendar = () => {
         </div>
       )}
 
-      <button onClick={resetDate} style={styles.button}>
+      <button onClick={resetDate} style={styles.blueButton}>
         Go Today
       </button>
-      <button onClick={changeDisplay} style={styles.button}>
+      <button onClick={changeDisplay} style={styles.greenButton}>
         {monthView ? "Week View" : "Month View"}
       </button>
       <CalendarDisplay
