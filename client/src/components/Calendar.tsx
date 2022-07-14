@@ -77,7 +77,7 @@ const Calendar = () => {
         {monthView ? "Week View" : "Month View"}
       </button>
 
-      {monthView ? (
+      {/* {monthView ? (
         <div>
           <button onClick={lastMonth} style={styles.button}>
             {"<"}
@@ -95,7 +95,22 @@ const Calendar = () => {
             {">"}
           </button>
         </div>
-      )}
+      )} */}
+
+      <div>
+        <button
+          onClick={monthView ? lastMonth : lastWeek}
+          style={styles.button}
+        >
+          {"<"}
+        </button>
+        <button
+          onClick={monthView ? nextMonth : nextWeek}
+          style={styles.button}
+        >
+          {">"}
+        </button>
+      </div>
 
       <CalendarDisplay
         selectedDate={selectedDate}
