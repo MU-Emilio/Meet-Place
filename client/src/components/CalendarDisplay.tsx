@@ -1,9 +1,6 @@
-import { startOfMonth, startOfWeek, format } from "date-fns";
-import { addMonths } from "date-fns/esm";
-import React, { useState, useMemo } from "react";
+import React, { useMemo } from "react";
 import { generateMonth, generateWeek } from "../utils/calendar_utils";
 import { WEEK_DAYS } from "../utils/constats";
-// import generateWeek from "../utils/calendar_utils";
 import CalendarDate from "./CalendarDate";
 
 // Styles
