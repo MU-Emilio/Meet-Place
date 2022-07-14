@@ -2,6 +2,7 @@ import { startOfMonth, startOfWeek, format } from "date-fns";
 import { addMonths } from "date-fns/esm";
 import React, { useState, useMemo } from "react";
 import { generateMonth, generateWeek } from "../utils/calendar_utils";
+import { WEEK_DAYS } from "../utils/constats";
 // import generateWeek from "../utils/calendar_utils";
 import CalendarDate from "./CalendarDate";
 
@@ -61,22 +62,31 @@ const CalendarDisplay = ({
 
     const week_days: React.ReactNode[] = [];
 
-    const days: React.ReactNode[] = [];
-
     weekGenerator().map((day: Date, day_index: number) => {
-      days.push(
+      week_days.push(
         <React.Fragment key={`${day_index}`}>
           <CalendarDate date={day} startDate={startDate} />
         </React.Fragment>
       );
     });
 
-    week_days.push(days);
-
     return week_days;
   };
 
-  const month = useMemo(() => {
+  const renderDayNames = () => {
+    const day_names: React.ReactNode[] = [];
+
+    WEEK_DAYS.map((name, index) => {
+      day_names.push(
+        <React.Fragment key={index}>
+          <p className="border h-10 px-1 bg-green-200">{name}</p>
+        </React.Fragment>
+      );
+    });
+    return day_names;
+  };
+
+  const calendar = useMemo(() => {
     if (monthView) {
       return renderMonth(calendarDate);
     } else {
@@ -84,7 +94,18 @@ const CalendarDisplay = ({
     }
   }, [calendarDate, monthView, weekDate]);
 
-  return <div style={styles.calendar}>{month}</div>;
+  const dayNames = useMemo(() => {
+    return renderDayNames();
+  }, []);
+
+  return (
+    <div style={styles.calendar}>
+      <>
+        {dayNames}
+        {calendar}
+      </>
+    </div>
+  );
 };
 
 export default CalendarDisplay;

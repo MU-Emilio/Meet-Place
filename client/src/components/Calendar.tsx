@@ -69,25 +69,6 @@ const Calendar = () => {
           : format(weekDate, "MMMMMM yyyy")}
       </h1>
       <p>Today: {format(selectedDate, "MM/dd/yyyy'")}</p>
-      {monthView ? (
-        <div>
-          <button onClick={lastMonth} style={styles.button}>
-            Last Month
-          </button>
-          <button onClick={nextMonth} style={styles.button}>
-            Next Month
-          </button>
-        </div>
-      ) : (
-        <div>
-          <button onClick={lastWeek} style={styles.button}>
-            Last Week
-          </button>
-          <button onClick={nextWeek} style={styles.button}>
-            Next Week
-          </button>
-        </div>
-      )}
 
       <button onClick={resetDate} style={styles.blueButton}>
         Go Today
@@ -95,6 +76,27 @@ const Calendar = () => {
       <button onClick={changeDisplay} style={styles.greenButton}>
         {monthView ? "Week View" : "Month View"}
       </button>
+
+      {monthView ? (
+        <div>
+          <button onClick={lastMonth} style={styles.button}>
+            {"<"}
+          </button>
+          <button onClick={nextMonth} style={styles.button}>
+            {">"}
+          </button>
+        </div>
+      ) : (
+        <div>
+          <button onClick={lastWeek} style={styles.button}>
+            {"<"}
+          </button>
+          <button onClick={nextWeek} style={styles.button}>
+            {">"}
+          </button>
+        </div>
+      )}
+
       <CalendarDisplay
         selectedDate={selectedDate}
         setSelectedDate={setSelectedDate}
