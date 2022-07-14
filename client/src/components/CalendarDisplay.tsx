@@ -1,6 +1,6 @@
 import { startOfMonth, startOfWeek, format } from "date-fns";
 import { addMonths } from "date-fns/esm";
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import generateMonth from "../utils/calendar_utils";
 import CalendarDate from "./CalendarDate";
 
@@ -50,7 +50,12 @@ const CalendarDisplay = ({
 
     return month_days;
   };
-  return <div style={styles.calendar}>{renderMonth(calendarDate)}</div>;
+
+  const month = useMemo(() => {
+    return renderMonth(calendarDate);
+  }, [calendarDate]);
+
+  return <div style={styles.calendar}>{month}</div>;
 };
 
 export default CalendarDisplay;
