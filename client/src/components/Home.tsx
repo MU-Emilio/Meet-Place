@@ -3,11 +3,7 @@ import axios from "axios";
 import { SESSION_KEY } from "../lib/constants";
 import { useQuery } from "react-query";
 import Calendar from "./Calendar";
-
-interface User {
-  username: string;
-  objectId: string;
-}
+import { User } from "../lib/types";
 
 const Home = () => {
   const fetchData = async () => {
@@ -29,10 +25,14 @@ const Home = () => {
     return <p>{`An error has occurred: ${error.message}`}</p>;
   }
 
+  if (!data) {
+    return null;
+  }
+
   return (
     <div>
       <h1>Welcome {data?.username}</h1>
-      <Calendar />
+      <Calendar user={data} />
     </div>
   );
 };

@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import CalendarDisplay from "./CalendarDisplay";
 import { useQuery } from "react-query";
 import axios from "axios";
+import { User } from "../lib/types";
 
 const styles = {
   button: {
@@ -23,7 +24,11 @@ const styles = {
   },
 };
 
-const Calendar = () => {
+interface Props {
+  user: User;
+}
+
+const Calendar = ({ user }: Props) => {
   // States
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [startDate, setStartDate] = useState(selectedDate);
@@ -109,6 +114,7 @@ const Calendar = () => {
           monthView={monthView}
           calendarDate={calendarDate}
           events={data}
+          user={user}
         />
       ) : (
         <p>Loading...</p>

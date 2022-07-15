@@ -60,23 +60,29 @@ app.post("/users/register", async (req, res) => {
   }
 });
 
-app.use("/viewer", async (req, res, next) => {
+app.use("*", async (req, res, next) => {
   const myToken = req.headers.authorization;
-  const query = new Parse.Query(Parse.Session);
-
-  try {
+  console.log(myToken);
+  if (!myToken) {
+    req.userID = null;
+    next();
+  } else {
+    const query = new Parse.Query(Parse.Session);
     const user = await query.first({ sessionToken: myToken });
+    req.user = user.get("user");
     req.userID = user.get("user").id;
     next();
-  } catch (error) {
-    res.status(404).send({ message: error.message });
   }
 });
 
 app.get("/viewer", async (req, res) => {
   const userID = req.userID;
-  const query = new Parse.Query(Parse.User);
+  if (!userID) {
+    res.status(401).send({ message: "Unauthorized" });
+    return;
+  }
   try {
+    const query = new Parse.Query(Parse.User);
     query.equalTo("objectId", userID);
     const userObject = await query.first();
     res.send(userObject);
@@ -86,9 +92,15 @@ app.get("/viewer", async (req, res) => {
 });
 
 app.get("/events", async (req, res) => {
-  const Event = Parse.Object.extend("Event");
-  const query = new Parse.Query(Event);
+  const Guests = Parse.Object.extend("Guests");
+  const query = new Parse.Query(Guests);
+  if (!req.userID) {
+    res.status(401).send({ message: "Unauthorized" });
+    return;
+  }
   try {
+    const user = req.user;
+    query.equalTo("guest", user);
     const events = await query.find();
     res.send(events);
   } catch (error) {
@@ -96,4 +108,42 @@ app.get("/events", async (req, res) => {
   }
 });
 
+// app.get("/events", async (req, res) => {
+//   const Event = Parse.Object.extend("Event");
+//   const query = new Parse.Query(Event);
+//   try {
+//     const events = await query.find();
+//     res.send(events);
+//   } catch (error) {
+//     res.status(404).send({ message: error.message });
+//   }
+// });
+
+// app.get("/events/:eventId", async (req, res) => {
+//   console.log("si");
+//   const Guests = Parse.Object.extend("Guests");
+//   const query = new Parse.Query(Guests);
+//   try {
+//     const guests = await query.find("event", req.params.eventId);
+//     // console.log(guests);
+//     // const results = guests.get("guest");
+//     res.send(guests);
+//   } catch (error) {
+//     res.status(404).send({ message: error.message });
+//   }
+// });
+
+// app.get("/events/:eventId/:userId", async (req, res) => {
+//   console.log("si");
+//   const Guests = Parse.Object.extend("Guests");
+//   const query = new Parse.Query(Guests);
+//   try {
+//     const guests = await query.find("event", req.params.eventId);
+//     // console.log(guests);
+//     // const results = guests.get("guest");
+//     res.send(guests);
+//   } catch (error) {
+//     res.status(404).send({ message: error.message });
+//   }
+// });
 module.exports = app;

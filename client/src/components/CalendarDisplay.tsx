@@ -2,6 +2,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import { WEEK_DAYS } from "../lib/constants";
 import { MonthContainer } from "./MonthContainer";
 import { WeekContainer } from "./WeekContainer";
+import { User } from "../lib/types";
 
 // Styles
 const styles = {
@@ -16,6 +17,7 @@ interface Props {
   monthView: boolean;
   calendarDate: Date;
   events: any;
+  user: User;
 }
 
 const CalendarDisplay = ({
@@ -23,6 +25,7 @@ const CalendarDisplay = ({
   monthView,
   calendarDate,
   events,
+  user,
 }: Props) => {
   const renderDayNames = () => {
     const day_names: React.ReactNode[] = [];
@@ -44,6 +47,7 @@ const CalendarDisplay = ({
           startDate={startDate}
           calendarDate={calendarDate}
           events={events}
+          user={user}
         />
       );
     } else {
@@ -52,6 +56,7 @@ const CalendarDisplay = ({
           startDate={startDate}
           calendarDate={calendarDate}
           events={events}
+          user={user}
         />
       );
     }
