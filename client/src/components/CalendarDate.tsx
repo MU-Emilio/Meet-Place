@@ -1,6 +1,5 @@
 import { startOfDay, format, isEqual } from "date-fns";
-import { insert } from "formik";
-import React, { useMemo } from "react";
+import React from "react";
 import Event from "./Event";
 interface Props {
   date: Date;
@@ -39,14 +38,10 @@ const CalendarDate = ({ date, startDate, events }: Props) => {
     return day_events;
   };
 
-  // const day_events = useMemo(() => {
-  //   return insertEvent();
-  // }, [events]);
-
   return (
     <div>
       <p
-        className="border h-20 px-1"
+        className="border h-24 px-1 pb-4"
         style={
           isEqual(startOfDay(date), startOfDay(startDate))
             ? styles.today

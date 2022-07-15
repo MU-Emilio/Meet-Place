@@ -5,7 +5,9 @@ interface Props {
 }
 
 const Event = ({ event }: Props) => {
-  return <div>{event.title}</div>;
+  return (
+    <div className=" bg-green-200 border border-green-300">{event.title}</div>
+  );
 };
 
 export default Event;

@@ -56,8 +56,6 @@ const Calendar = () => {
     setMonthView(!monthView);
   };
 
-  const [events, setEvents]: any = useState({});
-
   const fetchEvents = async () => {
     const response = await axios.get("http://localhost:3001/events");
     const events_json = manageEvents(response.data);
