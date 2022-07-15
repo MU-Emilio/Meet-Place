@@ -40,7 +40,7 @@ const CalendarDate = ({ date, startDate, events }: Props) => {
 
   return (
     <div>
-      <p
+      <div
         className="border h-24 px-1 pb-4"
         style={
           isEqual(startOfDay(date), startOfDay(startDate))
@@ -50,7 +50,7 @@ const CalendarDate = ({ date, startDate, events }: Props) => {
       >
         {format(date, "dd")}
         {insertEvent()}
-      </p>
+      </div>
     </div>
   );
 };
