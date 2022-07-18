@@ -60,26 +60,56 @@ app.post("/users/register", async (req, res) => {
   }
 });
 
-app.use("/viewer", async (req, res, next) => {
+app.use("*", async (req, res, next) => {
   const myToken = req.headers.authorization;
-  const query = new Parse.Query(Parse.Session);
-
-  try {
-    const user = await query.first({ sessionToken: myToken });
-    req.userID = user.get("user").id;
+  if (!myToken) {
+    req.userID = null;
     next();
+  } else {
+    const query = new Parse.Query(Parse.Session);
+    const user = await query.first({ sessionToken: myToken });
+    req.user = user.get("user");
+    next();
+  }
+});
+
+app.get("/viewer", async (req, res) => {
+  const userID = req.user.id;
+  if (!userID) {
+    res.status(401).send({ message: "Unauthorized" });
+    return;
+  }
+  try {
+    const query = new Parse.Query(Parse.User);
+    query.equalTo("objectId", userID);
+    const userObject = await query.first();
+    res.send(userObject);
   } catch (error) {
     res.status(404).send({ message: error.message });
   }
 });
 
-app.get("/viewer", async (req, res) => {
-  const userID = req.userID;
-  const query = new Parse.Query(Parse.User);
+app.get("/events", async (req, res) => {
+  const event_list = [];
+
+  const Guests = Parse.Object.extend("Guests");
+  const query = new Parse.Query(Guests);
+
+  if (!req.user) {
+    res.status(401).send({ message: "Unauthorized" });
+    return;
+  }
   try {
-    query.equalTo("objectId", userID);
-    const userObject = await query.first();
-    res.send(userObject);
+    const user = req.user;
+    query.equalTo("guest", user);
+    query.include(["event"]);
+    const events = await query.find();
+
+    events.map((item) => {
+      event_list.push(item.get("event"));
+    });
+
+    res.send(event_list);
   } catch (error) {
     res.status(404).send({ message: error.message });
   }

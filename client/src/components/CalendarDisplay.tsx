@@ -1,7 +1,8 @@
 import React, { useMemo } from "react";
-import { WEEK_DAYS } from "../utils/constats";
+import { WEEK_DAYS } from "../lib/constants";
 import { MonthContainer } from "./MonthContainer";
 import { WeekContainer } from "./WeekContainer";
+import { EventType } from "../lib/types";
 
 // Styles
 const styles = {
@@ -15,9 +16,15 @@ interface Props {
   startDate: Date;
   monthView: boolean;
   calendarDate: Date;
+  events: { [key: string]: EventType[] };
 }
 
-const CalendarDisplay = ({ startDate, monthView, calendarDate }: Props) => {
+const CalendarDisplay = ({
+  startDate,
+  monthView,
+  calendarDate,
+  events,
+}: Props) => {
   const renderDayNames = () => {
     const day_names: React.ReactNode[] = [];
 
@@ -34,14 +41,22 @@ const CalendarDisplay = ({ startDate, monthView, calendarDate }: Props) => {
   const calendar = useMemo(() => {
     if (monthView) {
       return (
-        <MonthContainer startDate={startDate} calendarDate={calendarDate} />
+        <MonthContainer
+          startDate={startDate}
+          calendarDate={calendarDate}
+          events={events}
+        />
       );
     } else {
       return (
-        <WeekContainer startDate={startDate} calendarDate={calendarDate} />
+        <WeekContainer
+          startDate={startDate}
+          calendarDate={calendarDate}
+          events={events}
+        />
       );
     }
-  }, [calendarDate, monthView]);
+  }, [calendarDate, monthView, events]);
 
   const dayNames = useMemo(() => {
     return renderDayNames();

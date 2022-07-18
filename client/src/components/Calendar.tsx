@@ -2,6 +2,10 @@ import { startOfWeek, format, addWeeks, startOfMonth } from "date-fns";
 import { addMonths, subMonths, subWeeks } from "date-fns/esm";
 import { useState } from "react";
 import CalendarDisplay from "./CalendarDisplay";
+import { useQuery } from "react-query";
+import axios from "axios";
+import { SESSION_KEY } from "../lib/constants";
+import { EventType } from "../lib/types";
 
 const styles = {
   button: {
@@ -54,6 +58,37 @@ const Calendar = () => {
     setMonthView(!monthView);
   };
 
+  const fetchEvents = async () => {
+    const response = await axios.get("http://localhost:3001/events", {
+      headers: {
+        authorization: localStorage.getItem(SESSION_KEY) || false,
+      },
+    });
+    const eventsJson = manageEvents(response.data);
+    return eventsJson;
+  };
+
+  const { isLoading, error, data } = useQuery<{ [key: string]: EventType[] }>(
+    ["events"],
+    fetchEvents
+  );
+
+  const manageEvents = (data: EventType[]) => {
+    const events_json: { [key: string]: EventType[] } = {};
+    if (data) {
+      data.map((event: EventType) => {
+        const date = event.date.iso.split("T")[0];
+        const dateSplit = date.split("-");
+        if (events_json[date]) {
+          events_json[date] = [...events_json[date], event];
+        } else {
+          events_json[date] = [event];
+        }
+      });
+    }
+    return events_json;
+  };
+
   return (
     <div>
       <h1 className=" text-3xl">
@@ -77,11 +112,16 @@ const Calendar = () => {
         </button>
       </div>
 
-      <CalendarDisplay
-        startDate={startDate}
-        monthView={monthView}
-        calendarDate={calendarDate}
-      />
+      {!isLoading && data != null ? (
+        <CalendarDisplay
+          startDate={startDate}
+          monthView={monthView}
+          calendarDate={calendarDate}
+          events={data}
+        />
+      ) : (
+        <p>Loading...</p>
+      )}
     </div>
   );
 };
