@@ -1,13 +1,12 @@
 import { startOfDay, format, isEqual } from "date-fns";
 import React from "react";
 import Event from "./Event";
-import { User, EventType } from "../lib/types";
+import { EventType } from "../lib/types";
 
 interface Props {
   date: Date;
   startDate: Date;
   events: { [key: string]: EventType[] };
-  user: User;
 }
 
 const styles = {
@@ -19,7 +18,7 @@ const styles = {
   },
 };
 
-const CalendarDate = ({ date, startDate, events, user }: Props) => {
+const CalendarDate = ({ date, startDate, events }: Props) => {
   const insertEvent = () => {
     const day_events: React.ReactNode[] = [];
     const today = format(date, "yyyy-MM-dd");

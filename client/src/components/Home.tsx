@@ -31,7 +31,7 @@ const Home = () => {
   return (
     <div>
       <h1>Welcome {data?.username}</h1>
-      <Calendar user={data} />
+      <Calendar />
     </div>
   );
 };

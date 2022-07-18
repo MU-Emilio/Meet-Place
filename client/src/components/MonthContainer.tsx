@@ -1,21 +1,15 @@
 import React from "react";
 import CalendarDate from "./CalendarDate";
 import { generateMonth } from "../utils/calendar_utils";
-import { User, EventType } from "../lib/types";
+import { EventType } from "../lib/types";
 
 interface Props {
   startDate: Date;
   calendarDate: Date;
   events: { [key: string]: EventType[] };
-  user: User;
 }
 
-export const MonthContainer = ({
-  startDate,
-  calendarDate,
-  events,
-  user,
-}: Props) => {
+export const MonthContainer = ({ startDate, calendarDate, events }: Props) => {
   const renderMonth = (monthDate: Date) => {
     const monthGenerator = generateMonth(monthDate);
 
@@ -27,12 +21,7 @@ export const MonthContainer = ({
       week.map((day, day_index) => {
         days.push(
           <React.Fragment key={`${week_index}-${day_index}`}>
-            <CalendarDate
-              date={day}
-              startDate={startDate}
-              events={events}
-              user={user}
-            />
+            <CalendarDate date={day} startDate={startDate} events={events} />
           </React.Fragment>
         );
       });
