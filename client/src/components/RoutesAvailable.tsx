@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
-import Friends from "./Friends";
+import Users from "./Users";
 
 import Login from "./Login";
 import Register from "./Register";
@@ -23,7 +23,7 @@ const RoutesAvailable = () => {
     return (
       <Routes>
         <Route path="/home" element={<Home />} />
-        <Route path="/friends" element={<Friends />} />
+        <Route path="/friends" element={<Users />} />
         <Route path="/*" element={<Navigate to="/home" />} />
       </Routes>
     );

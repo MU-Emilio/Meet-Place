@@ -1,22 +1,22 @@
 import React from "react";
 import { User } from "../lib/types";
-import Friend from "./Friend";
+import UserCard from "./UserCard";
 
 interface Props {
-  friends: User[];
+  users: User[];
 }
 
-const FriendsContainer = ({ friends }: Props) => {
-  if (!friends) {
+const UsersContainer = ({ users }: Props) => {
+  if (!users) {
     return null;
   }
 
   return (
     <>
-      {friends.map((friend: User, index: number) => {
+      {users.map((user: User, index: number) => {
         return (
           <React.Fragment key={index}>
-            <Friend friend={friend} />
+            <UserCard user={user} />
           </React.Fragment>
         );
       })}
@@ -24,4 +24,4 @@ const FriendsContainer = ({ friends }: Props) => {
   );
 };
 
-export default FriendsContainer;
+export default UsersContainer;

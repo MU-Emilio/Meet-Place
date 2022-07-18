@@ -1,19 +1,19 @@
 import { User } from "../lib/types";
 
 interface Props {
-  friend: User;
+  user: User;
 }
 
-const Friend = ({ friend }: Props) => {
+const UserCard = ({ user }: Props) => {
   let profileImage: string | null = "";
 
-  if (friend.profileImage) {
-    profileImage = friend.profileImage.url;
+  if (user.profileImage) {
+    profileImage = user.profileImage.url;
   } else {
     profileImage = null;
   }
   return (
-    <div className="flex items-center">
+    <div className="flex items-center my-4">
       {profileImage && (
         <img
           src={profileImage}
@@ -21,9 +21,9 @@ const Friend = ({ friend }: Props) => {
           className=" w-10 rounded-full"
         />
       )}
-      <p>{friend.username}</p>
+      <p>{user.username}</p>
     </div>
   );
 };
 
-export default Friend;
+export default UserCard;

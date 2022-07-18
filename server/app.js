@@ -17,6 +17,40 @@ Parse.initialize(
   MASTER_KEY //  Master key
 );
 
+app.use("*", async (req, res, next) => {
+  const myToken = req.headers.authorization;
+  if (!myToken) {
+    req.userID = null;
+    next();
+  } else {
+    const query = new Parse.Query(Parse.Session);
+    query.include(["user"]);
+    const results = await query.first({ sessionToken: myToken });
+    req.user = results.get("user");
+    next();
+  }
+});
+
+app.get("/users", async (req, res) => {
+  const query = new Parse.Query(Parse.User);
+
+  if (!req.user) {
+    res.status(401).send({ message: "Unauthorized" });
+    return;
+  }
+  try {
+    const user = req.user;
+
+    query.notEqualTo("objectId", user.id);
+
+    const users = await query.find();
+
+    res.send(users);
+  } catch (error) {
+    res.status(404).send({ message: error.message });
+  }
+});
+
 // Request the Log in passing the email and password
 app.post("/users/login", async (req, res) => {
   const body = req.body;
@@ -57,20 +91,6 @@ app.post("/users/register", async (req, res) => {
     res
       .status(400)
       .send({ message: error.message, status: "danger", payload: body });
-  }
-});
-
-app.use("*", async (req, res, next) => {
-  const myToken = req.headers.authorization;
-  if (!myToken) {
-    req.userID = null;
-    next();
-  } else {
-    const query = new Parse.Query(Parse.Session);
-    query.include(["user"]);
-    const results = await query.first({ sessionToken: myToken });
-    req.user = results.get("user");
-    next();
   }
 });
 
