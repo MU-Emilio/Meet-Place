@@ -69,13 +69,12 @@ app.use("*", async (req, res, next) => {
     const query = new Parse.Query(Parse.Session);
     const user = await query.first({ sessionToken: myToken });
     req.user = user.get("user");
-    req.userID = user.get("user").id;
     next();
   }
 });
 
 app.get("/viewer", async (req, res) => {
-  const userID = req.userID;
+  const userID = req.user.id;
   if (!userID) {
     res.status(401).send({ message: "Unauthorized" });
     return;
@@ -96,7 +95,7 @@ app.get("/events", async (req, res) => {
   const Guests = Parse.Object.extend("Guests");
   const query = new Parse.Query(Guests);
 
-  if (!req.userID) {
+  if (!req.user) {
     res.status(401).send({ message: "Unauthorized" });
     return;
   }
