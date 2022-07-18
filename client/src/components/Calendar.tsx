@@ -64,8 +64,8 @@ const Calendar = () => {
         authorization: localStorage.getItem(SESSION_KEY) || false,
       },
     });
-    const events_json = manageEvents(response.data);
-    return events_json;
+    const eventsJson = manageEvents(response.data);
+    return eventsJson;
   };
 
   const { isLoading, error, data } = useQuery<{ [key: string]: EventType[] }>(

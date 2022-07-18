@@ -1,5 +1,5 @@
 import { startOfDay, format, isEqual } from "date-fns";
-import React from "react";
+import React, { useEffect, useMemo } from "react";
 import Event from "./Event";
 import { EventType } from "../lib/types";
 
@@ -19,9 +19,10 @@ const styles = {
 };
 
 const CalendarDate = ({ date, startDate, events }: Props) => {
+  const today = format(date, "yyyy-MM-dd");
+
   const insertEvent = () => {
     const day_events: React.ReactNode[] = [];
-    const today = format(date, "yyyy-MM-dd");
     if (events[today]) {
       events[today].map((event: EventType, event_index: number) => {
         day_events.push(
@@ -34,6 +35,12 @@ const CalendarDate = ({ date, startDate, events }: Props) => {
     return day_events;
   };
 
+  useEffect(() => {
+    insertEvent();
+  }, [events]);
+
+  const dayEvents = useMemo(() => insertEvent(), [events]);
+
   return (
     <div>
       <div
@@ -45,7 +52,7 @@ const CalendarDate = ({ date, startDate, events }: Props) => {
         }
       >
         {format(date, "dd")}
-        {insertEvent()}
+        {dayEvents}
       </div>
     </div>
   );
