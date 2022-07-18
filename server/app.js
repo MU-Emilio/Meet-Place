@@ -115,4 +115,40 @@ app.get("/events", async (req, res) => {
   }
 });
 
+app.get("/friends", async (req, res) => {
+  const friendList = [];
+
+  const Friends = Parse.Object.extend("Friends");
+  const query1 = new Parse.Query(Friends);
+  const query2 = new Parse.Query(Friends);
+
+  if (!req.user) {
+    res.status(401).send({ message: "Unauthorized" });
+    return;
+  }
+  try {
+    const user = req.user;
+    query1.equalTo("user1Id", user);
+    query2.equalTo("user2Id", user);
+
+    const compoundQuery = Parse.Query.or(query1, query2);
+
+    compoundQuery.includeAll();
+
+    const friends = await compoundQuery.find();
+
+    friends.map((item) => {
+      if (item.get("user2Id").id === user.id) {
+        friendList.push(item.get("user1Id"));
+      } else {
+        friendList.push(item.get("user2Id"));
+      }
+    });
+
+    res.send(friendList);
+  } catch (error) {
+    res.status(404).send({ message: error.message });
+  }
+});
+
 module.exports = app;
