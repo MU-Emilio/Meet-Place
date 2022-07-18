@@ -1,5 +1,4 @@
-import { useContext, useEffect, useMemo, useState } from "react";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
 import { QueryClient, QueryClientProvider, useQuery } from "react-query";
 import RoutesAvailable from "./components/RoutesAvailable";
 import "./App.css";

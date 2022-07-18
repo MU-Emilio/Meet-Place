@@ -5,6 +5,8 @@ import CalendarDisplay from "./CalendarDisplay";
 import { useQuery } from "react-query";
 import axios from "axios";
 import { User } from "../lib/types";
+import { SESSION_KEY } from "../lib/constants";
+import { EventType } from "../lib/types";
 
 const styles = {
   button: {
@@ -62,23 +64,30 @@ const Calendar = ({ user }: Props) => {
   };
 
   const fetchEvents = async () => {
-    const response = await axios.get("http://localhost:3001/events");
+    const response = await axios.get("http://localhost:3001/events", {
+      headers: {
+        authorization: localStorage.getItem(SESSION_KEY) || false,
+      },
+    });
     const events_json = manageEvents(response.data);
     return events_json;
   };
 
-  const { isLoading, error, data } = useQuery<any>(["events"], fetchEvents);
+  const { isLoading, error, data } = useQuery<{ [key: string]: EventType[] }>(
+    ["events"],
+    fetchEvents
+  );
 
-  const manageEvents = (data: any) => {
-    const events_json: any = {};
+  const manageEvents = (data: EventType[]) => {
+    const events_json: { [key: string]: EventType[] } = {};
     if (data) {
-      data.map((event: any) => {
+      data.map((event: EventType) => {
         const date = event.date.iso.split("T")[0];
         const dateSplit = date.split("-");
-        if (events_json[dateSplit]) {
-          events_json[dateSplit] = [...events_json[dateSplit], event];
+        if (events_json[date]) {
+          events_json[date] = [...events_json[date], event];
         } else {
-          events_json[dateSplit] = [event];
+          events_json[date] = [event];
         }
       });
     }

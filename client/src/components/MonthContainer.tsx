@@ -1,12 +1,12 @@
 import React from "react";
 import CalendarDate from "./CalendarDate";
 import { generateMonth } from "../utils/calendar_utils";
-import { User } from "../lib/types";
+import { User, EventType } from "../lib/types";
 
 interface Props {
   startDate: Date;
   calendarDate: Date;
-  events: any;
+  events: { [key: string]: EventType[] };
   user: User;
 }
 
