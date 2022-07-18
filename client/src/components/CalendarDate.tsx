@@ -1,7 +1,6 @@
 import { startOfDay, format, isEqual } from "date-fns";
-import React, { useEffect, useMemo } from "react";
-import Event from "./Event";
 import { EventType } from "../lib/types";
+import EventsContainer from "./EventsContainer";
 
 interface Props {
   date: Date;
@@ -19,28 +18,6 @@ const styles = {
 };
 
 const CalendarDate = ({ date, startDate, events }: Props) => {
-  const today = format(date, "yyyy-MM-dd");
-
-  const insertEvent = () => {
-    const day_events: React.ReactNode[] = [];
-    if (events[today]) {
-      events[today].map((event: EventType, event_index: number) => {
-        day_events.push(
-          <React.Fragment key={`${today}-${event_index}`}>
-            <Event event={event} />
-          </React.Fragment>
-        );
-      });
-    }
-    return day_events;
-  };
-
-  useEffect(() => {
-    insertEvent();
-  }, [events]);
-
-  const dayEvents = useMemo(() => insertEvent(), [events]);
-
   return (
     <div>
       <div
@@ -52,7 +29,7 @@ const CalendarDate = ({ date, startDate, events }: Props) => {
         }
       >
         {format(date, "dd")}
-        {dayEvents}
+        <EventsContainer events={events} date={date} />
       </div>
     </div>
   );
