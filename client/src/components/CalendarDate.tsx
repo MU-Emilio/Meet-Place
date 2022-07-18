@@ -1,10 +1,12 @@
 import { startOfDay, format, isEqual } from "date-fns";
 import React from "react";
 import Event from "./Event";
+import { EventType } from "../lib/types";
+
 interface Props {
   date: Date;
   startDate: Date;
-  events: any;
+  events: { [key: string]: EventType[] };
 }
 
 const styles = {
@@ -17,24 +19,18 @@ const styles = {
 };
 
 const CalendarDate = ({ date, startDate, events }: Props) => {
-  const isToday = (event: any) => {
-    const event_date = new Date(event.date.iso);
-    return isEqual(startOfDay(date), startOfDay(event_date));
-  };
-
   const insertEvent = () => {
     const day_events: React.ReactNode[] = [];
-    Object.keys(events).map((item: any, index: any) => {
-      events[item].map((event: any, event_index: number) => {
-        if (isToday(event)) {
-          day_events.push(
-            <React.Fragment key={`${item}-${event_index}`}>
-              <Event event={event} />
-            </React.Fragment>
-          );
-        }
+    const today = format(date, "yyyy-MM-dd");
+    if (events[today]) {
+      events[today].map((event: EventType, event_index: number) => {
+        day_events.push(
+          <React.Fragment key={`${today}-${event_index}`}>
+            <Event event={event} />
+          </React.Fragment>
+        );
       });
-    });
+    }
     return day_events;
   };
 

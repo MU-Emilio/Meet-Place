@@ -1,12 +1,15 @@
-import React from "react";
+import { EventType } from "../lib/types";
 
 interface Props {
-  event: any;
+  event: EventType;
 }
 
 const Event = ({ event }: Props) => {
   return (
-    <div className=" bg-green-200 border border-green-300">{event.title}</div>
+    <div className=" bg-green-200 border border-green-300 flex justify-between">
+      <p>{event.title}</p>
+      <p className=" text-xs">{event.date.iso.split("T")[1].split(".")[0]}</p>
+    </div>
   );
 };
 
