@@ -1,13 +1,25 @@
-import { startOfMonth, startOfWeek, format } from "date-fns";
-import { addMonths, subMonths } from "date-fns/esm";
-import React, { useState } from "react";
-import generateMonth from "../utils/calendar_utils";
-import CalendarDate from "./CalendarDate";
+import { startOfWeek, format, addWeeks, startOfMonth } from "date-fns";
+import { addMonths, subMonths, subWeeks } from "date-fns/esm";
+import { useState } from "react";
 import CalendarDisplay from "./CalendarDisplay";
+import { useQuery } from "react-query";
+import axios from "axios";
+import { SESSION_KEY } from "../lib/constants";
+import { EventType } from "../lib/types";
 
 const styles = {
   button: {
     backgroundColor: "#EA574A",
+    padding: "0.5rem 1.25rem",
+    margin: "1rem",
+  },
+  greenButton: {
+    backgroundColor: "rgb(134 239 172)",
+    padding: "0.5rem 1.25rem",
+    margin: "1rem",
+  },
+  blueButton: {
+    backgroundColor: "rgb(147 197 253",
     padding: "0.5rem 1.25rem",
     margin: "1rem",
   },
@@ -17,43 +29,99 @@ const Calendar = () => {
   // States
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [startDate, setStartDate] = useState(selectedDate);
+  const [monthView, setMonthView] = useState(true);
   const [calendarDate, setCalendarDate] = useState(selectedDate);
 
   // Functions
 
-  const nextMonth = () => {
-    setCalendarDate(addMonths(calendarDate, 1));
+  const addToDate = () => {
+    if (monthView) {
+      setCalendarDate(startOfMonth(addMonths(calendarDate, 1)));
+    } else {
+      setCalendarDate(startOfWeek(addWeeks(calendarDate, 1)));
+    }
   };
 
-  const lastMonth = () => {
-    setCalendarDate(subMonths(calendarDate, 1));
+  const subToDate = () => {
+    if (monthView) {
+      setCalendarDate(startOfMonth(subMonths(calendarDate, 1)));
+    } else {
+      setCalendarDate(startOfWeek(subWeeks(calendarDate, 1)));
+    }
   };
 
   const resetDate = () => {
     setCalendarDate(selectedDate);
   };
 
+  const changeDisplay = () => {
+    setMonthView(!monthView);
+  };
+
+  const fetchEvents = async () => {
+    const response = await axios.get("http://localhost:3001/events", {
+      headers: {
+        authorization: localStorage.getItem(SESSION_KEY) || false,
+      },
+    });
+    const eventsJson = manageEvents(response.data);
+    return eventsJson;
+  };
+
+  const { isLoading, error, data } = useQuery<{ [key: string]: EventType[] }>(
+    ["events"],
+    fetchEvents
+  );
+
+  const manageEvents = (data: EventType[]) => {
+    const events_json: { [key: string]: EventType[] } = {};
+    if (data) {
+      data.map((event: EventType) => {
+        const date = event.date.iso.split("T")[0];
+        const dateSplit = date.split("-");
+        if (events_json[date]) {
+          events_json[date] = [...events_json[date], event];
+        } else {
+          events_json[date] = [event];
+        }
+      });
+    }
+    return events_json;
+  };
+
   return (
     <div>
-      <h1>Calendar {format(calendarDate, "MMMMMM yyyy")}</h1>
+      <h1 className=" text-3xl">
+        Calendar {format(calendarDate, "MMMMMM yyyy")}
+      </h1>
       <p>Today: {format(selectedDate, "MM/dd/yyyy'")}</p>
-      <button onClick={lastMonth} style={styles.button}>
-        Back
+
+      <button onClick={resetDate} style={styles.blueButton}>
+        Go Today
       </button>
-      <button onClick={nextMonth} style={styles.button}>
-        Next
+      <button onClick={changeDisplay} style={styles.greenButton}>
+        {monthView ? "Week View" : "Month View"}
       </button>
-      <button onClick={resetDate} style={styles.button}>
-        Today
-      </button>
-      <CalendarDisplay
-        selectedDate={selectedDate}
-        setSelectedDate={setSelectedDate}
-        startDate={startDate}
-        setStartDate={setStartDate}
-        calendarDate={calendarDate}
-        setCalendarDate={setCalendarDate}
-      />
+
+      <div>
+        <button onClick={subToDate} style={styles.button}>
+          {"<"}
+        </button>
+        <button onClick={addToDate} style={styles.button}>
+          {">"}
+        </button>
+      </div>
+
+      {!isLoading && data != null ? (
+        <CalendarDisplay
+          startDate={startDate}
+          monthView={monthView}
+          calendarDate={calendarDate}
+          events={data}
+        />
+      ) : (
+        <p>Loading...</p>
+      )}
     </div>
   );
 };

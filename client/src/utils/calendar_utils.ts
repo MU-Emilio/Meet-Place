@@ -7,7 +7,7 @@ import {
   addDays,
 } from "date-fns";
 
-const generateWeek = (start: Date = new Date()) => {
+export const generateWeek = (start: Date = new Date()) => {
   let date = startOfWeek(startOfDay(start));
 
   return () => {
@@ -17,7 +17,7 @@ const generateWeek = (start: Date = new Date()) => {
   };
 };
 
-const generateMonth = (start: Date = new Date()) => {
+export const generateMonth = (start: Date = new Date()) => {
   let month: Date[][] = [];
   let date = start;
 
@@ -42,4 +42,4 @@ const generateMonth = (start: Date = new Date()) => {
   };
 };
 
-export default generateMonth;
+// export default generateMonth;

@@ -1,13 +1,8 @@
-import { useContext, useEffect, useMemo, useState } from "react";
 import axios from "axios";
 import { SESSION_KEY } from "../lib/constants";
 import { useQuery } from "react-query";
 import Calendar from "./Calendar";
-
-interface User {
-  username: string;
-  objectId: string;
-}
+import { User } from "../lib/types";
 
 const Home = () => {
   const fetchData = async () => {
@@ -27,6 +22,10 @@ const Home = () => {
 
   if (error instanceof Error) {
     return <p>{`An error has occurred: ${error.message}`}</p>;
+  }
+
+  if (!data) {
+    return null;
   }
 
   return (
