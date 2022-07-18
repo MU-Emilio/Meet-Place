@@ -1,6 +1,12 @@
+interface Image {
+  url: string;
+}
+
 export interface User {
   username: string;
   objectId: string;
+  email: string;
+  profileImage: Image;
 }
 
 interface Date {

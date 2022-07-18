@@ -67,9 +67,26 @@ app.use("*", async (req, res, next) => {
     next();
   } else {
     const query = new Parse.Query(Parse.Session);
-    const user = await query.first({ sessionToken: myToken });
-    req.user = user.get("user");
+    query.include(["user"]);
+    const results = await query.first({ sessionToken: myToken });
+    req.user = results.get("user");
     next();
+  }
+});
+
+app.get("/viewer", async (req, res) => {
+  const userID = req.user.id;
+  if (!userID) {
+    res.status(401).send({ message: "Unauthorized" });
+    return;
+  }
+  try {
+    const query = new Parse.Query(Parse.User);
+    query.equalTo("objectId", userID);
+    const userObject = await query.first();
+    res.send(userObject);
+  } catch (error) {
+    res.status(404).send({ message: error.message });
   }
 });
 
@@ -133,7 +150,7 @@ app.get("/friends", async (req, res) => {
 
     const compoundQuery = Parse.Query.or(query1, query2);
 
-    compoundQuery.includeAll();
+    compoundQuery.include("*");
 
     const friends = await compoundQuery.find();
 
