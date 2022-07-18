@@ -1,5 +1,4 @@
 import { EventType } from "../lib/types";
-import { format } from "date-fns";
 
 interface Props {
   event: EventType;

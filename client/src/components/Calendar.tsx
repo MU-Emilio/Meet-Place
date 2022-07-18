@@ -1,6 +1,6 @@
 import { startOfWeek, format, addWeeks, startOfMonth } from "date-fns";
 import { addMonths, subMonths, subWeeks } from "date-fns/esm";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import CalendarDisplay from "./CalendarDisplay";
 import { useQuery } from "react-query";
 import axios from "axios";

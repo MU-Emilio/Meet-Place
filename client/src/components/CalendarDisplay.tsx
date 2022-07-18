@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useMemo } from "react";
 import { WEEK_DAYS } from "../lib/constants";
 import { MonthContainer } from "./MonthContainer";
 import { WeekContainer } from "./WeekContainer";
