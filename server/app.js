@@ -91,13 +91,10 @@ app.get("/viewer", async (req, res) => {
 });
 
 app.get("/events", async (req, res) => {
-  const event_ids = [];
+  const event_list = [];
 
   const Guests = Parse.Object.extend("Guests");
   const query = new Parse.Query(Guests);
-
-  const Event = Parse.Object.extend("Event");
-  const query_event = new Parse.Query(Event);
 
   if (!req.userID) {
     res.status(401).send({ message: "Unauthorized" });
@@ -110,10 +107,10 @@ app.get("/events", async (req, res) => {
     const events = await query.find();
 
     events.map((item) => {
-      event_ids.push(item.get("event"));
+      event_list.push(item.get("event"));
     });
 
-    res.send(event_ids);
+    res.send(event_list);
   } catch (error) {
     res.status(404).send({ message: error.message });
   }
