@@ -110,22 +110,6 @@ app.get("/viewer", async (req, res) => {
   }
 });
 
-app.get("/viewer", async (req, res) => {
-  const userID = req.user.id;
-  if (!userID) {
-    res.status(401).send({ message: "Unauthorized" });
-    return;
-  }
-  try {
-    const query = new Parse.Query(Parse.User);
-    query.equalTo("objectId", userID);
-    const userObject = await query.first();
-    res.send(userObject);
-  } catch (error) {
-    res.status(404).send({ message: error.message });
-  }
-});
-
 app.get("/events", async (req, res) => {
   const event_list = [];
 
@@ -185,6 +169,34 @@ app.get("/friends", async (req, res) => {
     res.send(friendList);
   } catch (error) {
     res.status(404).send({ message: error.message });
+  }
+});
+
+app.post("/friend", async (req, res) => {
+  const Friends = Parse.Object.extend("Friends");
+
+  const friend = new Friends();
+
+  try {
+    const userPointer = {
+      __type: "Pointer",
+      className: "_User",
+      objectId: req.user.id,
+    };
+
+    const friendPointer = {
+      __type: "Pointer",
+      className: "_User",
+      objectId: req.body.id,
+    };
+    // friend.set("user1Id", userPointer);
+    // friend.set("user2Id", friendPointer);
+
+    // friend.save();
+
+    res.send(`${req.user.username} added ${req.body.username}`);
+  } catch (error) {
+    res.status(409).set({ message: error.message });
   }
 });
 
