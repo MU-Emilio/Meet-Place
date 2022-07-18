@@ -1,8 +1,8 @@
-import { startOfMonth, startOfWeek, format } from "date-fns";
-import { addMonths } from "date-fns/esm";
-import React, { useState, useMemo } from "react";
-import generateMonth from "../utils/calendar_utils";
-import CalendarDate from "./CalendarDate";
+import React, { useMemo } from "react";
+import { WEEK_DAYS } from "../lib/constants";
+import { MonthContainer } from "./MonthContainer";
+import { WeekContainer } from "./WeekContainer";
+import { EventType } from "../lib/types";
 
 // Styles
 const styles = {
@@ -13,49 +13,63 @@ const styles = {
 };
 
 interface Props {
-  selectedDate: Date;
-  setSelectedDate: (date: Date) => void;
   startDate: Date;
-  setStartDate: (date: Date) => void;
+  monthView: boolean;
   calendarDate: Date;
-  setCalendarDate: (date: Date) => void;
+  events: { [key: string]: EventType[] };
 }
 
 const CalendarDisplay = ({
-  selectedDate,
-  setSelectedDate,
   startDate,
-  setStartDate,
+  monthView,
   calendarDate,
-  setCalendarDate,
+  events,
 }: Props) => {
-  const renderMonth = (calendarDate: Date) => {
-    const monthGenerator = generateMonth(calendarDate);
+  const renderDayNames = () => {
+    const day_names: React.ReactNode[] = [];
 
-    const month_days: React.ReactNode[][] = [];
-
-    const days: React.ReactNode[] = [];
-
-    monthGenerator().map((week, week_index) => {
-      week.map((day, day_index) => {
-        days.push(
-          <React.Fragment key={`${week_index}-${day_index}`}>
-            <CalendarDate date={day} startDate={startDate} />
-          </React.Fragment>
-        );
-      });
+    WEEK_DAYS.map((name, index) => {
+      day_names.push(
+        <React.Fragment key={index}>
+          <p className="border h-10 px-1 bg-green-200">{name}</p>
+        </React.Fragment>
+      );
     });
-
-    month_days.push(days);
-
-    return month_days;
+    return day_names;
   };
 
-  const month = useMemo(() => {
-    return renderMonth(calendarDate);
-  }, [calendarDate]);
+  const calendar = useMemo(() => {
+    if (monthView) {
+      return (
+        <MonthContainer
+          startDate={startDate}
+          calendarDate={calendarDate}
+          events={events}
+        />
+      );
+    } else {
+      return (
+        <WeekContainer
+          startDate={startDate}
+          calendarDate={calendarDate}
+          events={events}
+        />
+      );
+    }
+  }, [calendarDate, monthView, events]);
 
-  return <div style={styles.calendar}>{month}</div>;
+  const dayNames = useMemo(() => {
+    return renderDayNames();
+  }, []);
+
+  return (
+    <div style={styles.calendar}>
+      <>
+        {dayNames}
+        {calendar}
+      </>
+    </div>
+  );
 };
 
 export default CalendarDisplay;

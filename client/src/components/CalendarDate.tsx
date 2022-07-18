@@ -1,7 +1,11 @@
 import { startOfDay, format, isEqual } from "date-fns";
+import { EventType } from "../lib/types";
+import EventsContainer from "./EventsContainer";
+
 interface Props {
   date: Date;
   startDate: Date;
+  events: { [key: string]: EventType[] };
 }
 
 const styles = {
@@ -13,11 +17,11 @@ const styles = {
   },
 };
 
-const CalendarDate = ({ date, startDate }: Props) => {
+const CalendarDate = ({ date, startDate, events }: Props) => {
   return (
     <div>
-      <p
-        className="border h-20 px-1"
+      <div
+        className="border h-24 px-1 pb-4"
         style={
           isEqual(startOfDay(date), startOfDay(startDate))
             ? styles.today
@@ -25,7 +29,8 @@ const CalendarDate = ({ date, startDate }: Props) => {
         }
       >
         {format(date, "dd")}
-      </p>
+        <EventsContainer events={events} date={date} />
+      </div>
     </div>
   );
 };
