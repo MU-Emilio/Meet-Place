@@ -62,7 +62,6 @@ app.post("/users/register", async (req, res) => {
 
 app.use("*", async (req, res, next) => {
   const myToken = req.headers.authorization;
-  console.log(myToken);
   if (!myToken) {
     req.userID = null;
     next();
@@ -92,8 +91,14 @@ app.get("/viewer", async (req, res) => {
 });
 
 app.get("/events", async (req, res) => {
+  const event_ids = [];
+
   const Guests = Parse.Object.extend("Guests");
   const query = new Parse.Query(Guests);
+
+  const Event = Parse.Object.extend("Event");
+  const query_event = new Parse.Query(Event);
+
   if (!req.userID) {
     res.status(401).send({ message: "Unauthorized" });
     return;
@@ -101,49 +106,17 @@ app.get("/events", async (req, res) => {
   try {
     const user = req.user;
     query.equalTo("guest", user);
+    query.include(["event"]);
     const events = await query.find();
-    res.send(events);
+
+    events.map((item) => {
+      event_ids.push(item.get("event"));
+    });
+
+    res.send(event_ids);
   } catch (error) {
     res.status(404).send({ message: error.message });
   }
 });
 
-// app.get("/events", async (req, res) => {
-//   const Event = Parse.Object.extend("Event");
-//   const query = new Parse.Query(Event);
-//   try {
-//     const events = await query.find();
-//     res.send(events);
-//   } catch (error) {
-//     res.status(404).send({ message: error.message });
-//   }
-// });
-
-// app.get("/events/:eventId", async (req, res) => {
-//   console.log("si");
-//   const Guests = Parse.Object.extend("Guests");
-//   const query = new Parse.Query(Guests);
-//   try {
-//     const guests = await query.find("event", req.params.eventId);
-//     // console.log(guests);
-//     // const results = guests.get("guest");
-//     res.send(guests);
-//   } catch (error) {
-//     res.status(404).send({ message: error.message });
-//   }
-// });
-
-// app.get("/events/:eventId/:userId", async (req, res) => {
-//   console.log("si");
-//   const Guests = Parse.Object.extend("Guests");
-//   const query = new Parse.Query(Guests);
-//   try {
-//     const guests = await query.find("event", req.params.eventId);
-//     // console.log(guests);
-//     // const results = guests.get("guest");
-//     res.send(guests);
-//   } catch (error) {
-//     res.status(404).send({ message: error.message });
-//   }
-// });
 module.exports = app;
