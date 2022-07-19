@@ -31,8 +31,12 @@ app.use("*", async (req, res, next) => {
   }
 });
 
-app.get("/users", async (req, res) => {
-  const query = new Parse.Query(Parse.User);
+app.use("/users", async (req, res, next) => {
+  const friendList = [];
+
+  const Friends = Parse.Object.extend("Friends");
+  const query1 = new Parse.Query(Friends);
+  const query2 = new Parse.Query(Friends);
 
   if (!req.user) {
     res.status(401).send({ message: "Unauthorized" });
@@ -40,25 +44,52 @@ app.get("/users", async (req, res) => {
   }
   try {
     const user = req.user;
+    query1.equalTo("user1Id", user);
+    query2.equalTo("user2Id", user);
 
-    query.notEqualTo("objectId", user.id);
-    const users = await query.find();
+    const compoundQuery = Parse.Query.or(query1, query2);
 
-    const Friends = Parse.Object.extend("Friends");
-    const query1 = new Parse.Query(Friends);
-    const query2 = new Parse.Query(Friends);
+    compoundQuery.include("*");
 
-    query1.notEqualTo("user1Id", user);
-    query2.notEqualTo("user2Id", user);
+    const friends = await compoundQuery.find();
 
-    const compoundQuery = Parse.Query.and(query1, query2);
+    friends.map((item) => {
+      if (item.get("user2Id").id === user.id) {
+        friendList.push(item.get("user1Id"));
+      } else {
+        friendList.push(item.get("user2Id"));
+      }
+    });
 
-    const friends1 = await compoundQuery.find();
-
-    res.send(users);
+    req.friends = friendList;
+    next();
   } catch (error) {
     res.status(404).send({ message: error.message });
   }
+});
+
+app.get("/users", async (req, res) => {
+  const user = req.user;
+  const friends = req.friends;
+  const friendIds = [];
+
+  friends.map((friend, index) => {
+    friendIds.push(friend.id);
+  });
+
+  const query = new Parse.Query(Parse.User);
+  query.notEqualTo("objectId", user.id);
+  const users = await query.find();
+
+  const usersNotFriends = [];
+
+  users.map((item, index) => {
+    if (!friendIds.includes(item.id)) {
+      usersNotFriends.push(item);
+    }
+  });
+
+  res.send(usersNotFriends);
 });
 
 // Request the Log in passing the email and password
