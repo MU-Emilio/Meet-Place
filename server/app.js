@@ -220,6 +220,8 @@ app.post("/friend", async (req, res) => {
 
   const friend = new Friends();
 
+  console.log(req.body.userCard);
+
   try {
     const userPointer = {
       __type: "Pointer",
@@ -230,7 +232,7 @@ app.post("/friend", async (req, res) => {
     const friendPointer = {
       __type: "Pointer",
       className: "_User",
-      objectId: req.body.userCard.id,
+      objectId: req.body.userCard.objectId,
     };
 
     // Check if already friends
@@ -250,6 +252,7 @@ app.post("/friend", async (req, res) => {
 
     if (isFriend.length > 0) {
       res.send(`Already Friends`);
+      return;
     } else {
       friend.set("user1Id", userPointer);
       friend.set("user2Id", friendPointer);
@@ -257,11 +260,13 @@ app.post("/friend", async (req, res) => {
       friend.save();
 
       res.send(`${req.user.username} added ${req.body.username}`);
+      return;
     }
     return;
   } catch (error) {
     console.log(error.message);
     res.status(409).set({ message: error.message });
+    return;
   }
 });
 
