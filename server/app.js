@@ -17,81 +17,6 @@ Parse.initialize(
   MASTER_KEY //  Master key
 );
 
-app.use("*", async (req, res, next) => {
-  const myToken = req.headers.authorization;
-  if (!myToken) {
-    req.userID = null;
-    next();
-  } else {
-    const query = new Parse.Query(Parse.Session);
-    query.include(["user"]);
-    const results = await query.first({ sessionToken: myToken });
-    req.user = results.get("user");
-    next();
-  }
-});
-
-app.use("/users", async (req, res, next) => {
-  const friendList = [];
-
-  const Friends = Parse.Object.extend("Friends");
-  const query1 = new Parse.Query(Friends);
-  const query2 = new Parse.Query(Friends);
-
-  if (!req.user) {
-    res.status(401).send({ message: "Unauthorized" });
-    return;
-  }
-  try {
-    const user = req.user;
-    query1.equalTo("user1Id", user);
-    query2.equalTo("user2Id", user);
-
-    const compoundQuery = Parse.Query.or(query1, query2);
-
-    compoundQuery.include("*");
-
-    const friends = await compoundQuery.find();
-
-    friends.map((item) => {
-      if (item.get("user2Id").id === user.id) {
-        friendList.push(item.get("user1Id"));
-      } else {
-        friendList.push(item.get("user2Id"));
-      }
-    });
-
-    req.friends = friendList;
-    next();
-  } catch (error) {
-    res.status(404).send({ message: error.message });
-  }
-});
-
-app.get("/users", async (req, res) => {
-  const user = req.user;
-  const friends = req.friends;
-  const friendIds = [];
-
-  friends.map((friend, index) => {
-    friendIds.push(friend.id);
-  });
-
-  const query = new Parse.Query(Parse.User);
-  query.notEqualTo("objectId", user.id);
-  const users = await query.find();
-
-  const usersNotFriends = [];
-
-  users.map((item, index) => {
-    if (!friendIds.includes(item.id)) {
-      usersNotFriends.push(item);
-    }
-  });
-
-  res.send(usersNotFriends);
-});
-
 // Request the Log in passing the email and password
 app.post("/users/login", async (req, res) => {
   const body = req.body;
@@ -133,6 +58,83 @@ app.post("/users/register", async (req, res) => {
       .status(400)
       .send({ message: error.message, status: "danger", payload: body });
   }
+});
+
+app.use("*", async (req, res, next) => {
+  const myToken = req.headers.authorization;
+  if (!myToken) {
+    req.userID = null;
+    next();
+  } else {
+    const query = new Parse.Query(Parse.Session);
+    query.include(["user"]);
+    const results = await query.first({ sessionToken: myToken });
+    req.user = results.get("user");
+    next();
+  }
+});
+
+app.use("/users", async (req, res, next) => {
+  const friendList = [];
+
+  const Friends = Parse.Object.extend("Friends");
+  const query1 = new Parse.Query(Friends);
+  const query2 = new Parse.Query(Friends);
+
+  if (!req.user) {
+    res.status(401).send({ message: "Unauthorized" });
+    return;
+  }
+  try {
+    const user = req.user;
+    query1.equalTo("user1Id", user);
+    query2.equalTo("user2Id", user);
+
+    const compoundQuery = Parse.Query.or(query1, query2);
+
+    compoundQuery.include("*");
+
+    const friends = await compoundQuery.find();
+
+    friends.map((item) => {
+      if (item.get("user1Id").id == user.id) {
+        friendList.push(item.get("user2Id"));
+      } else {
+        friendList.push(item.get("user1Id"));
+      }
+    });
+
+    req.friends = friendList;
+    next();
+  } catch (error) {
+    res.status(404).send({ message: error.message });
+  }
+});
+
+app.get("/users", async (req, res) => {
+  const user = req.user;
+  const friends = req.friends;
+  const friendIds = [];
+
+  friends.map((friend, index) => {
+    if (friend) {
+      friendIds.push(friend.id);
+    }
+  });
+
+  const query = new Parse.Query(Parse.User);
+  query.notEqualTo("objectId", user.id);
+  const users = await query.find();
+
+  const usersNotFriends = [];
+
+  users.map((item, index) => {
+    if (!friendIds.includes(item.id)) {
+      usersNotFriends.push(item);
+    }
+  });
+
+  res.send(usersNotFriends);
 });
 
 app.get("/viewer", async (req, res) => {
@@ -200,10 +202,10 @@ app.get("/friends", async (req, res) => {
     const friends = await compoundQuery.find();
 
     friends.map((item) => {
-      if (item.get("user2Id").id === user.id) {
-        friendList.push(item.get("user1Id"));
-      } else {
+      if (item.get("user1Id").id == user.id) {
         friendList.push(item.get("user2Id"));
+      } else {
+        friendList.push(item.get("user1Id"));
       }
     });
 
@@ -228,7 +230,7 @@ app.post("/friend", async (req, res) => {
     const friendPointer = {
       __type: "Pointer",
       className: "_User",
-      objectId: req.body.id,
+      objectId: req.body.userCard.id,
     };
 
     // Check if already friends
@@ -256,7 +258,9 @@ app.post("/friend", async (req, res) => {
 
       res.send(`${req.user.username} added ${req.body.username}`);
     }
+    return;
   } catch (error) {
+    console.log(error.message);
     res.status(409).set({ message: error.message });
   }
 });

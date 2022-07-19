@@ -17,7 +17,7 @@ const UsersContainer = ({ users, friendContainer }: Props) => {
       {users.map((user: User, index: number) => {
         return (
           <React.Fragment key={index}>
-            <UserCard user={user} friendContainer={friendContainer} />
+            <UserCard userCard={user} friendContainer={friendContainer} />
           </React.Fragment>
         );
       })}
