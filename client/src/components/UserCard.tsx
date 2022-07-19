@@ -2,9 +2,10 @@ import { User } from "../lib/types";
 
 interface Props {
   user: User;
+  friendContainer: boolean;
 }
 
-const UserCard = ({ user }: Props) => {
+const UserCard = ({ user, friendContainer }: Props) => {
   let profileImage: string | null = "";
 
   if (user.profileImage) {
@@ -32,12 +33,15 @@ const UserCard = ({ user }: Props) => {
       )}
       <div className=" flex gap-3">
         <p>{user.username}</p>
-        <button
-          className=" bg-green-200 rounded-sm text-xs"
-          onClick={addFriend}
-        >
-          Add
-        </button>
+        {!friendContainer && (
+          <button
+            className=" bg-green-200 rounded-sm text-xs"
+            onClick={addFriend}
+          >
+            Add
+          </button>
+        )}
+
         <button
           className=" bg-red-200 rounded-sm text-xs"
           onClick={deleteFriend}

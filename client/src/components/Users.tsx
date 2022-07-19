@@ -41,7 +41,7 @@ const Users = () => {
       <div className="border m-auto w-10/12">
         <h1>Friends:</h1>
         {!isLoading && data ? (
-          <UsersContainer users={data} />
+          <UsersContainer users={data} friendContainer={true} />
         ) : (
           <p>Loading...</p>
         )}
@@ -50,7 +50,7 @@ const Users = () => {
       <div className="border m-auto w-10/12">
         <h1>All Users:</h1>
         {!usersAreLoading && usersData ? (
-          <UsersContainer users={usersData} />
+          <UsersContainer users={usersData} friendContainer={false} />
         ) : (
           <p>Loading...</p>
         )}

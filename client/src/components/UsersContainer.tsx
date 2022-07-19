@@ -4,9 +4,10 @@ import UserCard from "./UserCard";
 
 interface Props {
   users: User[];
+  friendContainer: boolean;
 }
 
-const UsersContainer = ({ users }: Props) => {
+const UsersContainer = ({ users, friendContainer }: Props) => {
   if (!users) {
     return null;
   }
@@ -16,7 +17,7 @@ const UsersContainer = ({ users }: Props) => {
       {users.map((user: User, index: number) => {
         return (
           <React.Fragment key={index}>
-            <UserCard user={user} />
+            <UserCard user={user} friendContainer={friendContainer} />
           </React.Fragment>
         );
       })}
