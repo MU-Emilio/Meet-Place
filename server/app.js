@@ -230,12 +230,32 @@ app.post("/friend", async (req, res) => {
       className: "_User",
       objectId: req.body.id,
     };
-    friend.set("user1Id", userPointer);
-    friend.set("user2Id", friendPointer);
 
-    friend.save();
+    // Check if already friends
 
-    res.send(`${req.user.username} added ${req.body.username}`);
+    const query1 = new Parse.Query(Friends);
+    const query2 = new Parse.Query(Friends);
+
+    query1.equalTo("user1Id", userPointer);
+    query1.equalTo("user2Id", friendPointer);
+
+    query2.equalTo("user1Id", friendPointer);
+    query2.equalTo("user2Id", userPointer);
+
+    const compoundQuery = Parse.Query.or(query1, query2);
+
+    const isFriend = await compoundQuery.find();
+
+    if (isFriend.length > 0) {
+      res.send(`Already Friends`);
+    } else {
+      friend.set("user1Id", userPointer);
+      friend.set("user2Id", friendPointer);
+
+      friend.save();
+
+      res.send(`${req.user.username} added ${req.body.username}`);
+    }
   } catch (error) {
     res.status(409).set({ message: error.message });
   }
