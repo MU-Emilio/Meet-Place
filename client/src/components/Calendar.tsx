@@ -6,6 +6,7 @@ import { useQuery } from "react-query";
 import axios from "axios";
 import { SESSION_KEY } from "../lib/constants";
 import { EventType } from "../lib/types";
+import EventPopover from "./EventPopover";
 
 const styles = {
   button: {
@@ -31,6 +32,7 @@ const Calendar = () => {
   const [startDate, setStartDate] = useState(selectedDate);
   const [monthView, setMonthView] = useState(true);
   const [calendarDate, setCalendarDate] = useState(selectedDate);
+  const [eventHover, setEventHover] = useState<EventType | null>(null);
 
   // Functions
 
@@ -113,12 +115,16 @@ const Calendar = () => {
       </div>
 
       {!isLoading && data != null ? (
-        <CalendarDisplay
-          startDate={startDate}
-          monthView={monthView}
-          calendarDate={calendarDate}
-          events={data}
-        />
+        <>
+          <CalendarDisplay
+            startDate={startDate}
+            monthView={monthView}
+            calendarDate={calendarDate}
+            events={data}
+            setEventHover={setEventHover}
+          />
+          <EventPopover eventHover={eventHover} setEventHover={setEventHover} />
+        </>
       ) : (
         <p>Loading...</p>
       )}
