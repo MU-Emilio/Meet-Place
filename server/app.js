@@ -42,8 +42,18 @@ app.get("/users", async (req, res) => {
     const user = req.user;
 
     query.notEqualTo("objectId", user.id);
-
     const users = await query.find();
+
+    const Friends = Parse.Object.extend("Friends");
+    const query1 = new Parse.Query(Friends);
+    const query2 = new Parse.Query(Friends);
+
+    query1.notEqualTo("user1Id", user);
+    query2.notEqualTo("user2Id", user);
+
+    const compoundQuery = Parse.Query.and(query1, query2);
+
+    const friends1 = await compoundQuery.find();
 
     res.send(users);
   } catch (error) {
@@ -189,10 +199,10 @@ app.post("/friend", async (req, res) => {
       className: "_User",
       objectId: req.body.id,
     };
-    // friend.set("user1Id", userPointer);
-    // friend.set("user2Id", friendPointer);
+    friend.set("user1Id", userPointer);
+    friend.set("user2Id", friendPointer);
 
-    // friend.save();
+    friend.save();
 
     res.send(`${req.user.username} added ${req.body.username}`);
   } catch (error) {
