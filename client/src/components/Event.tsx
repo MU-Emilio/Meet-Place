@@ -8,7 +8,7 @@ interface Props {
   setEventHover: (eventHover: EventType | null) => void;
 }
 
-const Event = ({ event, eventHover, setEventHover }: Props) => {
+const Event = ({ event }: Props) => {
   const [isHover, setIsHover] = useState(false);
 
   return (

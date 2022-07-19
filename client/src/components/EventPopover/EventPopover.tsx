@@ -9,7 +9,10 @@ interface Props {
 const EventPopover = ({ event, isHover }: Props) => {
   return (
     <div className={`eventPop ${isHover ? "fadeIn" : "fadeOut"}`}>
-      {event?.title}
+      <h1>{event?.title}</h1>
+      <hr />
+      <p>Date: {event?.date.iso}</p>
+      <p>{event?.description}</p>
     </div>
   );
 };
