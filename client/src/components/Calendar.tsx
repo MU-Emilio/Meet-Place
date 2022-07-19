@@ -6,7 +6,6 @@ import { useQuery } from "react-query";
 import axios from "axios";
 import { SESSION_KEY } from "../lib/constants";
 import { EventType } from "../lib/types";
-import EventPopover from "./EventPopover";
 
 const styles = {
   button: {
@@ -122,8 +121,8 @@ const Calendar = () => {
             calendarDate={calendarDate}
             events={data}
             setEventHover={setEventHover}
+            eventHover={eventHover}
           />
-          <EventPopover eventHover={eventHover} setEventHover={setEventHover} />
         </>
       ) : (
         <p>Loading...</p>

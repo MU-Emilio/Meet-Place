@@ -17,6 +17,7 @@ interface Props {
   monthView: boolean;
   calendarDate: Date;
   events: { [key: string]: EventType[] };
+  eventHover: EventType | null;
   setEventHover: (eventHover: EventType | null) => void;
 }
 
@@ -25,6 +26,7 @@ const CalendarDisplay = ({
   monthView,
   calendarDate,
   events,
+  eventHover,
   setEventHover,
 }: Props) => {
   const renderDayNames = () => {
@@ -47,6 +49,7 @@ const CalendarDisplay = ({
           startDate={startDate}
           calendarDate={calendarDate}
           events={events}
+          eventHover={eventHover}
           setEventHover={setEventHover}
         />
       );
@@ -56,6 +59,7 @@ const CalendarDisplay = ({
           startDate={startDate}
           calendarDate={calendarDate}
           events={events}
+          eventHover={eventHover}
           setEventHover={setEventHover}
         />
       );

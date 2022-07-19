@@ -7,6 +7,7 @@ interface Props {
   startDate: Date;
   calendarDate: Date;
   events: { [key: string]: EventType[] };
+  eventHover: EventType | null;
   setEventHover: (eventHover: EventType | null) => void;
 }
 
@@ -14,6 +15,7 @@ export const WeekContainer = ({
   startDate,
   calendarDate,
   events,
+  eventHover,
   setEventHover,
 }: Props) => {
   const renderWeek = (weekDate: Date) => {
@@ -28,6 +30,7 @@ export const WeekContainer = ({
             date={day}
             startDate={startDate}
             events={events}
+            eventHover={eventHover}
             setEventHover={setEventHover}
           />
         </React.Fragment>

@@ -6,10 +6,16 @@ import { EventType } from "../lib/types";
 interface Props {
   events: { [key: string]: EventType[] };
   date: Date;
+  eventHover: EventType | null;
   setEventHover: (eventHover: EventType | null) => void;
 }
 
-const EventsContainer = ({ events, date, setEventHover }: Props) => {
+const EventsContainer = ({
+  events,
+  date,
+  eventHover,
+  setEventHover,
+}: Props) => {
   const today = format(date, "yyyy-MM-dd");
 
   if (!events[today]) {
@@ -21,7 +27,11 @@ const EventsContainer = ({ events, date, setEventHover }: Props) => {
       {events[today].map((event: EventType, event_index: number) => {
         return (
           <React.Fragment key={`${today}-${event_index}`}>
-            <Event event={event} setEventHover={setEventHover} />
+            <Event
+              event={event}
+              eventHover={eventHover}
+              setEventHover={setEventHover}
+            />
           </React.Fragment>
         );
       })}
