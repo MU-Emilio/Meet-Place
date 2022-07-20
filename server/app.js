@@ -106,10 +106,48 @@ app.get("/events", async (req, res) => {
     const events = await query.find();
 
     events.map((item) => {
-      event_list.push(item.get("event"));
+      if (item.get("event")) {
+        event_list.push(item.get("event"));
+      }
     });
 
     res.send(event_list);
+  } catch (error) {
+    res.status(404).send({ message: error.message });
+  }
+});
+
+app.get("/users/invited/:eventId", async (req, res) => {
+  console.log(req.params.eventId);
+
+  const guestsList = [];
+
+  const eventPointer = {
+    __type: "Pointer",
+    className: "Event",
+    objectId: req.params.eventId,
+  };
+
+  const Guests = Parse.Object.extend("Guests");
+  const query = new Parse.Query(Guests);
+
+  if (!req.user) {
+    res.status(401).send({ message: "Unauthorized" });
+    return;
+  }
+  try {
+    const user = req.user;
+    query.equalTo("event", eventPointer);
+    query.include(["guest"]);
+    const guests = await query.find();
+
+    guests.map((item) => {
+      if (item.get("guest")) {
+        guestsList.push(item.get("guest"));
+      }
+    });
+
+    res.send(guestsList);
   } catch (error) {
     res.status(404).send({ message: error.message });
   }

@@ -7,6 +7,7 @@
   width: 200px;
   height: 250px;
   color: black;
+  border-width: 1px;
 }
 .fadeOut {
   visibility: hidden;
