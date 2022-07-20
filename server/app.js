@@ -314,8 +314,31 @@ app.post("/deleteFriend", async (req, res) => {
 });
 
 app.post("/event", async (req, res) => {
-  console.log(req.body.title);
-  res.send(req.body.title);
+  const Event = Parse.Object.extend("Event");
+
+  const event = new Event();
+
+  try {
+    const userPointer = {
+      __type: "Pointer",
+      className: "_User",
+      objectId: req.user.id,
+    };
+
+    event.set("title", req.body.title);
+    event.set("date", req.body.date);
+    event.set("description", req.body.description);
+    event.set("owner", userPointer);
+    event.set("location", req.body.location);
+
+    event.save();
+
+    res.send(event);
+    return;
+  } catch (error) {
+    res.status(409).set({ message: error.message });
+    return;
+  }
 });
 
 module.exports = app;
