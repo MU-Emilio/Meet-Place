@@ -113,12 +113,14 @@ const Calendar = () => {
       </div>
 
       {!isLoading && data != null ? (
-        <CalendarDisplay
-          startDate={startDate}
-          monthView={monthView}
-          calendarDate={calendarDate}
-          events={data}
-        />
+        <>
+          <CalendarDisplay
+            startDate={startDate}
+            monthView={monthView}
+            calendarDate={calendarDate}
+            events={data}
+          />
+        </>
       ) : (
         <p>Loading...</p>
       )}

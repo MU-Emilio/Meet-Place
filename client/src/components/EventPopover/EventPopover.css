@@ -1,0 +1,21 @@
+.eventPop {
+  position: absolute;
+  top: -250px;
+  right: -200px;
+  z-index: 1;
+  background-color: white;
+  width: 200px;
+  height: 250px;
+  color: black;
+  border-width: 1px;
+}
+.fadeOut {
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0s linear 300ms, opacity 300ms;
+}
+.fadeIn {
+  visibility: vissible;
+  opacity: 1;
+  transition: visibility 0s linear 0s, opacity 300ms;
+}
