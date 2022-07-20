@@ -67,10 +67,74 @@ app.use("*", async (req, res, next) => {
     next();
   } else {
     const query = new Parse.Query(Parse.Session);
-    const user = await query.first({ sessionToken: myToken });
-    req.user = user.get("user");
+    query.include(["user"]);
+    const results = await query.first({ sessionToken: myToken });
+    req.user = results.get("user");
     next();
   }
+});
+
+app.use("/friends", async (req, res, next) => {
+  const friendList = [];
+
+  const Friends = Parse.Object.extend("Friends");
+  const query1 = new Parse.Query(Friends);
+  const query2 = new Parse.Query(Friends);
+
+  if (!req.user) {
+    res.status(401).send({ message: "Unauthorized" });
+    return;
+  }
+  try {
+    const user = req.user;
+    query1.equalTo("user1Id", user);
+    query2.equalTo("user2Id", user);
+
+    const compoundQuery = Parse.Query.or(query1, query2);
+
+    compoundQuery.include("*");
+
+    const friends = await compoundQuery.find();
+
+    friends.map((item) => {
+      if (item.get("user1Id").id == user.id) {
+        friendList.push(item.get("user2Id"));
+      } else {
+        friendList.push(item.get("user1Id"));
+      }
+    });
+
+    req.friends = friendList;
+    next();
+  } catch (error) {
+    res.status(404).send({ message: error.message });
+  }
+});
+
+app.get("/friends/notFriends", async (req, res) => {
+  const user = req.user;
+  const friends = req.friends;
+  const friendIds = [];
+
+  friends.map((friend, index) => {
+    if (friend) {
+      friendIds.push(friend.id);
+    }
+  });
+
+  const query = new Parse.Query(Parse.User);
+  query.notEqualTo("objectId", user.id);
+  const users = await query.find();
+
+  const usersNotFriends = [];
+
+  users.map((item, index) => {
+    if (!friendIds.includes(item.id)) {
+      usersNotFriends.push(item);
+    }
+  });
+
+  res.send(usersNotFriends);
 });
 
 app.get("/viewer", async (req, res) => {
@@ -148,6 +212,104 @@ app.get("/users/invited/:eventId", async (req, res) => {
     res.send(guestsList);
   } catch (error) {
     res.status(404).send({ message: error.message });
+  }
+});
+
+app.get("/friends", async (req, res) => {
+  res.send(req.friends);
+});
+
+app.post("/addFriend", async (req, res) => {
+  const Friends = Parse.Object.extend("Friends");
+
+  const friend = new Friends();
+
+  try {
+    const userPointer = {
+      __type: "Pointer",
+      className: "_User",
+      objectId: req.user.id,
+    };
+
+    const friendPointer = {
+      __type: "Pointer",
+      className: "_User",
+      objectId: req.body.userCard.objectId,
+    };
+
+    // Check if already friends
+
+    const query1 = new Parse.Query(Friends);
+    const query2 = new Parse.Query(Friends);
+
+    query1.equalTo("user1Id", userPointer);
+    query1.equalTo("user2Id", friendPointer);
+
+    query2.equalTo("user1Id", friendPointer);
+    query2.equalTo("user2Id", userPointer);
+
+    const compoundQuery = Parse.Query.or(query1, query2);
+
+    const isFriend = await compoundQuery.find();
+
+    if (isFriend.length > 0) {
+      res.send(`Already Friends`);
+      return;
+    } else {
+      friend.set("user1Id", userPointer);
+      friend.set("user2Id", friendPointer);
+
+      friend.save();
+
+      res.send(`${req.user.username} added ${req.body.username}`);
+      return;
+    }
+  } catch (error) {
+    res.status(409).set({ message: error.message });
+    return;
+  }
+});
+
+app.post("/deleteFriend", async (req, res) => {
+  const user = req.user;
+
+  try {
+    const userPointer = {
+      __type: "Pointer",
+      className: "_User",
+      objectId: req.user.id,
+    };
+
+    const friendPointer = {
+      __type: "Pointer",
+      className: "_User",
+      objectId: req.body.userCard.objectId,
+    };
+
+    const Friends = Parse.Object.extend("Friends");
+
+    // Check if already friends
+
+    const query1 = new Parse.Query(Friends);
+    const query2 = new Parse.Query(Friends);
+
+    query1.equalTo("user1Id", userPointer);
+    query1.equalTo("user2Id", friendPointer);
+
+    query2.equalTo("user1Id", friendPointer);
+    query2.equalTo("user2Id", userPointer);
+
+    const compoundQuery = Parse.Query.or(query1, query2);
+
+    const friendRelation = await compoundQuery.first();
+
+    Parse.Object.destroyAll(friendRelation);
+
+    res.send(friendRelation);
+    return;
+  } catch (error) {
+    res.status(409).set({ message: error.message });
+    return;
   }
 });
 

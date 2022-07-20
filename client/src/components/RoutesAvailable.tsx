@@ -1,5 +1,6 @@
-import { useContext, useEffect, useMemo, useState } from "react";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { useContext } from "react";
+import { Routes, Route, Navigate } from "react-router-dom";
+import Users from "./Users";
 
 import Login from "./Login";
 import Register from "./Register";
@@ -15,14 +16,15 @@ const RoutesAvailable = () => {
         <Route path="/" element={<Navigate to="/login" />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/*" element={<Login />} />
+        <Route path="/*" element={<Navigate to="/login" />} />
       </Routes>
     );
   } else {
     return (
       <Routes>
         <Route path="/home" element={<Home />} />
-        <Route path="/*" element={<Home />} />
+        <Route path="/friends" element={<Users />} />
+        <Route path="/*" element={<Navigate to="/home" />} />
       </Routes>
     );
   }
