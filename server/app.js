@@ -74,7 +74,7 @@ app.use("*", async (req, res, next) => {
   }
 });
 
-app.use("/users", async (req, res, next) => {
+app.use("/friends", async (req, res, next) => {
   const friendList = [];
 
   const Friends = Parse.Object.extend("Friends");
@@ -111,7 +111,7 @@ app.use("/users", async (req, res, next) => {
   }
 });
 
-app.get("/users/notFriends", async (req, res) => {
+app.get("/friends/notFriends", async (req, res) => {
   const user = req.user;
   const friends = req.friends;
   const friendIds = [];
@@ -179,7 +179,7 @@ app.get("/events", async (req, res) => {
   }
 });
 
-app.get("/users/friends", async (req, res) => {
+app.get("/friends", async (req, res) => {
   res.send(req.friends);
 });
 
