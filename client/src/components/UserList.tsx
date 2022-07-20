@@ -7,7 +7,7 @@ interface Props {
   isFriendContainer: boolean;
 }
 
-const UsersContainer = ({ users, isFriendContainer }: Props) => {
+const UserList = ({ users, isFriendContainer }: Props) => {
   if (!users) {
     return null;
   }
@@ -25,4 +25,4 @@ const UsersContainer = ({ users, isFriendContainer }: Props) => {
   );
 };
 
-export default UsersContainer;
+export default UserList;

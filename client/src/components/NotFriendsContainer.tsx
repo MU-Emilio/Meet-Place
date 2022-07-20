@@ -2,7 +2,7 @@ import { User } from "../lib/types";
 import { SESSION_KEY } from "../lib/constants";
 import axios from "axios";
 import { useQuery } from "react-query";
-import UsersContainer from "./UsersContainer";
+import UserList from "./UserList";
 
 const NotFriendsContainer = () => {
   const fetchUsers = async () => {
@@ -22,7 +22,7 @@ const NotFriendsContainer = () => {
   return (
     <div className="border">
       {data && !isLoading ? (
-        <UsersContainer users={data} isFriendContainer={false} />
+        <UserList users={data} isFriendContainer={false} />
       ) : (
         <p>Loading...</p>
       )}
