@@ -11,11 +11,7 @@ interface Props {
 const UserCard = ({ userCard, isFriendContainer }: Props) => {
   let profileImage: string | null = "";
 
-  if (userCard) {
-    profileImage = userCard.profileImage.url;
-  } else {
-    profileImage = null;
-  }
+  userCard ? (profileImage = userCard.profileImage.url) : (profileImage = null);
 
   const queryClient = useQueryClient();
 
@@ -86,16 +82,14 @@ const UserCard = ({ userCard, isFriendContainer }: Props) => {
       )}
       <div className=" flex gap-3">
         <p>{userCard.username}</p>
-        {!isFriendContainer && (
+        {!isFriendContainer ? (
           <button
             className=" bg-green-200 rounded-sm text-xs"
             onClick={() => mutate()}
           >
             Add
           </button>
-        )}
-
-        {isFriendContainer && (
+        ) : (
           <button
             className=" bg-red-200 rounded-sm text-xs"
             onClick={() => mutateDelete()}
