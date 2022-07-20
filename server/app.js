@@ -188,8 +188,6 @@ app.post("/friend", async (req, res) => {
 
   const friend = new Friends();
 
-  console.log(req.body.userCard);
-
   try {
     const userPointer = {
       __type: "Pointer",
@@ -230,9 +228,7 @@ app.post("/friend", async (req, res) => {
       res.send(`${req.user.username} added ${req.body.username}`);
       return;
     }
-    return;
   } catch (error) {
-    console.log(error.message);
     res.status(409).set({ message: error.message });
     return;
   }
@@ -274,8 +270,10 @@ app.post("/deleteFriend", async (req, res) => {
     Parse.Object.destroyAll(friendRelation);
 
     res.send(friendRelation);
+    return;
   } catch (error) {
     res.status(409).set({ message: error.message });
+    return;
   }
 });
 

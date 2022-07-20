@@ -6,7 +6,7 @@ import UsersContainer from "./UsersContainer";
 
 const Users = () => {
   const fetchFriends = async () => {
-    const response = await axios.get("http://localhost:3001/friends", {
+    const response = await axios.get("http://localhost:3001/users/friends", {
       headers: {
         authorization: localStorage.getItem(SESSION_KEY) || false,
       },

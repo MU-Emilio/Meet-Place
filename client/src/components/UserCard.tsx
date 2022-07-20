@@ -35,27 +35,52 @@ const UserCard = ({ userCard, isFriendContainer }: Props) => {
   };
 
   const { mutate, isLoading } = useMutation(addFriend, {
-    onSuccess: (data) => {
-      console.log(data);
+    onSuccess: () => {
       const message = "success";
-      alert(message);
     },
     onError: () => {
       alert("there was an error");
     },
     onSettled: () => {
-      queryClient.invalidateQueries("create");
+      queryClient.invalidateQueries(["friends"]);
+      queryClient.invalidateQueries(["users"]);
     },
   });
 
-  const deleteFriend = () => {
-    alert(`Friend Delete ${userCard.username}`);
+  const deleteFriend = async () => {
+    const { data: response } = await axios.post(
+      "http://localhost:3001/deleteFriend",
+      {
+        userCard: userCard,
+      },
+      {
+        headers: {
+          authorization: localStorage.getItem(SESSION_KEY) || false,
+        },
+      }
+    );
+    return response.data;
   };
 
-  if (!userCard) {
-    return null;
-  }
+  const { mutate: mutateDelete, isLoading: isLoadingDelete } = useMutation(
+    deleteFriend,
+    {
+      onSuccess: () => {
+        const message = "success";
+      },
+      onError: () => {
+        alert("there was an error");
+      },
+      onSettled: () => {
+        queryClient.invalidateQueries(["friends"]);
+        queryClient.invalidateQueries(["users"]);
+      },
+    }
+  );
 
+  if (isLoading || isLoadingDelete) {
+    return <p>Loading...</p>;
+  }
   return (
     <div className="flex items-center my-4">
       {profileImage && (
@@ -70,7 +95,7 @@ const UserCard = ({ userCard, isFriendContainer }: Props) => {
         {!isFriendContainer && (
           <button
             className=" bg-green-200 rounded-sm text-xs"
-            onClick={addFriend}
+            onClick={() => mutate()}
           >
             Add
           </button>
@@ -79,7 +104,7 @@ const UserCard = ({ userCard, isFriendContainer }: Props) => {
         {isFriendContainer && (
           <button
             className=" bg-red-200 rounded-sm text-xs"
-            onClick={deleteFriend}
+            onClick={() => mutateDelete()}
           >
             Delete
           </button>
