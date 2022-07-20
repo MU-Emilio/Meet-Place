@@ -315,8 +315,9 @@ app.post("/deleteFriend", async (req, res) => {
 
 app.post("/event", async (req, res) => {
   const Event = Parse.Object.extend("Event");
-
   const event = new Event();
+
+  const event_info = req.body.event;
 
   try {
     const userPointer = {
@@ -325,15 +326,74 @@ app.post("/event", async (req, res) => {
       objectId: req.user.id,
     };
 
-    event.set("title", req.body.title);
-    event.set("date", req.body.date);
-    event.set("description", req.body.description);
-    event.set("owner", userPointer);
-    event.set("location", req.body.location);
+    const eventPointer = await event.save(event_info, {
+      success: (obj) => {
+        return obj;
+      },
+      error: (err) => {
+        res.status(409).set({ message: err.message });
+        return;
+      },
+    });
 
-    event.save();
+    const Guests = Parse.Object.extend("Guests");
 
-    res.send(event);
+    const guests = [userPointer.objectId, ...req.body.guests];
+
+    if (guests) {
+      guests.map((item) => {
+        let guest = new Guests();
+
+        let guestPointer = {
+          __type: "Pointer",
+          className: "_User",
+          objectId: item,
+        };
+
+        guest.set("event", eventPointer);
+        guest.set("guest", guestPointer);
+
+        guest.save();
+      });
+    }
+
+    res.send(`Event ${eventPointer.id} created`);
+    return;
+  } catch (error) {
+    res.status(409).set({ message: error.message });
+    return;
+  }
+});
+
+app.post("/event/addGuest", async (req, res) => {
+  const Event = Parse.Object.extend("Event");
+  const event = new Event();
+
+  try {
+    const event_info = req.body.event;
+
+    const eventPointer = {
+      __type: "Pointer",
+      className: "Event",
+      objectId: event_info.objectId,
+    };
+
+    const Guests = Parse.Object.extend("Guests");
+
+    const guest_info = req.body.guest;
+    const guest = new Guests();
+
+    const guestPointer = {
+      __type: "Pointer",
+      className: "_User",
+      objectId: guest_info.objectId,
+    };
+
+    guest.set("event", eventPointer);
+    guest.set("guest", guestPointer);
+
+    await guest.save();
+    res.send(`User ${guest_info.objectId} added succesfully`);
     return;
   } catch (error) {
     res.status(409).set({ message: error.message });
