@@ -18,4 +18,5 @@ export interface EventType {
   description: string;
   title: string;
   owner: User;
+  location: string;
 }

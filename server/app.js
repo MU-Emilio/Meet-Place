@@ -313,4 +313,9 @@ app.post("/deleteFriend", async (req, res) => {
   }
 });
 
+app.post("/event", async (req, res) => {
+  console.log(req.body.title);
+  res.send(req.body.title);
+});
+
 module.exports = app;
