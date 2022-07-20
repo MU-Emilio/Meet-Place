@@ -3,16 +3,13 @@ import "./EventPopover.css";
 import axios from "axios";
 import { SESSION_KEY } from "../../lib/constants";
 import { useQuery } from "react-query";
-import React, { useEffect, useState } from "react";
-
+import GuestList from "../GuestList";
 interface Props {
   event: EventType | null;
   isHover: boolean;
 }
 
 const EventPopover = ({ event, isHover }: Props) => {
-  const [guests, setGuests] = useState<User[]>([]);
-
   const fetchGuests = async () => {
     const response = await axios.get(
       `http://localhost:3001/users/invited/${event?.objectId}`,
@@ -22,15 +19,13 @@ const EventPopover = ({ event, isHover }: Props) => {
         },
       }
     );
-    setGuests(response.data);
-    // return response.data;
+    return response.data;
   };
 
-  useEffect(() => {
-    if (isHover) {
-      fetchGuests();
-    }
-  }, [isHover]);
+  const { isLoading, error, data } = useQuery<User[]>(
+    [`guests:${event?.objectId}`],
+    fetchGuests
+  );
 
   return (
     <div className={`eventPop ${isHover ? "fadeIn" : "fadeOut"}`}>
@@ -39,14 +34,8 @@ const EventPopover = ({ event, isHover }: Props) => {
       <p>Date: {event?.date.iso}</p>
       <p>{event?.description}</p>
       <p>Guests:</p>
-      {guests &&
-        guests.map((item, index) => {
-          return (
-            <React.Fragment key={index}>
-              <p>{item.username}</p>
-            </React.Fragment>
-          );
-        })}
+
+      {isLoading || !data ? <p>Loading...</p> : <GuestList guests={data} />}
     </div>
   );
 };
