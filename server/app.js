@@ -401,4 +401,47 @@ app.post("/event/addGuest", async (req, res) => {
   }
 });
 
+app.post("/event/deleteGuest", async (req, res) => {
+  try {
+    const event_info = req.body.event;
+
+    const eventPointer = {
+      __type: "Pointer",
+      className: "Event",
+      objectId: event_info.objectId,
+    };
+
+    const guest_info = req.body.guest;
+
+    const guestPointer = {
+      __type: "Pointer",
+      className: "_User",
+      objectId: guest_info.objectId,
+    };
+
+    const Guests = Parse.Object.extend("Guests");
+
+    const query1 = new Parse.Query(Guests);
+    const query2 = new Parse.Query(Guests);
+
+    query1.equalTo("event", eventPointer);
+    query1.equalTo("guest", guestPointer);
+
+    query2.equalTo("guest", guestPointer);
+    query2.equalTo("event", eventPointer);
+
+    const compoundQuery = Parse.Query.or(query1, query2);
+
+    const guestRelation = await compoundQuery.first();
+
+    Parse.Object.destroyAll(guestRelation);
+
+    res.send(guestRelation);
+    return;
+  } catch (error) {
+    res.status(409).set({ message: error.message });
+    return;
+  }
+});
+
 module.exports = app;
