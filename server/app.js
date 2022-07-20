@@ -183,7 +183,7 @@ app.get("/users/friends", async (req, res) => {
   res.send(req.friends);
 });
 
-app.post("/friend", async (req, res) => {
+app.post("/addFriend", async (req, res) => {
   const Friends = Parse.Object.extend("Friends");
 
   const friend = new Friends();

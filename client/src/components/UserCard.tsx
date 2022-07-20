@@ -21,7 +21,7 @@ const UserCard = ({ userCard, isFriendContainer }: Props) => {
 
   const addFriend = async () => {
     const { data: response } = await axios.post(
-      "http://localhost:3001/friend",
+      "http://localhost:3001/addFriend",
       {
         userCard: userCard,
       },
@@ -35,9 +35,6 @@ const UserCard = ({ userCard, isFriendContainer }: Props) => {
   };
 
   const { mutate, isLoading } = useMutation(addFriend, {
-    onSuccess: () => {
-      const message = "success";
-    },
     onError: () => {
       alert("there was an error");
     },
@@ -65,9 +62,6 @@ const UserCard = ({ userCard, isFriendContainer }: Props) => {
   const { mutate: mutateDelete, isLoading: isLoadingDelete } = useMutation(
     deleteFriend,
     {
-      onSuccess: () => {
-        const message = "success";
-      },
       onError: () => {
         alert("there was an error");
       },
