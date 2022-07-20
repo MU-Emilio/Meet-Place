@@ -31,7 +31,6 @@ const Calendar = () => {
   const [startDate, setStartDate] = useState(selectedDate);
   const [monthView, setMonthView] = useState(true);
   const [calendarDate, setCalendarDate] = useState(selectedDate);
-  const [eventHover, setEventHover] = useState<EventType | null>(null);
 
   // Functions
 
@@ -120,8 +119,6 @@ const Calendar = () => {
             monthView={monthView}
             calendarDate={calendarDate}
             events={data}
-            setEventHover={setEventHover}
-            eventHover={eventHover}
           />
         </>
       ) : (

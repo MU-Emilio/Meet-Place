@@ -4,8 +4,6 @@ import EventPopover from "./EventPopover/EventPopover";
 
 interface Props {
   event: EventType;
-  eventHover: EventType | null;
-  setEventHover: (eventHover: EventType | null) => void;
 }
 
 const Event = ({ event }: Props) => {

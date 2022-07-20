@@ -6,8 +6,6 @@ interface Props {
   date: Date;
   startDate: Date;
   events: { [key: string]: EventType[] };
-  eventHover: EventType | null;
-  setEventHover: (eventHover: EventType | null) => void;
 }
 
 const styles = {
@@ -19,13 +17,7 @@ const styles = {
   },
 };
 
-const CalendarDate = ({
-  date,
-  startDate,
-  events,
-  eventHover,
-  setEventHover,
-}: Props) => {
+const CalendarDate = ({ date, startDate, events }: Props) => {
   return (
     <div>
       <div
@@ -37,12 +29,7 @@ const CalendarDate = ({
         }
       >
         {format(date, "dd")}
-        <EventsContainer
-          events={events}
-          date={date}
-          eventHover={eventHover}
-          setEventHover={setEventHover}
-        />
+        <EventsContainer events={events} date={date} />
       </div>
     </div>
   );
