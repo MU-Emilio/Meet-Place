@@ -111,7 +111,7 @@ app.use("/users", async (req, res, next) => {
   }
 });
 
-app.get("/users", async (req, res) => {
+app.get("/users/notFriends", async (req, res) => {
   const user = req.user;
   const friends = req.friends;
   const friendIds = [];

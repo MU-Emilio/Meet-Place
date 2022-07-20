@@ -20,7 +20,7 @@ const Users = () => {
   );
 
   const fetchUsers = async () => {
-    const response = await axios.get("http://localhost:3001/users", {
+    const response = await axios.get("http://localhost:3001/users/notFriends", {
       headers: {
         authorization: localStorage.getItem(SESSION_KEY) || false,
       },
