@@ -118,8 +118,6 @@ app.get("/events", async (req, res) => {
 });
 
 app.get("/users/invited/:eventId", async (req, res) => {
-  console.log(req.params.eventId);
-
   const guestsList = [];
 
   const eventPointer = {
