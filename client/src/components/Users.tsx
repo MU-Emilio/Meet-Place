@@ -6,7 +6,7 @@ const Users = () => {
     <div className="border m-auto w-10/12">
       <FriendsContainer />
 
-      <NotFriendsContainer />
+      {/* <NotFriendsContainer /> */}
     </div>
   );
 };

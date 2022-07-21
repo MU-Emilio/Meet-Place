@@ -1,13 +1,12 @@
 import React from "react";
 import { User } from "../lib/types";
 import UserCard from "./UserCard";
-
 interface Props {
   users: User[];
-  isFriendContainer: boolean;
+  ButtonComponent: (userInfo: User) => JSX.Element;
 }
 
-const UserList = ({ users, isFriendContainer }: Props) => {
+const UserList = ({ users, ButtonComponent }: Props) => {
   if (!users) {
     return null;
   }
@@ -17,7 +16,7 @@ const UserList = ({ users, isFriendContainer }: Props) => {
       {users.map((user: User, index: number) => {
         return (
           <React.Fragment key={index}>
-            <UserCard userCard={user} isFriendContainer={isFriendContainer} />
+            <UserCard userCard={user} ButtonComponent={ButtonComponent(user)} />
           </React.Fragment>
         );
       })}

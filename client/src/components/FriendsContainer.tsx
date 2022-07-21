@@ -3,6 +3,7 @@ import { SESSION_KEY } from "../lib/constants";
 import axios from "axios";
 import { useQuery } from "react-query";
 import UserList from "./UserList";
+import AddFriendButton from "./AddFriendButton";
 
 const FriendsContainer = () => {
   const fetchFriends = async () => {
@@ -20,9 +21,14 @@ const FriendsContainer = () => {
   );
 
   return (
-    <div className="border w-full">
+    <div className="border w-fit">
       {data && !isLoading ? (
-        <UserList users={data} isFriendContainer={true} />
+        <UserList
+          users={data}
+          ButtonComponent={(userInfo) => (
+            <AddFriendButton userCard={userInfo} />
+          )}
+        />
       ) : (
         <p>Loading...</p>
       )}
