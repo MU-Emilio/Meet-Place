@@ -5,7 +5,7 @@ import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import AddFriendButton from "./AddFriendButton";
 
-import { User } from "../lib/types";
+import { User, EventForm } from "../lib/types";
 import { SESSION_KEY } from "../lib/constants";
 import axios from "axios";
 import { useQuery } from "react-query";
@@ -14,16 +14,9 @@ import UserList from "./UserList";
 import DeleteFriendButton from "./DeleteFriendButton";
 
 interface Props {
-  data: { [key: string]: string | { [key: string]: string } };
-  handleNextField: (
-    newData: {
-      [key: string]: string | { [key: string]: string };
-    },
-    final: boolean
-  ) => void;
-  handlePrevField: (newData: {
-    [key: string]: string | { [key: string]: string };
-  }) => void;
+  data: EventForm;
+  handleNextField: (newData: EventForm, final: boolean) => void;
+  handlePrevField: (newData: EventForm) => void;
 }
 
 const EventGuestsContainer = ({
@@ -49,7 +42,12 @@ const EventGuestsContainer = ({
   return (
     <div className=" w-8/12 m-auto">
       {friends && !isLoading ? (
-        <EventGuestsField friends={friends} />
+        <EventGuestsField
+          friends={friends}
+          data={data}
+          handleNextField={handleNextField}
+          handlePrevField={handlePrevField}
+        />
       ) : (
         <p>Loading...</p>
       )}

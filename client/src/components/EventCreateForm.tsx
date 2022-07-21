@@ -4,37 +4,30 @@ import EventTitleField from "./EventTitleField";
 import EventDescriptionField from "./EventDescriptionField";
 import EventDateLocationField from "./EventDateLocationField";
 import EventGuestsContainer from "./EventGuestsContainer";
+import { User, EventForm } from "../lib/types";
 
-const EventCreateForm = () => {
-  const [data, setData] = useState<{
-    [key: string]: string | { [key: string]: string };
-  }>({
+interface Props {
+  owner: User;
+}
+
+const EventCreateForm = ({ owner }: Props) => {
+  const [data, setData] = useState<EventForm>({
     title: "",
     date: "",
     time: "",
     description: "",
-    owner: {
-      __type: "Pointer",
-      className: "_User",
-      objectId: "",
-    },
+    owner: owner,
     location: "",
+    guests: [],
   });
 
   const [currentField, setCurrentField] = useState<number>(0);
 
-  const makeRequest = (formData: {
-    [key: string]: string | { [key: string]: string };
-  }) => {
+  const makeRequest = (formData: EventForm) => {
     console.log("Form Submitted", formData);
   };
 
-  const handleNextField = (
-    newData: {
-      [key: string]: string | { [key: string]: string };
-    },
-    final: boolean
-  ) => {
+  const handleNextField = (newData: EventForm, final: boolean) => {
     setData((prev) => ({ ...prev, ...newData }));
     console.log(newData);
 
@@ -46,9 +39,7 @@ const EventCreateForm = () => {
     setCurrentField((prev) => prev + 1);
   };
 
-  const handlePrevField = (newData: {
-    [key: string]: string | { [key: string]: string };
-  }) => {
+  const handlePrevField = (newData: EventForm) => {
     setData((prev) => ({ ...prev, ...newData }));
     setCurrentField((prev) => prev - 1);
     console.log(newData);

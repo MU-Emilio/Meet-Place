@@ -1,18 +1,12 @@
 import { Dispatch, SetStateAction } from "react";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
+import { User, EventForm } from "../lib/types";
 
 interface Props {
-  data: { [key: string]: string | { [key: string]: string } };
-  handleNextField: (
-    newData: {
-      [key: string]: string | { [key: string]: string };
-    },
-    final: boolean
-  ) => void;
-  handlePrevField: (newData: {
-    [key: string]: string | { [key: string]: string };
-  }) => void;
+  data: EventForm;
+  handleNextField: (newData: EventForm, final: boolean) => void;
+  handlePrevField: (newData: EventForm) => void;
 }
 
 const EventDescriptionField = ({

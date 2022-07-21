@@ -20,3 +20,13 @@ export interface EventType {
   owner: User;
   location: string;
 }
+
+export interface EventForm {
+  date: string;
+  time: string;
+  description: string;
+  title: string;
+  owner: User | undefined;
+  location: string;
+  guests: User[];
+}
