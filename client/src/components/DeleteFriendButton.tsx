@@ -38,10 +38,10 @@ const DeleteFriendButton = ({ userCard }: Props) => {
 
   return (
     <button
-      className=" bg-green-200 rounded-sm text-xs h-fit px-2 py-1"
+      className=" bg-red-200 rounded-sm text-xs h-fit px-2 py-1"
       onClick={() => mutate()}
     >
-      Add
+      Delete
     </button>
   );
 };
