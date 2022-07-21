@@ -1,4 +1,5 @@
 import { startOfDay, format, isEqual } from "date-fns";
+import { useNavigate } from "react-router-dom";
 import { EventType } from "../lib/types";
 import EventsContainer from "./EventsContainer";
 
@@ -18,8 +19,14 @@ const styles = {
 };
 
 const CalendarDate = ({ date, startDate, events }: Props) => {
+  const navigate = useNavigate();
+
+  const handleNavigate = () => {
+    confirm("Do you want to create a event?") && navigate("/addEvent");
+  };
+
   return (
-    <div>
+    <div className=" cursor-pointer" onClick={handleNavigate}>
       <div
         className="border h-24 px-1 pb-4"
         style={
