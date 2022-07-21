@@ -3,6 +3,7 @@ import FriendsContainer from "./FriendsContainer";
 import { Dispatch, SetStateAction } from "react";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
+import AddFriendButton from "./AddFriendButton";
 
 interface Props {
   data: { [key: string]: string | { [key: string]: string } };
