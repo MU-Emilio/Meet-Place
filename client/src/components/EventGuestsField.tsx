@@ -23,10 +23,16 @@ const EventGuestsField = ({
   const [notAddedGuests, setNotAddedGuests] = useState<User[]>(friends);
 
   const handleAddGuest = (user: User) => {
-    setAddedGuests((prev) => [...prev, user]);
-    setNotAddedGuests((prev) => [...prev.filter((item) => item != user)]);
-    data.guests = [...data.guests, user];
-    console.log(data);
+    if (!data.guests.find((item) => item == user)) {
+      setAddedGuests((prev) => [...prev, user]);
+      setNotAddedGuests((prev) => [...prev.filter((item) => item != user)]);
+      data.guests = [...data.guests, user];
+      console.log(data);
+    } else {
+      setAddedGuests((prev) => [...prev, user]);
+      setNotAddedGuests((prev) => [...prev.filter((item) => item != user)]);
+      console.log("ya esta");
+    }
   };
 
   const handleDeleteGuest = (user: User) => {
@@ -66,65 +72,22 @@ const EventGuestsField = ({
         </div>
       </div>
 
-      {/* <div className="flex w-fit gap-6 m-auto">
+      <div className="flex gap-6">
         <button
           type="button"
           className="mt-4"
-          onClick={() => handlePrevField(values)}
+          onClick={() => handlePrevField(data)}
         >
           Back
         </button>
-        <button type="submit" className="mt-4">
+        <button
+          type="button"
+          className="mt-4"
+          onClick={() => handleNextField(data, false)}
+        >
           Next
         </button>
-      </div> */}
-
-      {/* <div className=" w-fit mt-10 mx-auto">
-        <Formik
-          initialValues={data}
-          onSubmit={(values) => {
-            handleNextField(values, false);
-          }}
-        >
-          {({ values }) => (
-            <Form className="block">
-              <div className="flex gap-10">
-                <div>
-                  <label
-                    className="block text-4xl mx-auto"
-                    htmlFor="description"
-                  >
-                    Where?
-                  </label>
-                  <p>{"If it's a remote event, don't type a location"}</p>
-                  <Field
-                    className="block w-96 h-10 border-2 m-auto mt-4"
-                    id="location"
-                    name="location"
-                    placeholder="Where are you going?"
-                    autoComplete="off"
-                  />
-                </div>
-              </div>
-
-              <ErrorMessage name="date" />
-
-              <div className="flex w-fit gap-6 m-auto">
-                <button
-                  type="button"
-                  className="mt-4"
-                  onClick={() => handlePrevField(values)}
-                >
-                  Back
-                </button>
-                <button type="submit" className="mt-4">
-                  Next
-                </button>
-              </div>
-            </Form>
-          )}
-        </Formik>
-      </div> */}
+      </div>
     </div>
   );
 };

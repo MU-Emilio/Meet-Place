@@ -41,7 +41,7 @@ const EventGuestsContainer = ({
 
   return (
     <div className=" w-8/12 m-auto">
-      {friends && !isLoading ? (
+      {friends ? (
         <EventGuestsField
           friends={friends}
           data={data}

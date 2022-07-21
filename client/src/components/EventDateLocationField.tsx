@@ -24,7 +24,7 @@ const EventDateLocationField = ({
         validationSchema={dateTimeFieldValSchema}
         initialValues={data}
         onSubmit={(values) => {
-          handleNextField(values, false);
+          handleNextField(values, true);
         }}
       >
         {({ values }) => (
@@ -76,7 +76,7 @@ const EventDateLocationField = ({
                 Back
               </button>
               <button type="submit" className="mt-4">
-                Next
+                Submit
               </button>
             </div>
           </Form>
