@@ -35,7 +35,7 @@ const EventDescriptionField = ({
           handleNextField(values, true);
         }}
       >
-        {() => (
+        {({ values }) => (
           <Form className="block">
             <label className="block text-4xl mx-auto" htmlFor="description">
               What is it about?...
@@ -47,7 +47,11 @@ const EventDescriptionField = ({
               placeholder="Give it a nice description!"
             />
             <div className="flex gap-6">
-              <button type="button" className="mt-4">
+              <button
+                type="button"
+                className="mt-4"
+                onClick={() => handlePrevField(values)}
+              >
                 Back
               </button>
               <button type="submit" className="mt-4">
