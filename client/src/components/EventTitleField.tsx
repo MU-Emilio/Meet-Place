@@ -8,6 +8,9 @@ interface Props {
   >;
   currentField: number;
   setCurrentField: Dispatch<SetStateAction<number>>;
+  handleNextField: (newData: {
+    [key: string]: string | { [key: string]: string };
+  }) => void;
 }
 
 const EventTitleField = ({
@@ -15,6 +18,7 @@ const EventTitleField = ({
   setData,
   currentField,
   setCurrentField,
+  handleNextField,
 }: Props) => {
   return (
     <div className=" w-fit m-auto">

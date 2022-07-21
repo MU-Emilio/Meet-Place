@@ -23,23 +23,39 @@ const EventCreateForm = () => {
 
   const [currentField, setCurrentField] = useState<number>(0);
 
-  return (
-    <div>
-      <EventTitleField
-        data={data}
-        setData={setData}
-        currentField={currentField}
-        setCurrentField={setCurrentField}
-      ></EventTitleField>
+  const handleNextField = (newData: {
+    [key: string]: string | { [key: string]: string };
+  }) => {
+    setData((prev) => ({ ...prev, ...newData }));
+    setCurrentField((prev) => prev + 1);
+  };
 
-      <EventDescriptionField
-        data={data}
-        setData={setData}
-        currentField={currentField}
-        setCurrentField={setCurrentField}
-      ></EventDescriptionField>
-    </div>
-  );
+  const handlePrevField = (newData: {
+    [key: string]: string | { [key: string]: string };
+  }) => {
+    setData((prev) => ({ ...prev, ...newData }));
+    setCurrentField((prev) => prev - 1);
+  };
+
+  const fields = [
+    <EventTitleField
+      data={data}
+      setData={setData}
+      currentField={currentField}
+      setCurrentField={setCurrentField}
+      handleNextField={handleNextField}
+    ></EventTitleField>,
+    <EventDescriptionField
+      data={data}
+      setData={setData}
+      currentField={currentField}
+      setCurrentField={setCurrentField}
+      handleNextField={handleNextField}
+      handlePrevField={handlePrevField}
+    ></EventDescriptionField>,
+  ];
+
+  return <div>{fields[currentField]}</div>;
 };
 
 export default EventCreateForm;
