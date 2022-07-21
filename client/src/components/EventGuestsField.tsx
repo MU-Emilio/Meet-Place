@@ -1,68 +1,53 @@
-import React from "react";
-import FriendsContainer from "./FriendsContainer";
-import { Dispatch, SetStateAction } from "react";
-import { Formik, Field, Form, ErrorMessage } from "formik";
-import * as Yup from "yup";
-import AddFriendButton from "./AddFriendButton";
+import React, { useState } from "react";
+import { User } from "../lib/types";
+import AddGuestButton from "./AddGuestButton";
+import DeleteGuestButton from "./DeleteGuestButton";
+import FormGuestsList from "./FormGuestsList";
 
 interface Props {
-  data: { [key: string]: string | { [key: string]: string } };
-  handleNextField: (
-    newData: {
-      [key: string]: string | { [key: string]: string };
-    },
-    final: boolean
-  ) => void;
-  handlePrevField: (newData: {
-    [key: string]: string | { [key: string]: string };
-  }) => void;
+  friends: User[];
 }
 
-const EventGuestsField = ({
-  data,
-  handleNextField,
-  handlePrevField,
-}: Props) => {
-  return (
-    <div className=" w-8/12 m-auto flex">
-      <div className=" w-1/4">
-        <FriendsContainer />
-      </div>
-      <div className=" w-fit m-auto">
-        <Formik
-          initialValues={data}
-          onSubmit={(values) => {
-            handleNextField(values, false);
-          }}
-        >
-          {({ values }) => (
-            <Form className="block">
-              <label className="block text-4xl mx-auto" htmlFor="description">
-                What is it about?...
-              </label>
-              <Field
-                className="block w-96 h-10 border-2 m-auto mt-4"
-                id="description"
-                name="description"
-                placeholder="Give it a nice description!"
-                autoComplete="off"
-              />
+const EventGuestsField = ({ friends }: Props) => {
+  const [addedGuests, setAddedGuests] = useState<User[]>([]);
+  const [notAddedGuests, setNotAddedGuests] = useState<User[]>(friends);
 
-              <div className="flex gap-6">
-                <button
-                  type="button"
-                  className="mt-4"
-                  onClick={() => handlePrevField(values)}
-                >
-                  Back
-                </button>
-                <button type="submit" className="mt-4">
-                  Next
-                </button>
-              </div>
-            </Form>
+  const handleAddGuest = (user: User) => {
+    setAddedGuests((prev) => [...prev, user]);
+    setNotAddedGuests((prev) => [...prev.filter((data) => data != user)]);
+  };
+
+  const handleDeleteGuest = (user: User) => {
+    setAddedGuests((prev) => [...prev.filter((data) => data != user)]);
+    setNotAddedGuests((prev) => [...prev, user]);
+  };
+
+  return (
+    <div className="flex justify-around">
+      <div>
+        <p>Not Added</p>
+        <FormGuestsList
+          users={notAddedGuests}
+          ButtonComponent={(userInfo: User) => (
+            <AddGuestButton
+              userCard={userInfo}
+              handleAddGuest={handleAddGuest}
+            />
           )}
-        </Formik>
+        />
+      </div>
+
+      <div>
+        <p>Added</p>
+        <FormGuestsList
+          users={addedGuests}
+          ButtonComponent={(userInfo: User) => (
+            <DeleteGuestButton
+              userCard={userInfo}
+              handleDeleteButton={handleDeleteGuest}
+            />
+          )}
+        />
       </div>
     </div>
   );
