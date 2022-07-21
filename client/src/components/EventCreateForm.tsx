@@ -7,7 +7,7 @@ const EventCreateForm = () => {
   const [data, setData] = useState<{
     [key: string]: string | { [key: string]: string };
   }>({
-    title: "Great America Meet",
+    title: "",
     date: {
       __type: "Date",
       iso: "",
@@ -23,10 +23,25 @@ const EventCreateForm = () => {
 
   const [currentField, setCurrentField] = useState<number>(0);
 
-  const handleNextField = (newData: {
+  const makeRequest = (formData: {
     [key: string]: string | { [key: string]: string };
   }) => {
+    console.log("Form Submitted", formData);
+  };
+
+  const handleNextField = (
+    newData: {
+      [key: string]: string | { [key: string]: string };
+    },
+    final: boolean
+  ) => {
     setData((prev) => ({ ...prev, ...newData }));
+
+    if (final) {
+      makeRequest(newData);
+      return;
+    }
+
     setCurrentField((prev) => prev + 1);
   };
 

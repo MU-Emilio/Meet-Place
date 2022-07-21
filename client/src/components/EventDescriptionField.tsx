@@ -8,9 +8,12 @@ interface Props {
   >;
   currentField: number;
   setCurrentField: Dispatch<SetStateAction<number>>;
-  handleNextField: (newData: {
-    [key: string]: string | { [key: string]: string };
-  }) => void;
+  handleNextField: (
+    newData: {
+      [key: string]: string | { [key: string]: string };
+    },
+    final: boolean
+  ) => void;
   handlePrevField: (newData: {
     [key: string]: string | { [key: string]: string };
   }) => void;
@@ -26,7 +29,12 @@ const EventDescriptionField = ({
 }: Props) => {
   return (
     <div className=" w-fit m-auto">
-      <Formik initialValues={{ description: "" }} onSubmit={() => {}}>
+      <Formik
+        initialValues={data}
+        onSubmit={(values) => {
+          handleNextField(values, true);
+        }}
+      >
         {() => (
           <Form className="block">
             <label className="block text-4xl mx-auto" htmlFor="description">
@@ -43,7 +51,7 @@ const EventDescriptionField = ({
                 Back
               </button>
               <button type="submit" className="mt-4">
-                Next
+                Submit
               </button>
             </div>
           </Form>
