@@ -2,16 +2,15 @@ import React, { useState } from "react";
 import { Formik, Field, Form } from "formik";
 import EventTitleField from "./EventTitleField";
 import EventDescriptionField from "./EventDescriptionField";
+import EventDateLocationField from "./EventDateLocationField";
 
 const EventCreateForm = () => {
   const [data, setData] = useState<{
     [key: string]: string | { [key: string]: string };
   }>({
     title: "",
-    date: {
-      __type: "Date",
-      iso: "",
-    },
+    date: "",
+    time: "",
     description: "",
     owner: {
       __type: "Pointer",
@@ -36,6 +35,7 @@ const EventCreateForm = () => {
     final: boolean
   ) => {
     setData((prev) => ({ ...prev, ...newData }));
+    console.log(newData);
 
     if (final) {
       makeRequest(newData);
@@ -50,6 +50,7 @@ const EventCreateForm = () => {
   }) => {
     setData((prev) => ({ ...prev, ...newData }));
     setCurrentField((prev) => prev - 1);
+    console.log(newData);
   };
 
   const fields = [
@@ -68,6 +69,14 @@ const EventCreateForm = () => {
       handleNextField={handleNextField}
       handlePrevField={handlePrevField}
     ></EventDescriptionField>,
+    <EventDateLocationField
+      data={data}
+      setData={setData}
+      currentField={currentField}
+      setCurrentField={setCurrentField}
+      handleNextField={handleNextField}
+      handlePrevField={handlePrevField}
+    />,
   ];
 
   return <div>{fields[currentField]}</div>;
