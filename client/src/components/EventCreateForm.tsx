@@ -56,24 +56,15 @@ const EventCreateForm = () => {
   const fields = [
     <EventTitleField
       data={data}
-      setData={setData}
-      currentField={currentField}
-      setCurrentField={setCurrentField}
       handleNextField={handleNextField}
     ></EventTitleField>,
     <EventDescriptionField
       data={data}
-      setData={setData}
-      currentField={currentField}
-      setCurrentField={setCurrentField}
       handleNextField={handleNextField}
       handlePrevField={handlePrevField}
     ></EventDescriptionField>,
     <EventDateLocationField
       data={data}
-      setData={setData}
-      currentField={currentField}
-      setCurrentField={setCurrentField}
       handleNextField={handleNextField}
       handlePrevField={handlePrevField}
     />,

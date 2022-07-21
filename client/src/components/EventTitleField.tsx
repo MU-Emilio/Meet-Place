@@ -4,11 +4,6 @@ import * as Yup from "yup";
 
 interface Props {
   data: { [key: string]: string | { [key: string]: string } };
-  setData?: Dispatch<
-    SetStateAction<{ [key: string]: string | { [key: string]: string } }>
-  >;
-  currentField: number;
-  setCurrentField: Dispatch<SetStateAction<number>>;
   handleNextField: (
     newData: {
       [key: string]: string | { [key: string]: string };
@@ -17,13 +12,7 @@ interface Props {
   ) => void;
 }
 
-const EventTitleField = ({
-  data,
-  setData,
-  currentField,
-  setCurrentField,
-  handleNextField,
-}: Props) => {
+const EventTitleField = ({ data, handleNextField }: Props) => {
   const titleFieldValSchema = Yup.object({
     title: Yup.string()
       .required()
