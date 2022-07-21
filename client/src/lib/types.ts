@@ -26,7 +26,7 @@ export interface EventForm {
   time: string;
   description: string;
   title: string;
-  owner: User | undefined;
+  owner: string;
   location: string;
   guests: User[];
 }

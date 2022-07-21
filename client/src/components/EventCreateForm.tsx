@@ -7,7 +7,7 @@ import EventGuestsContainer from "./EventGuestsContainer";
 import { User, EventForm } from "../lib/types";
 
 interface Props {
-  owner: User;
+  owner: string;
 }
 
 const EventCreateForm = ({ owner }: Props) => {
@@ -55,12 +55,12 @@ const EventCreateForm = ({ owner }: Props) => {
       handleNextField={handleNextField}
       handlePrevField={handlePrevField}
     ></EventDescriptionField>,
-    <EventDateLocationField
+    <EventGuestsContainer
       data={data}
       handleNextField={handleNextField}
       handlePrevField={handlePrevField}
     />,
-    <EventGuestsContainer
+    <EventDateLocationField
       data={data}
       handleNextField={handleNextField}
       handlePrevField={handlePrevField}
