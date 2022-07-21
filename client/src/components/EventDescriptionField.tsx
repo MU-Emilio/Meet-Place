@@ -1,5 +1,6 @@
 import { Dispatch, SetStateAction } from "react";
-import { Formik, Field, Form } from "formik";
+import { Formik, Field, Form, ErrorMessage } from "formik";
+import * as Yup from "yup";
 
 interface Props {
   data: { [key: string]: string | { [key: string]: string } };
@@ -27,12 +28,17 @@ const EventDescriptionField = ({
   handleNextField,
   handlePrevField,
 }: Props) => {
+  const descriptionFieldValSchema = Yup.object({
+    description: Yup.string().required().label("This"),
+  });
+
   return (
     <div className=" w-fit m-auto">
       <Formik
+        validationSchema={descriptionFieldValSchema}
         initialValues={data}
         onSubmit={(values) => {
-          handleNextField(values, true);
+          handleNextField(values, false);
         }}
       >
         {({ values }) => (
@@ -45,7 +51,11 @@ const EventDescriptionField = ({
               id="description"
               name="description"
               placeholder="Give it a nice description!"
+              autocomplete="off"
             />
+
+            <ErrorMessage name="description" />
+
             <div className="flex gap-6">
               <button
                 type="button"
@@ -55,7 +65,7 @@ const EventDescriptionField = ({
                 Back
               </button>
               <button type="submit" className="mt-4">
-                Submit
+                Next
               </button>
             </div>
           </Form>
