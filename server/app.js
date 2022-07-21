@@ -313,7 +313,7 @@ app.post("/deleteFriend", async (req, res) => {
   }
 });
 
-app.post("/event", async (req, res) => {
+app.post("/event/add", async (req, res) => {
   const Event = Parse.Object.extend("Event");
   const event = new Event();
 
@@ -365,10 +365,44 @@ app.post("/event", async (req, res) => {
   }
 });
 
-app.post("/event/addGuest", async (req, res) => {
-  const Event = Parse.Object.extend("Event");
-  const event = new Event();
+app.post("/event/delete", async (req, res) => {
+  try {
+    // Delete event
 
+    const Event = Parse.Object.extend("Event");
+    const query = new Parse.Query(Event);
+
+    query.equalTo("objectId", req.body.event.objectId);
+
+    const event = await query.first();
+
+    Parse.Object.destroyAll(event);
+
+    // Delete guests
+
+    const Guests = Parse.Object.extend("Guests");
+    const query2 = new Parse.Query(Guests);
+
+    const eventPointer = {
+      __type: "Pointer",
+      className: "Event",
+      objectId: req.body.event.objectId,
+    };
+
+    query2.equalTo("event", eventPointer);
+    const guests = await query2.find();
+
+    Parse.Object.destroyAll(guests);
+
+    res.send(guests);
+    return;
+  } catch (error) {
+    res.status(409).set({ message: error.message });
+    return;
+  }
+});
+
+app.post("/event/addGuest", async (req, res) => {
   try {
     const event_info = req.body.event;
 
