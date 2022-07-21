@@ -41,7 +41,7 @@ const EventTitleField = ({ data, handleNextField }: Props) => {
               id="title"
               name="title"
               placeholder="Title"
-              autocomplete="off"
+              autoComplete="off"
             />
 
             <ErrorMessage name="title" />

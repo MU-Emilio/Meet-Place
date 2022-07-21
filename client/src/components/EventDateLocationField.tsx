@@ -66,7 +66,7 @@ const EventDateLocationField = ({
                   id="location"
                   name="location"
                   placeholder="Where are you going?"
-                  autocomplete="off"
+                  autoComplete="off"
                 />
               </div>
             </div>

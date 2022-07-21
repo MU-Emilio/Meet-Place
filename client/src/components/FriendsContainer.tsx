@@ -20,7 +20,7 @@ const FriendsContainer = () => {
   );
 
   return (
-    <div className="border">
+    <div className="border w-full">
       {data && !isLoading ? (
         <UserList users={data} isFriendContainer={true} />
       ) : (

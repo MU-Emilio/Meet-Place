@@ -3,6 +3,7 @@ import { Formik, Field, Form } from "formik";
 import EventTitleField from "./EventTitleField";
 import EventDescriptionField from "./EventDescriptionField";
 import EventDateLocationField from "./EventDateLocationField";
+import EventGuestsField from "./EventGuestsField";
 
 const EventCreateForm = () => {
   const [data, setData] = useState<{
@@ -64,6 +65,11 @@ const EventCreateForm = () => {
       handlePrevField={handlePrevField}
     ></EventDescriptionField>,
     <EventDateLocationField
+      data={data}
+      handleNextField={handleNextField}
+      handlePrevField={handlePrevField}
+    />,
+    <EventGuestsField
       data={data}
       handleNextField={handleNextField}
       handlePrevField={handlePrevField}

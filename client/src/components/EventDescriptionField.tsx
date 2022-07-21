@@ -43,7 +43,7 @@ const EventDescriptionField = ({
               id="description"
               name="description"
               placeholder="Give it a nice description!"
-              autocomplete="off"
+              autoComplete="off"
             />
 
             <ErrorMessage name="description" />
