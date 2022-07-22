@@ -19,14 +19,8 @@ const styles = {
 };
 
 const CalendarDate = ({ date, startDate, events }: Props) => {
-  const navigate = useNavigate();
-
-  const handleNavigate = () => {
-    confirm("Do you want to create a event?") && navigate("/addEvent");
-  };
-
   return (
-    <div className=" cursor-pointer" onClick={handleNavigate}>
+    <div>
       <div
         className="border h-24 px-1 pb-4"
         style={

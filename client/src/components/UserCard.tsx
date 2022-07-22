@@ -16,7 +16,7 @@ const UserCard = ({ userCard, ButtonComponent }: Props) => {
         <img
           src={profileImage}
           alt="profileImage"
-          className=" w-10 rounded-full"
+          className=" object-cover w-10 h-10 rounded-full"
         />
       )}
       <div className=" flex gap-3">
