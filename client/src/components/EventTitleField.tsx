@@ -8,15 +8,15 @@ interface Props {
   handleNextField: (newData: EventForm) => void;
 }
 
-const EventTitleField = ({ data, handleNextField }: Props) => {
-  const titleFieldValSchema = Yup.object({
-    title: Yup.string()
-      .required()
-      .label("This")
-      .min(0, "Title is too long")
-      .max(30, "Title is too long"),
-  });
+const titleFieldValSchema = Yup.object({
+  title: Yup.string()
+    .required()
+    .label("This")
+    .min(0, "Title is too long")
+    .max(30, "Title is too long"),
+});
 
+const EventTitleField = ({ data, handleNextField }: Props) => {
   return (
     <div className=" w-fit m-auto">
       <Formik

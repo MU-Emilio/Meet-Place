@@ -8,15 +8,15 @@ interface Props {
   handlePrevField: (newData: EventForm) => void;
 }
 
+const dateTimeFieldValSchema = Yup.object({
+  date: Yup.string().required().label("Date"),
+});
+
 const EventDateLocationField = ({
   data,
   handleNextField,
   handlePrevField,
 }: Props) => {
-  const dateTimeFieldValSchema = Yup.object({
-    date: Yup.string().required().label("Date"),
-  });
-
   return (
     <div className=" w-fit m-auto">
       <Formik

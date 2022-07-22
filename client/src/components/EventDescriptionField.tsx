@@ -9,15 +9,15 @@ interface Props {
   handlePrevField: (newData: EventForm) => void;
 }
 
+const descriptionFieldValSchema = Yup.object({
+  description: Yup.string().required().label("This"),
+});
+
 const EventDescriptionField = ({
   data,
   handleNextField,
   handlePrevField,
 }: Props) => {
-  const descriptionFieldValSchema = Yup.object({
-    description: Yup.string().required().label("This"),
-  });
-
   return (
     <div className=" w-fit m-auto">
       <Formik
