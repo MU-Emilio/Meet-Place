@@ -313,4 +313,186 @@ app.post("/deleteFriend", async (req, res) => {
   }
 });
 
+app.post("/event/add", async (req, res) => {
+  const Event = Parse.Object.extend("Event");
+  const event = new Event();
+
+  const event_info = req.body.event;
+
+  try {
+    // Format everything
+
+    const event_format = {
+      title: event_info.title,
+      date: {
+        __type: "Date",
+        iso: event_info.date + "T" + event_info.time + ":00.000Z",
+      },
+      description: event_info.description,
+      location: event_info.location,
+      owner: req.user,
+    };
+
+    const eventPointer = await event.save(event_format, {
+      success: (obj) => {
+        return obj;
+      },
+      error: (err) => {
+        res.status(409).set({ message: err.message });
+        return;
+      },
+    });
+
+    const Guests = Parse.Object.extend("Guests");
+
+    const userPointer = {
+      __type: "Pointer",
+      className: "_User",
+      objectId: req.user.id,
+    };
+
+    const guests = [userPointer, ...req.body.event.guests];
+
+    if (guests) {
+      guests.map((item) => {
+        const guest = new Guests();
+
+        const guestPointer = {
+          __type: "Pointer",
+          className: "_User",
+          objectId: item.objectId,
+        };
+
+        guest.set("event", eventPointer);
+        guest.set("guest", guestPointer);
+
+        guest.save();
+      });
+    }
+
+    res.send(eventPointer);
+    return;
+  } catch (error) {
+    res.status(409).set({ message: error.message });
+    return;
+  }
+});
+
+app.post("/event/delete", async (req, res) => {
+  try {
+    // Delete event
+
+    const Event = Parse.Object.extend("Event");
+    const query = new Parse.Query(Event);
+
+    query.equalTo("objectId", req.body.event.objectId);
+
+    const event = await query.first();
+
+    if (event.get("owner").id === req.user.id) {
+      Parse.Object.destroyAll(event);
+
+      // Delete guests
+
+      const Guests = Parse.Object.extend("Guests");
+      const query2 = new Parse.Query(Guests);
+
+      const eventPointer = {
+        __type: "Pointer",
+        className: "Event",
+        objectId: req.body.event.objectId,
+      };
+
+      query2.equalTo("event", eventPointer);
+      const guests = await query2.find();
+
+      Parse.Object.destroyAll(guests);
+
+      res.send(eventPointer);
+    } else {
+      res.send("Only owner can delete event");
+    }
+    return;
+  } catch (error) {
+    res.status(409).set({ message: error.message });
+    return;
+  }
+});
+
+app.post("/event/addGuest", async (req, res) => {
+  try {
+    const event_info = req.body.event;
+
+    const eventPointer = {
+      __type: "Pointer",
+      className: "Event",
+      objectId: event_info.objectId,
+    };
+
+    const Guests = Parse.Object.extend("Guests");
+
+    const guest_info = req.body.guest;
+    const guest = new Guests();
+
+    const guestPointer = {
+      __type: "Pointer",
+      className: "_User",
+      objectId: guest_info.objectId,
+    };
+
+    guest.set("event", eventPointer);
+    guest.set("guest", guestPointer);
+
+    await guest.save();
+    res.send({ guestPointer });
+    return;
+  } catch (error) {
+    res.status(409).set({ message: error.message });
+    return;
+  }
+});
+
+app.post("/event/deleteGuest", async (req, res) => {
+  try {
+    const event_info = req.body.event;
+
+    const eventPointer = {
+      __type: "Pointer",
+      className: "Event",
+      objectId: event_info.objectId,
+    };
+
+    const guest_info = req.body.guest;
+
+    const guestPointer = {
+      __type: "Pointer",
+      className: "_User",
+      objectId: guest_info.objectId,
+    };
+
+    const Guests = Parse.Object.extend("Guests");
+
+    const query1 = new Parse.Query(Guests);
+    const query2 = new Parse.Query(Guests);
+
+    query1.equalTo("event", eventPointer);
+    query1.equalTo("guest", guestPointer);
+
+    query2.equalTo("guest", guestPointer);
+    query2.equalTo("event", eventPointer);
+
+    const compoundQuery = Parse.Query.or(query1, query2);
+
+    const guestRelation = await compoundQuery.first();
+
+    Parse.Object.destroyAll(guestRelation);
+
+    res.send(guestRelation);
+    return;
+  } catch (error) {
+    res.status(409).set({ message: error.message });
+    return;
+  }
+});
+
 module.exports = app;

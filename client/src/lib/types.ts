@@ -18,4 +18,14 @@ export interface EventType {
   description: string;
   title: string;
   owner: User;
+  location: string;
+}
+
+export interface EventForm {
+  date: string;
+  time: string;
+  description: string;
+  title: string;
+  location: string;
+  guests: User[];
 }

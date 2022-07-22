@@ -13,7 +13,7 @@ const Event = ({ event }: Props) => {
     <div
       onMouseEnter={() => setIsHover(true)}
       onMouseLeave={() => setIsHover(false)}
-      className=" relative cursor-pointer"
+      className="relative"
     >
       <div className=" text-sm bg-green-200 border border-green-300 flex justify-between mb-2 hover:scale-105 ease-in-out duration-300">
         <p>{event.title}</p>
