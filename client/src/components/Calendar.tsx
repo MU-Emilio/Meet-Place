@@ -139,10 +139,6 @@ const Calendar = () => {
         </div>
       </div>
 
-      <button onClick={() => navigate("/addEvent")} style={styles.button}>
-        Add new event
-      </button>
-
       {!isLoading && data != null ? (
         <>
           <CalendarDisplay
@@ -150,6 +146,7 @@ const Calendar = () => {
             monthView={monthView}
             calendarDate={calendarDate}
             events={data}
+            changeDisplay={changeDisplay}
           />
         </>
       ) : (

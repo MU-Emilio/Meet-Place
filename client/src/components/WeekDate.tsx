@@ -6,6 +6,7 @@ interface Props {
   date: Date;
   startDate: Date;
   events: { [key: string]: EventType[] };
+  changeDisplay: () => void;
 }
 
 const styles = {
@@ -18,7 +19,7 @@ const styles = {
   },
 };
 
-const WeekDate = ({ date, startDate, events }: Props) => {
+const WeekDate = ({ date, startDate, events, changeDisplay }: Props) => {
   return (
     <div className=" h-[500px]">
       <div
@@ -30,7 +31,12 @@ const WeekDate = ({ date, startDate, events }: Props) => {
         }
       >
         {format(date, "dd")}
-        <EventsContainer events={events} date={date} complete={true} />
+        <EventsContainer
+          events={events}
+          date={date}
+          complete={true}
+          changeDisplay={changeDisplay}
+        />
       </div>
     </div>
   );

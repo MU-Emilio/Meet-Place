@@ -17,6 +17,7 @@ interface Props {
   monthView: boolean;
   calendarDate: Date;
   events: { [key: string]: EventType[] };
+  changeDisplay: () => void;
 }
 
 const CalendarDisplay = ({
@@ -24,6 +25,7 @@ const CalendarDisplay = ({
   monthView,
   calendarDate,
   events,
+  changeDisplay,
 }: Props) => {
   const renderDayNames = () => {
     const day_names: React.ReactNode[] = [];
@@ -47,6 +49,7 @@ const CalendarDisplay = ({
           startDate={startDate}
           calendarDate={calendarDate}
           events={events}
+          changeDisplay={changeDisplay}
         />
       );
     } else {
@@ -55,6 +58,7 @@ const CalendarDisplay = ({
           startDate={startDate}
           calendarDate={calendarDate}
           events={events}
+          changeDisplay={changeDisplay}
         />
       );
     }

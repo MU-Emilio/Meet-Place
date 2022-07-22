@@ -8,9 +8,10 @@ interface Props {
   events: { [key: string]: EventType[] };
   date: Date;
   complete: boolean;
+  changeDisplay: () => void;
 }
 
-const EventsContainer = ({ events, date, complete }: Props) => {
+const EventsContainer = ({ events, date, complete, changeDisplay }: Props) => {
   const today = format(date, "yyyy-MM-dd");
 
   if (!events[today]) {
@@ -40,7 +41,10 @@ const EventsContainer = ({ events, date, complete }: Props) => {
         <React.Fragment key={`${today}-${0}`}>
           <Event event={events[today][0]} />
         </React.Fragment>
-        <MoreEventsMessage eventsLeft={events[today].length - 1} />
+        <MoreEventsMessage
+          eventsLeft={events[today].length - 1}
+          changeDisplay={changeDisplay}
+        />
       </>
     );
   } else {

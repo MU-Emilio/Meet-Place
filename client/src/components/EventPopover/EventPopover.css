@@ -1,9 +1,10 @@
 .eventPop {
   position: absolute;
-  top: -250px;
+  top: -265px;
+  left: -10px;
   z-index: 1;
   background-color: white;
-  width: 200px;
+  width: 250px;
   height: 250px;
   color: black;
   border-width: 1px;
