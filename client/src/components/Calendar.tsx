@@ -91,7 +91,7 @@ const Calendar = () => {
 
   return (
     <div>
-      <div className=" bg-gray-100 flex justify-around w-5/12 px-3 py-5 align-middle mb-5 rounded-md shadow-sm">
+      <div className=" bg-gray-100 flex justify-around w-[770px] px-3 py-5 align-middle mb-5 rounded-md shadow-sm">
         <div className="flex gap-3">
           <div>
             <h1 className=" text-3xl font-bold">
@@ -101,7 +101,7 @@ const Calendar = () => {
           </div>
         </div>
 
-        <div className="flex gap-2">
+        <div className="flex gap-2 h-fit">
           <div className="flex gap-1 h-fit">
             <button
               onClick={subToDate}
@@ -127,6 +127,12 @@ const Calendar = () => {
             className=" h-fit bg-gray-200 p-2 rounded-md shadow-md hover:scale-105 ease-in-out duration-300"
           >
             {monthView ? "Week View" : "Month View"}
+          </button>
+          <button
+            onClick={() => {}}
+            className=" h-fit bg-gray-200 p-2 rounded-md shadow-md hover:scale-105 ease-in-out duration-300"
+          >
+            Create Event
           </button>
         </div>
       </div>
