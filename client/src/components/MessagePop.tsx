@@ -7,7 +7,7 @@ interface Props {
 
 const styles = {
   message: {
-    top: "-25px",
+    bottom: "-10px",
     right: "0",
     zIndex: 1,
   },
