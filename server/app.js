@@ -319,8 +319,14 @@ app.post("/event/add", async (req, res) => {
 
   const event_info = req.body.event;
 
+  console.log(event_info);
+
   try {
     // Format everything
+
+    if (event_info.time === "") {
+      event_info.time = "00:00";
+    }
 
     const event_format = {
       title: event_info.title,
