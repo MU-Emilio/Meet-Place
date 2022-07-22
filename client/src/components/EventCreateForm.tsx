@@ -7,7 +7,7 @@ import EventGuestsContainer from "./EventGuestsContainer";
 import { User, EventForm } from "../lib/types";
 import axios from "axios";
 import { SESSION_KEY } from "../lib/constants";
-import { useMutation } from "react-query";
+import { useMutation, useQueryClient } from "react-query";
 import { useNavigate } from "react-router-dom";
 
 interface Props {
@@ -44,9 +44,20 @@ const EventCreateForm = ({ owner }: Props) => {
     return response.data;
   };
 
+  const queryClient = useQueryClient();
+
+  const { mutate, isLoading } = useMutation(createEvent, {
+    onError: () => {
+      alert("there was an error");
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries(["events"]);
+    },
+  });
+
   const makeRequest = (formData: EventForm) => {
     console.log("Form Submitted", formData);
-    createEvent(formData);
+    mutate(formData);
     navigate("/home");
   };
 
