@@ -18,11 +18,11 @@ const styles = {
   },
 };
 
-const CalendarDate = ({ date, startDate, events }: Props) => {
+const WeekDate = ({ date, startDate, events }: Props) => {
   return (
-    <div>
+    <div className=" h-[500px]">
       <div
-        className="border h-24 px-1 pb-4"
+        className="border h-full px-1"
         style={
           isEqual(startOfDay(date), startOfDay(startDate))
             ? styles.today
@@ -30,10 +30,10 @@ const CalendarDate = ({ date, startDate, events }: Props) => {
         }
       >
         {format(date, "dd")}
-        <EventsContainer events={events} date={date} complete={false} />
+        <EventsContainer events={events} date={date} complete={true} />
       </div>
     </div>
   );
 };
 
-export default CalendarDate;
+export default WeekDate;
