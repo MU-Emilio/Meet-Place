@@ -91,25 +91,41 @@ const Calendar = () => {
 
   return (
     <div>
-      <h1 className=" text-3xl">
-        Calendar {format(calendarDate, "MMMMMM yyyy")}
-      </h1>
-      <p>Today: {format(selectedDate, "MM/dd/yyyy'")}</p>
+      <div className=" bg-gray-50 flex justify-around w-5/12 px-3 py-5 align-middle mb-5 rounded-md">
+        <div className="flex gap-3">
+          <div>
+            <h1 className=" text-3xl">
+              Calendar {format(calendarDate, "MMMMMM yyyy")}
+            </h1>
+            <p>Today: {format(selectedDate, "MM/dd/yyyy'")}</p>
+          </div>
+        </div>
 
-      <button onClick={resetDate} style={styles.blueButton}>
-        Go Today
-      </button>
-      <button onClick={changeDisplay} style={styles.greenButton}>
-        {monthView ? "Week View" : "Month View"}
-      </button>
-
-      <div>
-        <button onClick={subToDate} style={styles.button}>
-          {"<"}
-        </button>
-        <button onClick={addToDate} style={styles.button}>
-          {">"}
-        </button>
+        <div className="flex gap-2">
+          <div className="flex gap-1 h-fit">
+            <button
+              onClick={subToDate}
+              className=" bg-gray-200 p-2 rounded-l-md"
+            >
+              {"<"}
+            </button>
+            <button onClick={resetDate} className=" bg-gray-200 p-2">
+              Today
+            </button>
+            <button
+              onClick={addToDate}
+              className=" bg-gray-200 p-2 rounded-r-md"
+            >
+              {">"}
+            </button>
+          </div>
+          <button
+            onClick={changeDisplay}
+            className=" h-fit bg-gray-200 p-2 rounded-md"
+          >
+            {monthView ? "Week View" : "Month View"}
+          </button>
+        </div>
       </div>
 
       {!isLoading && data != null ? (

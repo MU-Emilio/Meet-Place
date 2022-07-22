@@ -10,6 +10,7 @@ module.exports = {
       green: colors.green,
       red: colors.red,
       blue: colors.blue,
+      gray: colors.gray,
       primary: "#EA574A",
       secundary: "#279BB7",
     },
