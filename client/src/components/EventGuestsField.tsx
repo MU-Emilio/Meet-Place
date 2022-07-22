@@ -7,7 +7,7 @@ import FormGuestsList from "./FormGuestsList";
 interface Props {
   friends: User[];
   data: EventForm;
-  handleNextField: (newData: EventForm, final: boolean) => void;
+  handleNextField: (newData: EventForm) => void;
   handlePrevField: (newData: EventForm) => void;
 }
 
@@ -78,7 +78,7 @@ const EventGuestsField = ({
         <button
           type="button"
           className="mt-4"
-          onClick={() => handleNextField(data, false)}
+          onClick={() => handleNextField(data)}
         >
           Next
         </button>

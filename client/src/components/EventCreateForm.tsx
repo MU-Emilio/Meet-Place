@@ -54,10 +54,10 @@ const EventCreateForm = () => {
     navigate("/home");
   };
 
-  const handleNextField = (newData: EventForm, final: boolean) => {
+  const handleNextField = (newData: EventForm) => {
     setData((prev) => ({ ...prev, ...newData }));
 
-    if (final) {
+    if (currentField + 1 === fields.length) {
       makeRequest(newData);
       return;
     } else {

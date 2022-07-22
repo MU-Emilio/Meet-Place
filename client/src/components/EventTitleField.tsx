@@ -5,7 +5,7 @@ import { User, EventForm } from "../lib/types";
 
 interface Props {
   data: EventForm;
-  handleNextField: (newData: EventForm, final: boolean) => void;
+  handleNextField: (newData: EventForm) => void;
 }
 
 const EventTitleField = ({ data, handleNextField }: Props) => {
@@ -23,7 +23,7 @@ const EventTitleField = ({ data, handleNextField }: Props) => {
         validationSchema={titleFieldValSchema}
         initialValues={data}
         onSubmit={(values) => {
-          handleNextField(values, false);
+          handleNextField(values);
         }}
       >
         {() => (

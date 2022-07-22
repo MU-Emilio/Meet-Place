@@ -4,7 +4,7 @@ import { EventForm } from "../lib/types";
 
 interface Props {
   data: EventForm;
-  handleNextField: (newData: EventForm, final: boolean) => void;
+  handleNextField: (newData: EventForm) => void;
   handlePrevField: (newData: EventForm) => void;
 }
 
@@ -23,7 +23,7 @@ const EventDateLocationField = ({
         validationSchema={dateTimeFieldValSchema}
         initialValues={data}
         onSubmit={(values) => {
-          handleNextField(values, true);
+          handleNextField(values);
         }}
       >
         {({ values }) => (
