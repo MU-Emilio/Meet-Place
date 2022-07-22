@@ -8,6 +8,7 @@ import { User, EventForm } from "../lib/types";
 import axios from "axios";
 import { SESSION_KEY } from "../lib/constants";
 import { useMutation } from "react-query";
+import { useNavigate } from "react-router-dom";
 
 interface Props {
   owner: string;
@@ -25,11 +26,13 @@ const EventCreateForm = ({ owner }: Props) => {
 
   const [currentField, setCurrentField] = useState<number>(0);
 
-  const createEvent = async () => {
+  const navigate = useNavigate();
+
+  const createEvent = async (formData: EventForm) => {
     const { data: response } = await axios.post(
       "http://localhost:3001/event/add",
       {
-        event: data,
+        event: formData,
       },
       {
         headers: {
@@ -37,13 +40,14 @@ const EventCreateForm = ({ owner }: Props) => {
         },
       }
     );
+    console.log(response);
     return response.data;
   };
 
-  const { mutate, isLoading } = useMutation(createEvent);
-
   const makeRequest = (formData: EventForm) => {
     console.log("Form Submitted", formData);
+    createEvent(formData);
+    navigate("/home");
   };
 
   const handleNextField = (newData: EventForm, final: boolean) => {
