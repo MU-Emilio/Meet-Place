@@ -29,7 +29,7 @@ const WeekDate = ({ date, startDate, events }: Props) => {
         }
       >
         {format(date, "dd")}
-        <EventsContainer events={events} date={date} />
+        <EventsContainer events={events} date={date} complete={true} />
       </div>
     </div>
   );

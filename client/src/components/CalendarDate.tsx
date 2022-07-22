@@ -29,7 +29,7 @@ const CalendarDate = ({ date, startDate, events }: Props) => {
         }
       >
         {format(date, "dd")}
-        <EventsContainer events={events} date={date} />
+        <EventsContainer events={events} date={date} complete={false} />
       </div>
     </div>
   );
