@@ -4,6 +4,7 @@ import { useQuery } from "react-query";
 import Calendar from "./Calendar";
 import { User } from "../lib/types";
 import Logo from "./Logo";
+import Loading from "./Loading";
 
 const Home = () => {
   const fetchData = async () => {
@@ -18,7 +19,7 @@ const Home = () => {
   const { isLoading, error, data } = useQuery<User | null>(["user"], fetchData);
 
   if (isLoading) {
-    return <p>Loading...</p>;
+    return <Loading />;
   }
 
   if (error instanceof Error) {
