@@ -3,6 +3,7 @@ import { SESSION_KEY } from "../lib/constants";
 import { useQuery } from "react-query";
 import Calendar from "./Calendar";
 import { User } from "../lib/types";
+import Logo from "./Logo";
 
 const Home = () => {
   const fetchData = async () => {
@@ -30,7 +31,10 @@ const Home = () => {
 
   return (
     <div>
-      <h1>Welcome {data?.username}</h1>
+      <div className="flex">
+        <Logo />
+        <h1>Welcome {data?.username}</h1>
+      </div>
       <Calendar />
     </div>
   );
