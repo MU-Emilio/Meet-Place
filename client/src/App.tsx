@@ -9,7 +9,7 @@ const queryClient = new QueryClient();
 
 function App() {
   return (
-    <div className="App px-12 h-screen">
+    <div className="App h-screen w-5/6 m-auto">
       <QueryClientProvider client={queryClient}>
         <Logout />
         <UserProvider>

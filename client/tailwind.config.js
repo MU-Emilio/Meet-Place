@@ -15,5 +15,5 @@ module.exports = {
       secundary: "#279BB7",
     },
   },
-  plugins: [],
+  plugins: [require("tailwind-scrollbar-hide")],
 };

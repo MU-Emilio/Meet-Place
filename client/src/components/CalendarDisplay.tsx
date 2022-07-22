@@ -8,7 +8,7 @@ import { EventType } from "../lib/types";
 const styles = {
   calendar: {
     display: "grid",
-    gridTemplateColumns: "repeat(7, minmax(200px, 1fr))",
+    gridTemplateColumns: "repeat(7, minmax(200px, 300px))",
   },
 };
 
@@ -31,7 +31,7 @@ const CalendarDisplay = ({
     WEEK_DAYS.map((name, index) => {
       day_names.push(
         <React.Fragment key={index}>
-          <p className=" font-medium border h-10 px-1 bg-secundary opacity-80 text-center py-2">
+          <p className=" font-medium border h-10 w-full px-1 bg-secundary opacity-80 text-center py-2">
             {name}
           </p>
         </React.Fragment>
