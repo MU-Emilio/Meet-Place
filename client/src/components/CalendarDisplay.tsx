@@ -8,7 +8,7 @@ import { EventType } from "../lib/types";
 const styles = {
   calendar: {
     display: "grid",
-    gridTemplateColumns: "repeat(7, 200px)",
+    gridTemplateColumns: "repeat(7, minmax(200px, 1fr))",
   },
 };
 
