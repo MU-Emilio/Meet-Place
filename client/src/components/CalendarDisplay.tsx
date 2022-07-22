@@ -31,7 +31,7 @@ const CalendarDisplay = ({
     WEEK_DAYS.map((name, index) => {
       day_names.push(
         <React.Fragment key={index}>
-          <p className="border h-10 px-1 bg-green-200">{name}</p>
+          <p className=" font-medium border h-10 px-1 bg-green-200">{name}</p>
         </React.Fragment>
       );
     });

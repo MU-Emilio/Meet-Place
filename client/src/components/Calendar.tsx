@@ -94,7 +94,7 @@ const Calendar = () => {
       <div className=" bg-gray-50 flex justify-around w-5/12 px-3 py-5 align-middle mb-5 rounded-md">
         <div className="flex gap-3">
           <div>
-            <h1 className=" text-3xl">
+            <h1 className=" text-3xl font-bold">
               Calendar {format(calendarDate, "MMMMMM yyyy")}
             </h1>
             <p>Today: {format(selectedDate, "MM/dd/yyyy'")}</p>
