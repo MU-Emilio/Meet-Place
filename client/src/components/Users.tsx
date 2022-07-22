@@ -3,7 +3,7 @@ import NotFriendsContainer from "./NotFriendsContainer";
 
 const Users = () => {
   return (
-    <div className="border m-auto w-10/12">
+    <div className="border m-auto w-1/2">
       <FriendsContainer />
 
       <NotFriendsContainer />

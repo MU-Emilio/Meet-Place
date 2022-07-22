@@ -1,13 +1,14 @@
 import React from "react";
 import { User } from "../lib/types";
 import UserCard from "./UserCard";
+
 interface Props {
   users: User[];
   ButtonComponent: (userInfo: User) => JSX.Element;
 }
 
-const UserList = ({ users, ButtonComponent }: Props) => {
-  if (!users) {
+const FormGuestsList = ({ users, ButtonComponent }: Props) => {
+  if (users.length < 0) {
     return null;
   }
 
@@ -24,4 +25,4 @@ const UserList = ({ users, ButtonComponent }: Props) => {
   );
 };
 
-export default UserList;
+export default FormGuestsList;

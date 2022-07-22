@@ -3,6 +3,7 @@ import { SESSION_KEY } from "../lib/constants";
 import axios from "axios";
 import { useQuery } from "react-query";
 import UserList from "./UserList";
+import DeleteFriendButton from "./DeleteFriendButton";
 
 const FriendsContainer = () => {
   const fetchFriends = async () => {
@@ -20,9 +21,14 @@ const FriendsContainer = () => {
   );
 
   return (
-    <div className="border">
+    <div className="border w-full p-5">
       {data && !isLoading ? (
-        <UserList users={data} isFriendContainer={true} />
+        <UserList
+          users={data}
+          ButtonComponent={(userInfo) => (
+            <DeleteFriendButton userCard={userInfo} />
+          )}
+        />
       ) : (
         <p>Loading...</p>
       )}

@@ -313,20 +313,27 @@ app.post("/deleteFriend", async (req, res) => {
   }
 });
 
-app.post("/event", async (req, res) => {
+app.post("/event/add", async (req, res) => {
   const Event = Parse.Object.extend("Event");
   const event = new Event();
 
   const event_info = req.body.event;
 
   try {
-    const userPointer = {
-      __type: "Pointer",
-      className: "_User",
-      objectId: req.user.id,
+    // Format everything
+
+    const event_format = {
+      title: event_info.title,
+      date: {
+        __type: "Date",
+        iso: event_info.date + "T" + event_info.time + ":00.000Z",
+      },
+      description: event_info.description,
+      location: event_info.location,
+      owner: req.user,
     };
 
-    const eventPointer = await event.save(event_info, {
+    const eventPointer = await event.save(event_format, {
       success: (obj) => {
         return obj;
       },
@@ -338,16 +345,22 @@ app.post("/event", async (req, res) => {
 
     const Guests = Parse.Object.extend("Guests");
 
-    const guests = [userPointer.objectId, ...req.body.guests];
+    const userPointer = {
+      __type: "Pointer",
+      className: "_User",
+      objectId: req.user.id,
+    };
+
+    const guests = [userPointer, ...req.body.event.guests];
 
     if (guests) {
       guests.map((item) => {
-        let guest = new Guests();
+        const guest = new Guests();
 
-        let guestPointer = {
+        const guestPointer = {
           __type: "Pointer",
           className: "_User",
-          objectId: item,
+          objectId: item.objectId,
         };
 
         guest.set("event", eventPointer);
@@ -357,7 +370,48 @@ app.post("/event", async (req, res) => {
       });
     }
 
-    res.send(`Event ${eventPointer.id} created`);
+    res.send(eventPointer);
+    return;
+  } catch (error) {
+    res.status(409).set({ message: error.message });
+    return;
+  }
+});
+
+app.post("/event/delete", async (req, res) => {
+  try {
+    // Delete event
+
+    const Event = Parse.Object.extend("Event");
+    const query = new Parse.Query(Event);
+
+    query.equalTo("objectId", req.body.event.objectId);
+
+    const event = await query.first();
+
+    if (event.get("owner").id === req.user.id) {
+      Parse.Object.destroyAll(event);
+
+      // Delete guests
+
+      const Guests = Parse.Object.extend("Guests");
+      const query2 = new Parse.Query(Guests);
+
+      const eventPointer = {
+        __type: "Pointer",
+        className: "Event",
+        objectId: req.body.event.objectId,
+      };
+
+      query2.equalTo("event", eventPointer);
+      const guests = await query2.find();
+
+      Parse.Object.destroyAll(guests);
+
+      res.send(eventPointer);
+    } else {
+      res.send("Only owner can delete event");
+    }
     return;
   } catch (error) {
     res.status(409).set({ message: error.message });
@@ -366,9 +420,6 @@ app.post("/event", async (req, res) => {
 });
 
 app.post("/event/addGuest", async (req, res) => {
-  const Event = Parse.Object.extend("Event");
-  const event = new Event();
-
   try {
     const event_info = req.body.event;
 
@@ -393,7 +444,7 @@ app.post("/event/addGuest", async (req, res) => {
     guest.set("guest", guestPointer);
 
     await guest.save();
-    res.send(`User ${guest_info.objectId} added succesfully`);
+    res.send({ guestPointer });
     return;
   } catch (error) {
     res.status(409).set({ message: error.message });
