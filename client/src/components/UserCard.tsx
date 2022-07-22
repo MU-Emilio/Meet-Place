@@ -2,7 +2,7 @@ import { User } from "../lib/types";
 
 interface Props {
   userCard: User;
-  ButtonComponent: React.ReactNode;
+  ButtonComponent: React.ReactNode | null;
 }
 
 const UserCard = ({ userCard, ButtonComponent }: Props) => {
@@ -22,7 +22,7 @@ const UserCard = ({ userCard, ButtonComponent }: Props) => {
       <div className=" flex gap-3">
         <p>{userCard.username}</p>
       </div>
-      {ButtonComponent}
+      {ButtonComponent && ButtonComponent}
     </div>
   );
 };

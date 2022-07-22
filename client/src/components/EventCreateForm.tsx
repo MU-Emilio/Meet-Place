@@ -1,20 +1,15 @@
-import React, { useState } from "react";
-import { Formik, Field, Form } from "formik";
+import { useState } from "react";
 import EventTitleField from "./EventTitleField";
 import EventDescriptionField from "./EventDescriptionField";
 import EventDateLocationField from "./EventDateLocationField";
 import EventGuestsContainer from "./EventGuestsContainer";
-import { User, EventForm } from "../lib/types";
+import { EventForm } from "../lib/types";
 import axios from "axios";
 import { SESSION_KEY } from "../lib/constants";
 import { useMutation, useQueryClient } from "react-query";
 import { useNavigate } from "react-router-dom";
 
-interface Props {
-  owner: string;
-}
-
-const EventCreateForm = ({ owner }: Props) => {
+const EventCreateForm = () => {
   const [data, setData] = useState<EventForm>({
     title: "",
     date: "",
@@ -40,7 +35,6 @@ const EventCreateForm = ({ owner }: Props) => {
         },
       }
     );
-    console.log(response);
     return response.data;
   };
 
@@ -56,14 +50,12 @@ const EventCreateForm = ({ owner }: Props) => {
   });
 
   const makeRequest = (formData: EventForm) => {
-    console.log("Form Submitted", formData);
     mutate(formData);
     navigate("/home");
   };
 
   const handleNextField = (newData: EventForm, final: boolean) => {
     setData((prev) => ({ ...prev, ...newData }));
-    console.log(newData);
 
     if (final) {
       makeRequest(newData);
@@ -76,7 +68,6 @@ const EventCreateForm = ({ owner }: Props) => {
   const handlePrevField = (newData: EventForm) => {
     setData((prev) => ({ ...prev, ...newData }));
     setCurrentField((prev) => prev - 1);
-    console.log(newData);
   };
 
   const fields = [

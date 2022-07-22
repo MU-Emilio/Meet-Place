@@ -1,7 +1,6 @@
-import { Dispatch, SetStateAction, useState } from "react";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import { User, EventForm } from "../lib/types";
+import { EventForm } from "../lib/types";
 
 interface Props {
   data: EventForm;

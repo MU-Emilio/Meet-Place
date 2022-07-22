@@ -1,17 +1,8 @@
-import React from "react";
-import FriendsContainer from "./FriendsContainer";
-import { Dispatch, SetStateAction } from "react";
-import { Formik, Field, Form, ErrorMessage } from "formik";
-import * as Yup from "yup";
-import AddFriendButton from "./AddFriendButton";
-
 import { User, EventForm } from "../lib/types";
 import { SESSION_KEY } from "../lib/constants";
 import axios from "axios";
 import { useQuery } from "react-query";
 import EventGuestsField from "./EventGuestsField";
-import UserList from "./UserList";
-import DeleteFriendButton from "./DeleteFriendButton";
 
 interface Props {
   data: EventForm;

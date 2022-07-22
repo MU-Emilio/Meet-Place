@@ -1,6 +1,6 @@
-import React, { Dispatch, SetStateAction } from "react";
+import React from "react";
 import { User } from "../lib/types";
-import GuestCard from "./GuestCard";
+import UserCard from "./UserCard";
 
 interface Props {
   users: User[];
@@ -17,10 +17,7 @@ const FormGuestsList = ({ users, ButtonComponent }: Props) => {
       {users.map((user: User, index: number) => {
         return (
           <React.Fragment key={index}>
-            <GuestCard
-              userCard={user}
-              ButtonComponent={ButtonComponent(user)}
-            />
+            <UserCard userCard={user} ButtonComponent={ButtonComponent(user)} />
           </React.Fragment>
         );
       })}
