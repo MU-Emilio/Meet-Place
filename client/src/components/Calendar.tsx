@@ -91,7 +91,7 @@ const Calendar = () => {
 
   return (
     <div>
-      <div className=" bg-gray-50 flex justify-around w-5/12 px-3 py-5 align-middle mb-5 rounded-md">
+      <div className=" bg-gray-100 flex justify-around w-5/12 px-3 py-5 align-middle mb-5 rounded-md shadow-sm">
         <div className="flex gap-3">
           <div>
             <h1 className=" text-3xl font-bold">
@@ -105,23 +105,26 @@ const Calendar = () => {
           <div className="flex gap-1 h-fit">
             <button
               onClick={subToDate}
-              className=" bg-gray-200 p-2 rounded-l-md"
+              className=" bg-gray-200 p-2 rounded-l-md shadow-md hover:scale-105 ease-in-out duration-300"
             >
               {"<"}
             </button>
-            <button onClick={resetDate} className=" bg-gray-200 p-2">
+            <button
+              onClick={resetDate}
+              className=" bg-gray-200 p-2 shadow-md hover:scale-105 ease-in-out duration-300"
+            >
               Today
             </button>
             <button
               onClick={addToDate}
-              className=" bg-gray-200 p-2 rounded-r-md"
+              className=" bg-gray-200 p-2 rounded-r-md shadow-md hover:scale-105 ease-in-out duration-300"
             >
               {">"}
             </button>
           </div>
           <button
             onClick={changeDisplay}
-            className=" h-fit bg-gray-200 p-2 rounded-md"
+            className=" h-fit bg-gray-200 p-2 rounded-md shadow-md hover:scale-105 ease-in-out duration-300"
           >
             {monthView ? "Week View" : "Month View"}
           </button>
