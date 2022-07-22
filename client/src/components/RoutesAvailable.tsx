@@ -24,7 +24,7 @@ const RoutesAvailable = () => {
       <Routes>
         <Route path="/home" element={<Home />} />
         <Route path="/friends" element={<Users />} />
-        <Route path="/addEvent" element={<EventCreateForm owner={user} />} />
+        <Route path="/addEvent" element={<EventCreateForm />} />
         <Route path="/*" element={<Navigate to="/home" />} />
       </Routes>
     );
