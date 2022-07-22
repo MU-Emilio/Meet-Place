@@ -47,13 +47,13 @@ const EventDateLocationField = ({
                   type="time"
                   placeholder="Date"
                 />
+                <ErrorMessage name="date" />
               </div>
 
               <div>
                 <label className="block text-4xl mx-auto" htmlFor="description">
-                  Where?
+                  Where are you going?
                 </label>
-                <p>{"If it's a remote event, don't type a location"}</p>
                 <Field
                   className="block w-96 h-10 border-2 m-auto mt-4"
                   id="location"
@@ -61,10 +61,9 @@ const EventDateLocationField = ({
                   placeholder="Where are you going?"
                   autoComplete="off"
                 />
+                <ErrorMessage name="location" />
               </div>
             </div>
-
-            <ErrorMessage name="date" />
 
             <div className="flex w-fit gap-6 m-auto">
               <button

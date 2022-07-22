@@ -6,6 +6,7 @@ import { useQuery } from "react-query";
 import axios from "axios";
 import { SESSION_KEY } from "../lib/constants";
 import { EventType } from "../lib/types";
+import { Navigate, useNavigate } from "react-router-dom";
 
 const styles = {
   button: {
@@ -31,6 +32,7 @@ const Calendar = () => {
   const [startDate, setStartDate] = useState(selectedDate);
   const [monthView, setMonthView] = useState(true);
   const [calendarDate, setCalendarDate] = useState(selectedDate);
+  const navigate = useNavigate();
 
   // Functions
 
@@ -111,6 +113,10 @@ const Calendar = () => {
           {">"}
         </button>
       </div>
+
+      <button onClick={() => navigate("/addEvent")} style={styles.button}>
+        Add new event
+      </button>
 
       {!isLoading && data != null ? (
         <>
