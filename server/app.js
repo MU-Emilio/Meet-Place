@@ -390,8 +390,6 @@ app.post("/event/delete", async (req, res) => {
     const event = await query.first();
 
     if (event.get("owner").id === req.user.id) {
-      res.send("si");
-
       Parse.Object.destroyAll(event);
 
       // Delete guests
