@@ -19,9 +19,9 @@ const styles = {
 
 const WeekDate = ({ date, startDate, events }: Props) => {
   return (
-    <div className=" h-screen">
+    <div className=" h-[500px]">
       <div
-        className="border h-3/6 px-1 pb-8"
+        className="border h-full px-1"
         style={
           isEqual(startOfDay(date), startOfDay(startDate))
             ? styles.today
