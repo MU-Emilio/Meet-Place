@@ -20,7 +20,7 @@ const EventsContainer = ({ events, date, complete }: Props) => {
   // Week view
   if (complete) {
     return (
-      <>
+      <div className="w-full h-full overflow-y-scroll scroll whitespace-nowrap scroll-smooth scrollbar-hide">
         {events[today].map((event: EventType, event_index: number) => {
           return (
             <React.Fragment key={`${today}-${event_index}`}>
@@ -28,7 +28,7 @@ const EventsContainer = ({ events, date, complete }: Props) => {
             </React.Fragment>
           );
         })}
-      </>
+      </div>
     );
   }
 
