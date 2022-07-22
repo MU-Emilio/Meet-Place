@@ -11,6 +11,7 @@ interface Props {
 const styles = {
   today: {
     color: "blue",
+    backgroundColor: "rgb(239 246 255)",
   },
   notToday: {
     color: "black",
