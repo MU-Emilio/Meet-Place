@@ -2,6 +2,7 @@ import React from "react";
 import CalendarDate from "./CalendarDate";
 import { generateWeek } from "../utils/calendar_utils";
 import { EventType } from "../lib/types";
+import WeekDate from "./WeekDate";
 
 interface Props {
   startDate: Date;
@@ -18,7 +19,7 @@ export const WeekContainer = ({ startDate, calendarDate, events }: Props) => {
     weekGenerator().map((day: Date, day_index: number) => {
       week_days.push(
         <React.Fragment key={`${day_index}`}>
-          <CalendarDate date={day} startDate={startDate} events={events} />
+          <WeekDate date={day} startDate={startDate} events={events} />
         </React.Fragment>
       );
     });
