@@ -36,6 +36,7 @@ const Home = () => {
         <h1>Welcome {data?.username}</h1>
       </div>
       <Calendar />
+      <footer className=" bg-primary h-8"></footer>
     </div>
   );
 };
