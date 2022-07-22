@@ -389,25 +389,31 @@ app.post("/event/delete", async (req, res) => {
 
     const event = await query.first();
 
-    Parse.Object.destroyAll(event);
+    if (event.get("owner").id === req.user.id) {
+      res.send("si");
 
-    // Delete guests
+      Parse.Object.destroyAll(event);
 
-    const Guests = Parse.Object.extend("Guests");
-    const query2 = new Parse.Query(Guests);
+      // Delete guests
 
-    const eventPointer = {
-      __type: "Pointer",
-      className: "Event",
-      objectId: req.body.event.objectId,
-    };
+      const Guests = Parse.Object.extend("Guests");
+      const query2 = new Parse.Query(Guests);
 
-    query2.equalTo("event", eventPointer);
-    const guests = await query2.find();
+      const eventPointer = {
+        __type: "Pointer",
+        className: "Event",
+        objectId: req.body.event.objectId,
+      };
 
-    Parse.Object.destroyAll(guests);
+      query2.equalTo("event", eventPointer);
+      const guests = await query2.find();
 
-    res.send(eventPointer);
+      Parse.Object.destroyAll(guests);
+
+      res.send(eventPointer);
+    } else {
+      res.send("Only owner can delete event");
+    }
     return;
   } catch (error) {
     res.status(409).set({ message: error.message });

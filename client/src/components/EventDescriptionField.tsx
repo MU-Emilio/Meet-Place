@@ -5,26 +5,26 @@ import { User, EventForm } from "../lib/types";
 
 interface Props {
   data: EventForm;
-  handleNextField: (newData: EventForm, final: boolean) => void;
+  handleNextField: (newData: EventForm) => void;
   handlePrevField: (newData: EventForm) => void;
 }
+
+const descriptionFieldValSchema = Yup.object({
+  description: Yup.string().required().label("This"),
+});
 
 const EventDescriptionField = ({
   data,
   handleNextField,
   handlePrevField,
 }: Props) => {
-  const descriptionFieldValSchema = Yup.object({
-    description: Yup.string().required().label("This"),
-  });
-
   return (
     <div className=" w-fit m-auto">
       <Formik
         validationSchema={descriptionFieldValSchema}
         initialValues={data}
         onSubmit={(values) => {
-          handleNextField(values, false);
+          handleNextField(values);
         }}
       >
         {({ values }) => (

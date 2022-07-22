@@ -4,27 +4,26 @@ import { EventForm } from "../lib/types";
 
 interface Props {
   data: EventForm;
-  handleNextField: (newData: EventForm, final: boolean) => void;
+  handleNextField: (newData: EventForm) => void;
   handlePrevField: (newData: EventForm) => void;
 }
+
+const dateTimeFieldValSchema = Yup.object({
+  date: Yup.string().required().label("Date"),
+});
 
 const EventDateLocationField = ({
   data,
   handleNextField,
   handlePrevField,
 }: Props) => {
-  const dateTimeFieldValSchema = Yup.object({
-    date: Yup.string().required().label("Date"),
-    location: Yup.string().required().label("Location"),
-  });
-
   return (
     <div className=" w-fit m-auto">
       <Formik
         validationSchema={dateTimeFieldValSchema}
         initialValues={data}
         onSubmit={(values) => {
-          handleNextField(values, true);
+          handleNextField(values);
         }}
       >
         {({ values }) => (

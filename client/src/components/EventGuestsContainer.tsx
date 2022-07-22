@@ -6,7 +6,7 @@ import EventGuestsField from "./EventGuestsField";
 
 interface Props {
   data: EventForm;
-  handleNextField: (newData: EventForm, final: boolean) => void;
+  handleNextField: (newData: EventForm) => void;
   handlePrevField: (newData: EventForm) => void;
 }
 
