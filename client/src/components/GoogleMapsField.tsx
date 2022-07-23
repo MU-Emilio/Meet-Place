@@ -8,7 +8,14 @@ import {
 import { geocodeByAddress, getLatLng } from "react-google-places-autocomplete";
 import Loading from "./Loading";
 import { Location } from "../lib/types";
-import MapField from "./MapField";
+import { Formik, Field, Form, ErrorMessage } from "formik";
+import { EventForm } from "../lib/types";
+
+const mapContainerStyle = {
+  width: "75vw",
+  height: "60vh",
+  borderRadius: "20px",
+};
 
 const GoogleMapsField = () => {
   const { isLoaded } = useJsApiLoader({
@@ -43,6 +50,7 @@ const GoogleMapsField = () => {
           ></input>
         </Autocomplete>
         <button
+          type="submit"
           onClick={(e) => {
             e.preventDefault();
             geocodeByAddress(direction)
@@ -55,12 +63,12 @@ const GoogleMapsField = () => {
           Find Place!
         </button>
       </form>
-      <div className="relative w-[600px] h-[600px]">
-        <div className="absolute left-0 top-0 h-full w-full">
+      <div className="">
+        <div className="">
           <GoogleMap
+            mapContainerStyle={mapContainerStyle}
             center={center}
             zoom={15}
-            mapContainerStyle={{ width: "100%", height: "100%" }}
             options={{ fullscreenControl: false }}
             onLoad={(map) => setMap(map)}
           >
@@ -72,8 +80,6 @@ const GoogleMapsField = () => {
       <button onClick={() => map?.panTo(center)}>Center</button>
     </div>
   );
-
-  return <p>Error</p>;
 };
 
 export default GoogleMapsField;
