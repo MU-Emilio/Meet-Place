@@ -93,7 +93,7 @@ const Calendar = () => {
 
   return (
     <div>
-      <div className=" bg-gray-100 flex justify-around w-[770px] px-3 py-5 align-middle mb-5 rounded-md shadow-sm">
+      <div className=" bg-gray-100 flex justify-around w-[770px] h-[100px] px-3 py-5 align-middle mb-5 rounded-md shadow-sm">
         <div className="flex gap-3">
           <div>
             <h1 className=" text-3xl font-bold">
@@ -138,10 +138,6 @@ const Calendar = () => {
           </button>
         </div>
       </div>
-
-      <button onClick={() => navigate("/addEvent")} style={styles.button}>
-        Add new event
-      </button>
 
       {!isLoading && data != null ? (
         <>

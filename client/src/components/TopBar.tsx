@@ -4,7 +4,7 @@ import TopBarButtonContainer from "./TopBarButtonContainer";
 
 const TopBar = () => {
   return (
-    <div className="flex justify-between align-middle">
+    <div className="flex justify-between align-middle mb-5">
       <div>
         <Logo />
       </div>
