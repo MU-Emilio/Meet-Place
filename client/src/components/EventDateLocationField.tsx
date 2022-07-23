@@ -1,6 +1,7 @@
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { EventForm } from "../lib/types";
+import GoogleMapsField from "./GoogleMapsField";
 
 interface Props {
   data: EventForm;
@@ -61,10 +62,10 @@ const EventDateLocationField = ({
                   placeholder="Where are you going?"
                   autoComplete="off"
                 />
+                <GoogleMapsField />
                 <ErrorMessage name="location" />
               </div>
             </div>
-
             <div className="flex w-fit gap-6 m-auto">
               <button
                 type="button"

@@ -19,7 +19,6 @@ function App() {
           </BrowserRouter>
         </UserProvider>
       </QueryClientProvider>
-      <GoogleMapsField />
     </div>
   );
 }

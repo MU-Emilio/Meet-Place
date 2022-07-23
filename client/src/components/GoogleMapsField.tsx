@@ -8,12 +8,10 @@ import {
 import { geocodeByAddress, getLatLng } from "react-google-places-autocomplete";
 import Loading from "./Loading";
 import { Location } from "../lib/types";
-import { Formik, Field, Form, ErrorMessage } from "formik";
-import { EventForm } from "../lib/types";
 
 const mapContainerStyle = {
-  width: "75vw",
-  height: "60vh",
+  width: "30vw",
+  height: "35vh",
   borderRadius: "20px",
 };
 
@@ -41,7 +39,7 @@ const GoogleMapsField = () => {
         <Autocomplete>
           <input
             type="text"
-            className="border"
+            className="block w-96 h-10 border-2 m-auto mt-4"
             placeholder="Direction"
             value={direction}
             onChange={(e) => {
