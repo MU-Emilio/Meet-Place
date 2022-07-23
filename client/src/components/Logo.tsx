@@ -4,7 +4,7 @@ import LogoImg from "../../assets/MEET_PLACE_BG.svg";
 function Logo() {
   return (
     <div>
-      <img className="m-auto h-32" src={LogoImg} alt="Logo" />
+      <img className="m-auto h-[100px]" src={LogoImg} alt="Logo" />
     </div>
   );
 }

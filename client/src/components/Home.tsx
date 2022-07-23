@@ -5,6 +5,7 @@ import Calendar from "./Calendar";
 import { User } from "../lib/types";
 import Logo from "./Logo";
 import Loading from "./Loading";
+import TopBar from "./TopBar";
 
 const Home = () => {
   const fetchData = async () => {
@@ -32,10 +33,11 @@ const Home = () => {
 
   return (
     <div>
-      <div className="flex">
+      {/* <div className="flex">
         <Logo />
         <h1>Welcome {data?.username}</h1>
-      </div>
+      </div> */}
+      <TopBar />
       <Calendar />
       <footer className=" bg-primary h-8"></footer>
     </div>
