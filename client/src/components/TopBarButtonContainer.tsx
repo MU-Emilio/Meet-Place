@@ -12,13 +12,20 @@ const TopBarButtonContainer = () => {
   return (
     <div
       style={styles.topBarButtons}
-      className="bg-gray-100 flex justify-between px-3 py-5 align-middle mb-5 rounded-md shadow-sm"
+      className="bg-gray-100 flex justify-between gap-4 px-3 py-5 align-middle mb-5 rounded-md shadow-sm"
     >
       <button
         onClick={() => {}}
-        className=" h-full w-[180px] bg-gray-200 p-2 rounded-md shadow-md hover:scale-105 ease-in-out duration-300"
+        className=" h-full w-[120px] bg-gray-200 p-2 rounded-md shadow-md hover:scale-105 ease-in-out duration-300"
       >
-        Create Event
+        Calendar
+      </button>
+
+      <button
+        onClick={() => {}}
+        className=" h-full w-[120px] bg-gray-200 p-2 rounded-md shadow-md hover:scale-105 ease-in-out duration-300"
+      >
+        Profile
       </button>
 
       <ProfileButtonBar />

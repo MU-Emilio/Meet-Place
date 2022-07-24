@@ -4,6 +4,7 @@ import RoutesAvailable from "./components/RoutesAvailable";
 import "./App.css";
 import Logout from "./components/Logout";
 import UserProvider from "./components/UserContext";
+import TopBar from "./components/TopBar";
 
 const queryClient = new QueryClient();
 
@@ -14,6 +15,7 @@ function App() {
         <Logout />
         <UserProvider>
           <BrowserRouter>
+            <TopBar />
             <RoutesAvailable />
           </BrowserRouter>
         </UserProvider>

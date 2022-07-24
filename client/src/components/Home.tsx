@@ -33,11 +33,6 @@ const Home = () => {
 
   return (
     <div>
-      {/* <div className="flex">
-        <Logo />
-        <h1>Welcome {data?.username}</h1>
-      </div> */}
-      <TopBar />
       <Calendar />
       <footer className=" bg-primary h-8"></footer>
     </div>
