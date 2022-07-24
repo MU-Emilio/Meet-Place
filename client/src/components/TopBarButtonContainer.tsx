@@ -12,7 +12,7 @@ const TopBarButtonContainer = () => {
   return (
     <div
       style={styles.topBarButtons}
-      className="bg-gray-100 flex px-3 py-5 align-middle mb-5 rounded-md shadow-sm"
+      className="bg-gray-100 flex justify-between px-3 py-5 align-middle mb-5 rounded-md shadow-sm"
     >
       <button
         onClick={() => {}}
@@ -20,6 +20,8 @@ const TopBarButtonContainer = () => {
       >
         Create Event
       </button>
+
+      <ProfileButtonBar />
     </div>
   );
 };
