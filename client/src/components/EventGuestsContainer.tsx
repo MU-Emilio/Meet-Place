@@ -32,6 +32,9 @@ const EventGuestsContainer = ({
 
   return (
     <div className=" w-8/12 m-auto">
+      <label className="block text-4xl mx-auto mb-[50px]" htmlFor="description">
+        Whos's going?...
+      </label>
       {friends ? (
         <EventGuestsField
           friends={friends}
