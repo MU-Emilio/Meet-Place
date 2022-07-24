@@ -131,7 +131,9 @@ const Calendar = () => {
             {monthView ? "Week View" : "Month View"}
           </button>
           <button
-            onClick={() => {}}
+            onClick={() => {
+              navigate("/addEvent");
+            }}
             className=" h-fit bg-gray-200 p-2 rounded-md shadow-md hover:scale-105 ease-in-out duration-300"
           >
             Create Event
