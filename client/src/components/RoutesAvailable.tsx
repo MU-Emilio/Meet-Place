@@ -6,6 +6,7 @@ import Register from "./Register";
 import Home from "./Home";
 import { UserContext } from "./UserContext";
 import EventCreateForm from "./EventCreateForm";
+import TopBar from "./TopBar";
 
 const RoutesAvailable = () => {
   const { user } = useContext(UserContext);
@@ -21,12 +22,15 @@ const RoutesAvailable = () => {
     );
   } else {
     return (
-      <Routes>
-        <Route path="/home" element={<Home />} />
-        <Route path="/friends" element={<Users />} />
-        <Route path="/addEvent" element={<EventCreateForm />} />
-        <Route path="/*" element={<Navigate to="/home" />} />
-      </Routes>
+      <div>
+        <TopBar />
+        <Routes>
+          <Route path="/home" element={<Home />} />
+          <Route path="/friends" element={<Users />} />
+          <Route path="/addEvent" element={<EventCreateForm />} />
+          <Route path="/*" element={<Navigate to="/home" />} />
+        </Routes>
+      </div>
     );
   }
 };

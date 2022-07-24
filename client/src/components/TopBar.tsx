@@ -32,7 +32,7 @@ const TopBar = () => {
   }
 
   return (
-    <div className="flex justify-between align-middle mb-5 h-[70px]">
+    <div className="flex justify-between align-middle mb-5 h-[85px]">
       <div>
         <Logo />
       </div>

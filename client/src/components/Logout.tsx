@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "./UserContext";
+import { BiLogOut } from "react-icons/bi";
 
 const Logout = () => {
   const handleLogout = () => {
@@ -10,9 +11,9 @@ const Logout = () => {
 
   const { setUser } = useContext(UserContext);
   return (
-    <div>
-      <a href="/login">
-        <button onClick={handleLogout}>Logout</button>
+    <div className=" h-[25px] w-[25px] p-1 bg-red-200 rounded-md shadow-md hover:scale-105 ease-in-out duration-300 items-center">
+      <a href="/login" className="">
+        <BiLogOut onClick={handleLogout} />
       </a>
     </div>
   );

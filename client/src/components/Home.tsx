@@ -32,7 +32,7 @@ const Home = () => {
   }
 
   return (
-    <div>
+    <div className="h-[800px]">
       <Calendar />
       <footer className=" bg-primary h-8"></footer>
     </div>

@@ -8,7 +8,7 @@ function Logo() {
   return (
     <div>
       <img
-        className="m-auto h-[70px] cursor-pointer"
+        className="m-auto h-[85px] cursor-pointer"
         src={LogoImg}
         alt="Logo"
         onClick={() => navigate("/home")}
