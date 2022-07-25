@@ -4,6 +4,7 @@ import RoutesAvailable from "./components/RoutesAvailable";
 import "./App.css";
 import Logout from "./components/Logout";
 import UserProvider from "./components/UserContext";
+import GoogleMapsField from "./components/GoogleMapsField";
 
 const queryClient = new QueryClient();
 

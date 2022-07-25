@@ -12,11 +12,7 @@ const dateTimeFieldValSchema = Yup.object({
   date: Yup.string().required().label("Date"),
 });
 
-const EventDateLocationField = ({
-  data,
-  handleNextField,
-  handlePrevField,
-}: Props) => {
+const EventDateField = ({ data, handleNextField, handlePrevField }: Props) => {
   return (
     <div className=" w-fit m-auto">
       <Formik
@@ -49,22 +45,7 @@ const EventDateLocationField = ({
                 />
                 <ErrorMessage name="date" />
               </div>
-
-              <div>
-                <label className="block text-4xl mx-auto" htmlFor="description">
-                  Where are you going?
-                </label>
-                <Field
-                  className="block w-96 h-10 border-2 m-auto mt-4"
-                  id="location"
-                  name="location"
-                  placeholder="Where are you going?"
-                  autoComplete="off"
-                />
-                <ErrorMessage name="location" />
-              </div>
             </div>
-
             <div className="flex w-fit gap-6 m-auto">
               <button
                 type="button"
@@ -74,7 +55,7 @@ const EventDateLocationField = ({
                 Back
               </button>
               <button type="submit" className="mt-4">
-                Submit
+                Next
               </button>
             </div>
           </Form>
@@ -84,4 +65,4 @@ const EventDateLocationField = ({
   );
 };
 
-export default EventDateLocationField;
+export default EventDateField;
