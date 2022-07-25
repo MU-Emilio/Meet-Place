@@ -501,4 +501,46 @@ app.post("/event/deleteGuest", async (req, res) => {
   }
 });
 
+app.get("/event/:eventId", async (req, res) => {
+  try {
+    const Event = Parse.Object.extend("Event");
+    const query = new Parse.Query(Event);
+
+    query.equalTo("objectId", req.params.eventId);
+    const eventDetails = await query.first();
+
+    if (eventDetails.get("privacy")) {
+      const eventPointer = {
+        __type: "Pointer",
+        className: "Event",
+        objectId: req.params.eventId,
+      };
+
+      const guestPointer = {
+        __type: "Pointer",
+        className: "_User",
+        objectId: req.user.id,
+      };
+
+      const Guests = Parse.Object.extend("Guests");
+      const query2 = new Parse.Query(Guests);
+
+      query2.equalTo("event", eventPointer);
+      query2.equalTo("guest", guestPointer);
+
+      const isGuest = await query2.find();
+
+      console.log(isGuest);
+      if (isGuest.length < 1) {
+        res.status(404).send({ message: "Event details are not available" });
+        return;
+      }
+    }
+
+    res.send(eventDetails);
+  } catch (error) {
+    res.status(404).set({ message: error });
+  }
+});
+
 module.exports = app;
