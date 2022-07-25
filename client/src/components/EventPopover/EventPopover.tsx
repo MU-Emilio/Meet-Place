@@ -5,6 +5,14 @@ import { SESSION_KEY } from "../../lib/constants";
 import { useQuery } from "react-query";
 import GuestList from "../GuestList";
 import { useMutation, useQueryClient } from "react-query";
+import {
+  BiTrash,
+  BiCalendar,
+  BiCurrentLocation,
+  BiComment,
+} from "react-icons/bi";
+import { format } from "date-fns";
+
 interface Props {
   event: EventType | null;
   isHover: boolean;
@@ -79,22 +87,41 @@ const EventPopover = ({ event, isHover }: Props) => {
     isLoading || (viewerIsLoading && <p>Loading...</p>);
   }
 
+  const formatDate = (date: string) => {
+    const splited = date.split("T");
+    return format(new Date(splited[0]), "MMMMMM, dd");
+  };
+
+  if (!event) {
+    return null;
+  }
+
   return (
     <div className={`eventPop ${isHover ? "fadeIn" : "fadeOut"}`}>
-      <div className="flex justify-between">
-        <h1>{event?.title}</h1>
+      <div className="flex justify-between bg-blue-500 text-white font-medium items-center p-2">
+        <h1>{event.title}</h1>
         {isOwner(event) && (
-          <button className=" bg-red-300" onClick={() => mutate()}>
-            Delete
-          </button>
+          <BiTrash onClick={() => mutate()} className="cursor-pointer" />
         )}
       </div>
       <hr />
-      <p>Date: {event?.date.iso}</p>
-      <p>{event?.description}</p>
-      <p>Guests:</p>
-
-      {isLoading || !data ? <p>Loading...</p> : <GuestList guests={data} />}
+      <div className="border flex flex-col gap-4 bg-white">
+        <div className="flex items-center">
+          <BiCalendar />
+          <p>{formatDate(event.date.iso)}</p>
+        </div>
+        <div className="flex items-center">
+          <BiComment />
+          <p>{event?.description}</p>
+        </div>
+        <div className="flex items-center">
+          <BiCurrentLocation />
+          <p>{event?.location}</p>
+        </div>
+        <div className=" align-bottom">
+          {isLoading || !data ? <p>Loading...</p> : <GuestList guests={data} />}
+        </div>
+      </div>
     </div>
   );
 };

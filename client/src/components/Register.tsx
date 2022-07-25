@@ -11,8 +11,7 @@ import Logo from "./Logo";
 const styles = {
   formContainer: {
     height: "max-content",
-    width: "max-content",
-    margin: "100px auto",
+    width: "500px",
     padding: "15px",
   },
 
@@ -52,59 +51,64 @@ const Register = () => {
   };
 
   return (
-    <div className="block bg-primary rounded-lg" style={styles.formContainer}>
-      <Logo />
-      <h1 className="text-center">Register</h1>
-      <Formik
-        initialValues={{
-          username: "",
-          password: "",
-          email: "",
-        }}
-        onSubmit={(values: Values, { resetForm }) => {
-          handleRegister(values, () => resetForm());
-        }}
+    <div className="h-[800px] p-[200px]">
+      <div
+        className="block bg-primary rounded-lg  mx-auto mb-0"
+        style={styles.formContainer}
       >
-        <Form style={styles.form}>
-          <div className="mb-5" style={styles.field}>
-            <label htmlFor="email">Email</label>
-            <Field
-              className="block"
-              id="email"
-              name="email"
-              placeholder="email@email.com"
-              type="email"
-            />
-          </div>
-          <div className="mb-5" style={styles.field}>
-            <label className="block" htmlFor="username">
-              Username
-            </label>
-            <Field
-              className="block"
-              id="username"
-              name="username"
-              placeholder="Username"
-            />
-          </div>
+        <Logo />
+        <h1 className="text-center">Register</h1>
+        <Formik
+          initialValues={{
+            username: "",
+            password: "",
+            email: "",
+          }}
+          onSubmit={(values: Values, { resetForm }) => {
+            handleRegister(values, () => resetForm());
+          }}
+        >
+          <Form style={styles.form}>
+            <div className="mb-5" style={styles.field}>
+              <label htmlFor="email">Email</label>
+              <Field
+                className="block w-full"
+                id="email"
+                name="email"
+                placeholder="email@email.com"
+                type="email"
+              />
+            </div>
+            <div className="mb-5" style={styles.field}>
+              <label className="block" htmlFor="username">
+                Username
+              </label>
+              <Field
+                className="block w-full"
+                id="username"
+                name="username"
+                placeholder="Username"
+              />
+            </div>
 
-          <div className="mb-5" style={styles.field}>
-            <label htmlFor="password">Password</label>
-            <Field
-              className="block"
-              id="password"
-              name="password"
-              placeholder="Password"
-              type="password"
-            />
-          </div>
+            <div className="mb-5" style={styles.field}>
+              <label htmlFor="password">Password</label>
+              <Field
+                className="block w-full"
+                id="password"
+                name="password"
+                placeholder="Password"
+                type="password"
+              />
+            </div>
 
-          <button className="bg-white px-3" type="submit">
-            Submit
-          </button>
-        </Form>
-      </Formik>
-      {submitMessage && <p>{submitMessage}</p>}
+            <button className="bg-white px-3" type="submit">
+              Submit
+            </button>
+          </Form>
+        </Formik>
+        {submitMessage && <p>{submitMessage}</p>}
+      </div>
     </div>
   );
 };

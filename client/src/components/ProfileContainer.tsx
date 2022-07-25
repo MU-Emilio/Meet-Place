@@ -1,13 +1,11 @@
 import axios from "axios";
 import { SESSION_KEY } from "../lib/constants";
 import { useQuery } from "react-query";
-import Calendar from "./Calendar";
-import { User } from "../lib/types";
-import Logo from "./Logo";
 import Loading from "./Loading";
-import TopBar from "./TopBar";
+import { User } from "../lib/types";
+import Profile from "./Profile";
 
-const Home = () => {
+export const ProfileContainer = () => {
   const fetchData = async () => {
     const response = await axios.get("http://localhost:3001/viewer", {
       headers: {
@@ -32,11 +30,8 @@ const Home = () => {
   }
 
   return (
-    <div className="h-[800px]">
-      <Calendar />
-      <footer className=" bg-primary h-8"></footer>
+    <div className="h-[750px] w-2/6 p-10 bg-gray-100 rounded-lg">
+      <Profile user={data} />
     </div>
   );
 };
-
-export default Home;

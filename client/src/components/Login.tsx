@@ -14,8 +14,7 @@ import { SESSION_KEY } from "../lib/constants";
 const styles = {
   formContainer: {
     height: "max-content",
-    width: "max-content",
-    margin: "100px auto",
+    width: "500px",
     padding: "15px",
   },
 
@@ -58,52 +57,57 @@ const Login = () => {
   };
 
   return (
-    <div className="block bg-primary rounded-lg" style={styles.formContainer}>
-      <Logo />
-      <h1 className="text-center">Login</h1>
-      <Formik
-        initialValues={{
-          username: "",
-          password: "",
-        }}
-        onSubmit={(values: Values, { resetForm }) => {
-          handleLogin(values, () => resetForm());
-        }}
+    <div className="h-[800px] p-[200px]">
+      <div
+        className="block bg-primary rounded-lg mx-auto mb-0"
+        style={styles.formContainer}
       >
-        <Form style={styles.form}>
-          <div style={styles.field}>
-            <label className="block" htmlFor="username">
-              Username
-            </label>
-            <Field
-              className="block mb-5"
-              id="username"
-              name="username"
-              placeholder="Username"
-            />
-          </div>
+        <Logo />
+        <h1 className="text-center">Login</h1>
+        <Formik
+          initialValues={{
+            username: "",
+            password: "",
+          }}
+          onSubmit={(values: Values, { resetForm }) => {
+            handleLogin(values, () => resetForm());
+          }}
+        >
+          <Form style={styles.form}>
+            <div style={styles.field}>
+              <label className="block" htmlFor="username">
+                Username
+              </label>
+              <Field
+                className="block mb-5 w-full"
+                id="username"
+                name="username"
+                placeholder="Username"
+              />
+            </div>
 
-          <div className="block mb-5" style={styles.field}>
-            <label htmlFor="password">Password</label>
-            <Field
-              className="block"
-              id="password"
-              name="password"
-              placeholder="Password"
-              type="password"
-            />
-          </div>
+            <div className="block mb-5" style={styles.field}>
+              <label htmlFor="password">Password</label>
+              <Field
+                className="block w-full"
+                id="password"
+                name="password"
+                placeholder="Password"
+                type="password"
+              />
+            </div>
 
-          <button className="bg-white px-3" type="submit">
-            Submit
-          </button>
-        </Form>
-      </Formik>
-      {submitMessage && <p>{submitMessage}</p>}
-      <p>Need an account?</p>
-      <p className=" underline" onClick={() => navigate("/register")}>
-        Sign up
-      </p>
+            <button className="bg-white px-3" type="submit">
+              Submit
+            </button>
+          </Form>
+        </Formik>
+        {submitMessage && <p>{submitMessage}</p>}
+        <p>Need an account?</p>
+        <p className=" underline" onClick={() => navigate("/register")}>
+          Sign up
+        </p>
+      </div>
     </div>
   );
 };
