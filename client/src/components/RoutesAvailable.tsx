@@ -8,6 +8,7 @@ import { UserContext } from "./UserContext";
 import EventCreateForm from "./EventCreateForm";
 import TopBar from "./TopBar";
 import ProfilePage from "./ProfilePage";
+import EventDetailsContainer from "./EventDetailsContainer";
 
 const RoutesAvailable = () => {
   const { user } = useContext(UserContext);
@@ -30,6 +31,7 @@ const RoutesAvailable = () => {
           <Route path="/friends" element={<Users />} />
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/addEvent" element={<EventCreateForm />} />
+          <Route path="/event/:eventId" element={<EventDetailsContainer />} />
           <Route path="/*" element={<Navigate to="/home" />} />
         </Routes>
       </div>
