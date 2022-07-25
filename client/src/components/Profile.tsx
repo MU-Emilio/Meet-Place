@@ -57,8 +57,8 @@ const Profile = ({ user }: Props) => {
           </div>
 
           <div>
-            <div>Friends</div>
-            <FriendsContainer />
+            <div>Joined on:</div>
+            {user.createdAt.iso}
           </div>
         </div>
       </div>
