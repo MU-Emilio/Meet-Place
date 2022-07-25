@@ -7,6 +7,8 @@ export interface User {
   objectId: string;
   email: string;
   profileImage: Image;
+  publicEmail: string;
+  createdAt: string;
 }
 
 interface Date {

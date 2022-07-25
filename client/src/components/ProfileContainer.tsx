@@ -1,13 +1,11 @@
-import React from "react";
-import Logo from "./Logo";
-import TopBarButtonContainer from "./TopBarButtonContainer";
 import axios from "axios";
 import { SESSION_KEY } from "../lib/constants";
 import { useQuery } from "react-query";
 import Loading from "./Loading";
 import { User } from "../lib/types";
+import Profile from "./Profile";
 
-const TopBar = () => {
+export const ProfileContainer = () => {
   const fetchData = async () => {
     const response = await axios.get("http://localhost:3001/viewer", {
       headers: {
@@ -32,19 +30,8 @@ const TopBar = () => {
   }
 
   return (
-    <div>
-      <div className="flex justify-between align-middle mb-5 h-[85px]">
-        <div>
-          <Logo />
-        </div>
-
-        <div>
-          <TopBarButtonContainer user={data} />
-        </div>
-      </div>
-      <hr className="mb-3" />
+    <div className="h-[750px] w-2/6 p-10 bg-gray-100 rounded-lg">
+      <Profile user={data} />
     </div>
   );
 };
-
-export default TopBar;
