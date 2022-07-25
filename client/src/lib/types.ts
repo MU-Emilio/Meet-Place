@@ -31,3 +31,8 @@ export interface EventForm {
   location: string;
   guests: User[];
 }
+
+export interface Location {
+  lat: number;
+  lng: number;
+}

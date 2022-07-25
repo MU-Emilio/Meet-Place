@@ -8,9 +8,15 @@ interface Props {
   startDate: Date;
   calendarDate: Date;
   events: { [key: string]: EventType[] };
+  changeDisplay: () => void;
 }
 
-export const WeekContainer = ({ startDate, calendarDate, events }: Props) => {
+export const WeekContainer = ({
+  startDate,
+  calendarDate,
+  events,
+  changeDisplay,
+}: Props) => {
   const renderWeek = (weekDate: Date) => {
     const weekGenerator = generateWeek(weekDate);
 
@@ -19,7 +25,12 @@ export const WeekContainer = ({ startDate, calendarDate, events }: Props) => {
     weekGenerator().map((day: Date, day_index: number) => {
       week_days.push(
         <React.Fragment key={`${day_index}`}>
-          <WeekDate date={day} startDate={startDate} events={events} />
+          <WeekDate
+            date={day}
+            startDate={startDate}
+            events={events}
+            changeDisplay={changeDisplay}
+          />
         </React.Fragment>
       );
     });

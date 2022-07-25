@@ -1,13 +1,14 @@
 import { useState } from "react";
 import EventTitleField from "./EventTitleField";
 import EventDescriptionField from "./EventDescriptionField";
-import EventDateLocationField from "./EventDateLocationField";
+import EventDateField from "./EventDateField";
 import EventGuestsContainer from "./EventGuestsContainer";
 import { EventForm } from "../lib/types";
 import axios from "axios";
 import { SESSION_KEY } from "../lib/constants";
 import { useMutation, useQueryClient } from "react-query";
 import { useNavigate } from "react-router-dom";
+import GoogleMapsField from "./GoogleMapsField";
 
 const EventCreateForm = () => {
   const [data, setData] = useState<EventForm>({
@@ -85,7 +86,12 @@ const EventCreateForm = () => {
       handleNextField={handleNextField}
       handlePrevField={handlePrevField}
     />,
-    <EventDateLocationField
+    <EventDateField
+      data={data}
+      handleNextField={handleNextField}
+      handlePrevField={handlePrevField}
+    />,
+    <GoogleMapsField
       data={data}
       handleNextField={handleNextField}
       handlePrevField={handlePrevField}

@@ -148,6 +148,7 @@ const Calendar = () => {
             monthView={monthView}
             calendarDate={calendarDate}
             events={data}
+            changeDisplay={changeDisplay}
           />
         </>
       ) : (
