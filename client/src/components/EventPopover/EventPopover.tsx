@@ -119,7 +119,11 @@ const EventPopover = ({ event, isHover }: Props) => {
           <p>{event?.location}</p>
         </div>
         <div className=" align-bottom">
-          {isLoading || !data ? <p>Loading...</p> : <GuestList guests={data} />}
+          {isLoading || !data ? (
+            <p>Loading...</p>
+          ) : (
+            <GuestList guests={data} horizontal={true} />
+          )}
         </div>
       </div>
     </div>

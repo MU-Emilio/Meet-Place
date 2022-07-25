@@ -4,9 +4,10 @@ import UserCard from "./UserCard";
 import Carousel from "react-elastic-carousel";
 interface Props {
   guests: User[];
+  horizontal: boolean;
 }
 
-const GuestList = ({ guests }: Props) => {
+const GuestList = ({ guests, horizontal }: Props) => {
   return (
     <div className="relative flex items-center">
       <div
@@ -15,7 +16,11 @@ const GuestList = ({ guests }: Props) => {
       >
         {guests.map((item, index) => (
           <React.Fragment key={index}>
-            <div className=" inline-block cursor-pointer hover:scale-105 ease-in-out duration-300 mr-2">
+            <div
+              className={`${
+                horizontal && "inline-block"
+              } cursor-pointer hover:scale-105 ease-in-out duration-300 mr-2`}
+            >
               <UserCard userCard={item} ButtonComponent={null} />
             </div>
           </React.Fragment>
