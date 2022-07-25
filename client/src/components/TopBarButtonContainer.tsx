@@ -27,16 +27,16 @@ const TopBarButtonContainer = ({ user }: Props) => {
         onClick={() => {
           navigate("/home");
         }}
-        className=" h-full w-[140px] bg-gray-200 p-1 rounded-md shadow-md hover:scale-105 ease-in-out duration-300 items-center flex justify-around"
+        className=" h-full w-[140px] cursor-pointer bg-gray-200 p-1 rounded-md shadow-md hover:scale-105 ease-in-out duration-300 items-center flex justify-around"
       >
         <BiCalendar /> <p>Calendar</p>
       </div>
 
       <div
         onClick={() => {
-          navigate("/");
+          navigate("/profile");
         }}
-        className=" h-full w-[140px] bg-gray-200 p-1 rounded-md shadow-md hover:scale-105 ease-in-out duration-300 items-center flex justify-around"
+        className=" h-full w-[140px] cursor-pointer bg-gray-200 p-1 rounded-md shadow-md hover:scale-105 ease-in-out duration-300 items-center flex justify-around"
       >
         <BiUser /> <p>Profile</p>
       </div>

@@ -19,7 +19,7 @@ const ProfileButtonBar = ({ user }: Props) => {
       <div className=" px-2 flex justify-around gap-4 mr-0 items-center mx-auto">
         <Logout />
         <div
-          className="flex justify-between gap-3 hover:scale-105 ease-in-out duration-300 bg-white rounded-md shadow-md p-1 w-[120px] items-center cursor-pointer"
+          className="flex justify-end gap-3 hover:scale-105 ease-in-out duration-300 bg-white rounded-md shadow-md p-1 w-[120px] items-center cursor-pointer"
           onClick={() => navigate("/profile")}
         >
           <p className="font-medium">{user.username}</p>

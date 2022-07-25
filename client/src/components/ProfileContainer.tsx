@@ -30,7 +30,7 @@ export const ProfileContainer = () => {
   }
 
   return (
-    <div className="h-[750px] w-2/6 p-10 bg-gray-100">
+    <div className="h-[750px] w-2/6 p-10 bg-gray-100 rounded-lg">
       <Profile user={data} />
     </div>
   );
