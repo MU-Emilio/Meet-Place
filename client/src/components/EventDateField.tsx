@@ -1,7 +1,6 @@
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { EventForm } from "../lib/types";
-import GoogleMapsField from "./GoogleMapsField";
 
 interface Props {
   data: EventForm;
@@ -13,11 +12,7 @@ const dateTimeFieldValSchema = Yup.object({
   date: Yup.string().required().label("Date"),
 });
 
-const EventDateLocationField = ({
-  data,
-  handleNextField,
-  handlePrevField,
-}: Props) => {
+const EventDateField = ({ data, handleNextField, handlePrevField }: Props) => {
   return (
     <div className=" w-fit m-auto">
       <Formik
@@ -70,4 +65,4 @@ const EventDateLocationField = ({
   );
 };
 
-export default EventDateLocationField;
+export default EventDateField;

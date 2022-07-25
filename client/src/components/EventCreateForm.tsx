@@ -1,7 +1,7 @@
 import { useState } from "react";
 import EventTitleField from "./EventTitleField";
 import EventDescriptionField from "./EventDescriptionField";
-import EventDateLocationField from "./EventDateLocationField";
+import EventDateField from "./EventDateField";
 import EventGuestsContainer from "./EventGuestsContainer";
 import { EventForm } from "../lib/types";
 import axios from "axios";
@@ -51,8 +51,7 @@ const EventCreateForm = () => {
   });
 
   const makeRequest = (formData: EventForm) => {
-    // mutate(formData);
-    console.log(formData);
+    mutate(formData);
     navigate("/home");
   };
 
@@ -87,7 +86,7 @@ const EventCreateForm = () => {
       handleNextField={handleNextField}
       handlePrevField={handlePrevField}
     />,
-    <EventDateLocationField
+    <EventDateField
       data={data}
       handleNextField={handleNextField}
       handlePrevField={handlePrevField}
