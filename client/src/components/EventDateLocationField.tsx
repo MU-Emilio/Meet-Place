@@ -50,21 +50,6 @@ const EventDateLocationField = ({
                 />
                 <ErrorMessage name="date" />
               </div>
-
-              <div>
-                <label className="block text-4xl mx-auto" htmlFor="description">
-                  Where are you going?
-                </label>
-                <Field
-                  className="block w-96 h-10 border-2 m-auto mt-4"
-                  id="location"
-                  name="location"
-                  placeholder="Where are you going?"
-                  autoComplete="off"
-                />
-                <GoogleMapsField />
-                <ErrorMessage name="location" />
-              </div>
             </div>
             <div className="flex w-fit gap-6 m-auto">
               <button
@@ -75,7 +60,7 @@ const EventDateLocationField = ({
                 Back
               </button>
               <button type="submit" className="mt-4">
-                Submit
+                Next
               </button>
             </div>
           </Form>

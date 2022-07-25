@@ -8,6 +8,7 @@ import axios from "axios";
 import { SESSION_KEY } from "../lib/constants";
 import { useMutation, useQueryClient } from "react-query";
 import { useNavigate } from "react-router-dom";
+import GoogleMapsField from "./GoogleMapsField";
 
 const EventCreateForm = () => {
   const [data, setData] = useState<EventForm>({
@@ -50,7 +51,8 @@ const EventCreateForm = () => {
   });
 
   const makeRequest = (formData: EventForm) => {
-    mutate(formData);
+    // mutate(formData);
+    console.log(formData);
     navigate("/home");
   };
 
@@ -86,6 +88,11 @@ const EventCreateForm = () => {
       handlePrevField={handlePrevField}
     />,
     <EventDateLocationField
+      data={data}
+      handleNextField={handleNextField}
+      handlePrevField={handlePrevField}
+    />,
+    <GoogleMapsField
       data={data}
       handleNextField={handleNextField}
       handlePrevField={handlePrevField}

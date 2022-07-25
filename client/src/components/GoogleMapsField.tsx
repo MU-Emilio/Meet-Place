@@ -7,7 +7,8 @@ import {
 } from "@react-google-maps/api";
 import { geocodeByAddress, getLatLng } from "react-google-places-autocomplete";
 import Loading from "./Loading";
-import { Location } from "../lib/types";
+import { Location, EventForm } from "../lib/types";
+import { BiCurrentLocation } from "react-icons/bi";
 
 const mapContainerStyle = {
   width: "30vw",
@@ -15,7 +16,13 @@ const mapContainerStyle = {
   borderRadius: "20px",
 };
 
-const GoogleMapsField = () => {
+interface Props {
+  data: EventForm;
+  handleNextField: (newData: EventForm) => void;
+  handlePrevField: (newData: EventForm) => void;
+}
+
+const GoogleMapsField = ({ data, handleNextField, handlePrevField }: Props) => {
   const { isLoaded } = useJsApiLoader({
     googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAPS_API_KEY,
     libraries: ["places"],
@@ -26,7 +33,8 @@ const GoogleMapsField = () => {
     lng: -122.036346,
   });
   const [map, setMap] = useState<google.maps.Map | null>(null);
-  const [direction, setDirection] = useState<string>("");
+  const [direction, setDirection] = useState<string>(data.location);
+  const [message, setMessage] = useState<string | null>(null);
 
   if (!isLoaded) {
     return <Loading />;
@@ -36,30 +44,40 @@ const GoogleMapsField = () => {
     <div className="w-full h-full">
       Google Maps
       <form action="">
-        <Autocomplete>
-          <input
-            type="text"
-            className="block w-96 h-10 border-2 m-auto mt-4"
-            placeholder="Direction"
-            value={direction}
-            onChange={(e) => {
-              setDirection(e.target.value);
+        <div className="flex items-center">
+          <Autocomplete>
+            <input
+              type="text"
+              className="block w-96 h-10 border-2"
+              placeholder="Direction"
+              value={direction}
+              onChange={(e) => {
+                setDirection(e.target.value);
+              }}
+              required
+            ></input>
+          </Autocomplete>
+          <button
+            type="submit"
+            onClick={(e) => {
+              e.preventDefault();
+              if (direction === "") {
+                setMessage("Location is required");
+              } else {
+                setMessage(null);
+                geocodeByAddress(direction)
+                  .then((results) => getLatLng(results[0]))
+                  .then(({ lat, lng }) => {
+                    setCenter({ lat, lng });
+                  });
+              }
             }}
-          ></input>
-        </Autocomplete>
-        <button
-          type="submit"
-          onClick={(e) => {
-            e.preventDefault();
-            geocodeByAddress(direction)
-              .then((results) => getLatLng(results[0]))
-              .then(({ lat, lng }) => {
-                setCenter({ lat, lng });
-              });
-          }}
-        >
-          Find Place!
-        </button>
+            className="bg-green-200 h-10"
+          >
+            <BiCurrentLocation />
+          </button>
+        </div>
+        <p>{message}</p>
       </form>
       <div className="">
         <div className="">
@@ -75,7 +93,40 @@ const GoogleMapsField = () => {
           </GoogleMap>
         </div>
       </div>
-      <button onClick={() => map?.panTo(center)}>Center</button>
+      <button
+        onClick={() => {
+          map?.panTo(center);
+        }}
+      >
+        Center
+      </button>
+      <div className="flex w-fit gap-6 m-auto">
+        <button
+          type="button"
+          className="mt-4"
+          onClick={() => {
+            data.location = direction;
+            handlePrevField(data);
+          }}
+        >
+          Back
+        </button>
+        <button
+          type="submit"
+          className="mt-4"
+          onClick={() => {
+            if (direction === "") {
+              setMessage("Location is required");
+            } else {
+              setMessage(null);
+              data.location = direction;
+              handleNextField(data);
+            }
+          }}
+        >
+          Next
+        </button>
+      </div>
     </div>
   );
 };
