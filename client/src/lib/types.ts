@@ -8,7 +8,7 @@ export interface User {
   email: string;
   profileImage: Image;
   publicEmail: string;
-  createdAt: Date;
+  createdAt: string;
 }
 
 interface Date {

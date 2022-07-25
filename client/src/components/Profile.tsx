@@ -2,6 +2,7 @@ import React from "react";
 import { User } from "../lib/types";
 import FriendsContainer from "./FriendsContainer";
 import { BiEditAlt } from "react-icons/bi";
+import { format } from "date-fns";
 
 interface Props {
   user: User;
@@ -56,9 +57,13 @@ const Profile = ({ user }: Props) => {
             </div>
           </div>
 
-          <div>
-            <div>Joined on:</div>
-            {user.createdAt.iso}
+          <div className=" bg-gray-50 mb-5 hover:scale-105 ease-in-out duration-300">
+            <div className=" text-xs">
+              <p>Joined on:</p>
+            </div>
+            <div className="">
+              {format(new Date(user.createdAt), "MMMMMM, dd, yyyy")}
+            </div>
           </div>
         </div>
       </div>
