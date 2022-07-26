@@ -47,7 +47,6 @@ const EventDetailsContainer = () => {
   } = useQuery<User[]>([`guests:${params.eventId}`], fetchGuests);
 
   if (error || guestsError) {
-    console.log(error);
     return <NotFound />;
   }
 

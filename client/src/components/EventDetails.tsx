@@ -48,7 +48,7 @@ const EventDetails = ({ event, guests }: Props) => {
           <div className=" bg-secundary p-3 flex">
             <div className="bg-white w-fit py-1 px-10 m-auto rounded-lg flex items-center gap-3 font-medium">
               <BiUser className=" text-primary" />
-              <h2 className="">Who's comming?...</h2>
+              <h2 className="">Who's coming?...</h2>
             </div>
           </div>
           <div className="p-5">
