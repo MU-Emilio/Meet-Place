@@ -22,7 +22,6 @@ const ProfileButtonBar = ({ user }: Props) => {
           className="flex justify-end gap-3 hover:scale-105 ease-in-out duration-300 bg-white rounded-md shadow-md p-1 w-[120px] items-center cursor-pointer"
           onClick={() => {
             navigate(`/users/${user.username}`);
-            window.location.reload();
           }}
         >
           <p className="font-medium">{user.username}</p>

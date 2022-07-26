@@ -23,7 +23,7 @@ export const ProfileContainer = () => {
   };
 
   const { isLoading, error, data } = useQuery<User | null>(
-    ["profile"],
+    [`user-${params.username}`],
     fetchData
   );
 
