@@ -20,7 +20,7 @@ const ProfileButtonBar = ({ user }: Props) => {
         <Logout />
         <div
           className="flex justify-end gap-3 hover:scale-105 ease-in-out duration-300 bg-white rounded-md shadow-md p-1 w-[120px] items-center cursor-pointer"
-          onClick={() => navigate("/profile")}
+          onClick={() => navigate(`/users/${user.username}`)}
         >
           <p className="font-medium">{user.username}</p>
           <div className="w-fit">

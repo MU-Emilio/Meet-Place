@@ -4,18 +4,28 @@ import { useQuery } from "react-query";
 import Loading from "./Loading";
 import { User } from "../lib/types";
 import Profile from "./Profile";
+import { useParams } from "react-router-dom";
 
 export const ProfileContainer = () => {
+  const params = useParams();
+
   const fetchData = async () => {
-    const response = await axios.get("http://localhost:3001/viewer", {
-      headers: {
-        authorization: localStorage.getItem(SESSION_KEY) || false,
-      },
-    });
+    console.log(params.username);
+    const response = await axios.get(
+      `http://localhost:3001/user/${params.username}`,
+      {
+        headers: {
+          authorization: localStorage.getItem(SESSION_KEY) || false,
+        },
+      }
+    );
     return response.data;
   };
 
-  const { isLoading, error, data } = useQuery<User | null>(["user"], fetchData);
+  const { isLoading, error, data } = useQuery<User | null>(
+    ["profile"],
+    fetchData
+  );
 
   if (isLoading) {
     return <Loading />;

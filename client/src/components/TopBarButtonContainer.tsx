@@ -34,7 +34,7 @@ const TopBarButtonContainer = ({ user }: Props) => {
 
       <div
         onClick={() => {
-          navigate("/profile");
+          navigate(`/users/${user.username}`);
         }}
         className=" h-full w-[140px] cursor-pointer bg-gray-200 p-1 rounded-md shadow-md hover:scale-105 ease-in-out duration-300 items-center flex justify-around"
       >

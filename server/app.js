@@ -3,6 +3,7 @@ const Parse = require("parse/node");
 const express = require("express");
 const app = express();
 const cors = require("cors");
+const { User } = require("parse/node");
 app.use(express.json());
 const APP_ID = process.env.APP_ID;
 const JS_KEY = process.env.JS_KEY;
@@ -106,6 +107,22 @@ app.use("/friends", async (req, res, next) => {
 
     req.friends = friendList;
     next();
+  } catch (error) {
+    res.status(404).send({ message: error.message });
+  }
+});
+
+app.get("/user/:username", async (req, res) => {
+  const User = new Parse.User();
+  const query1 = new Parse.Query(User);
+
+  try {
+    query1.equalTo("username", req.params.username);
+    console.log(query1);
+
+    const user = await query1.first();
+
+    res.send(user);
   } catch (error) {
     res.status(404).send({ message: error.message });
   }
