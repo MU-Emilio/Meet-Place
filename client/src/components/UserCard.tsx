@@ -16,7 +16,11 @@ const UserCard = ({ userCard, ButtonComponent }: Props) => {
   return (
     <div
       className="flex items-center my-4"
-      onClick={() => navigate(`/users/${userCard.username}`)}
+      onClick={() => {
+        if (!ButtonComponent) {
+          navigate(`/users/${userCard.username}`);
+        }
+      }}
     >
       {profileImage && (
         <img
