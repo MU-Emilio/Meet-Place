@@ -11,11 +11,11 @@ const mapContainerStyle = {
 };
 
 const options = {
-  fillscreenControl: false,
+  // fillscreenControl: false,
   disableDefaultUI: true,
   zoomControl: true,
-  scrollwheel: false,
-  gestureHandling: "none",
+  scrollwheel: true,
+  // gestureHandling: "none",
 };
 
 interface Props {

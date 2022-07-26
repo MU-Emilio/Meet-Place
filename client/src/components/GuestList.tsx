@@ -21,7 +21,7 @@ const GuestList = ({ guests, horizontal }: Props) => {
             <div
               className={`${
                 horizontal && "inline-block"
-              } cursor-pointer hover:scale-105 ease-in-out duration-300 mr-2`}
+              } cursor-pointer hover:scale-105 ease-in-out duration-300 mr-2 px-2`}
             >
               <UserCard userCard={item} ButtonComponent={null} />
             </div>

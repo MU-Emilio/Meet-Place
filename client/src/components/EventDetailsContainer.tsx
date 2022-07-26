@@ -6,6 +6,7 @@ import axios from "axios";
 import { useQuery } from "react-query";
 import { EventType, User } from "../lib/types";
 import Loading from "./Loading";
+import NotFound from "./PrivateEventMessage";
 
 const EventDetailsContainer = () => {
   const params = useParams();
@@ -45,18 +46,21 @@ const EventDetailsContainer = () => {
     data: guests,
   } = useQuery<User[]>([`guests:${params.eventId}`], fetchGuests);
 
-  if (isLoading && guestsIsLoading) {
+  if (error || guestsError) {
+    console.log(error);
+    return <NotFound />;
+  }
+
+  if (isLoading || guestsIsLoading || !data) {
     return <Loading />;
   }
 
   return (
     <div>
-      {data && guests ? (
+      {data && guests && (
         <div className="h-[800px]">
           <EventDetails event={data} guests={guests} />
         </div>
-      ) : (
-        <Loading />
       )}
     </div>
   );

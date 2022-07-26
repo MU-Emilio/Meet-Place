@@ -7,6 +7,7 @@ import {
   BiCalendar,
   BiCurrentLocation,
   BiComment,
+  BiUser,
 } from "react-icons/bi";
 interface Props {
   event: EventType;
@@ -15,28 +16,48 @@ interface Props {
 
 const EventDetails = ({ event, guests }: Props) => {
   return (
-    <div className=" bg-gray-100 m-auto w-3/4 p-8">
-      <div className="flex m-auto gap-4 w-fit">
-        <div className=" bg-secundary w-[400px] h-[700px] p-8 text-center shadow-md rounded-sm">
-          <div className="mt-14">
-            <h1 className=" text-4xl">{event.title}</h1>
+    <div className=" bg-gray-100 m-auto w-3/4 p-8 flex ">
+      <div className="">
+        <div className=" bg-secundary w-[400px] h-fit p-8 text-center shadow-md rounded-sm hover:scale-105 ease-in-out duration-300">
+          <div className="bg-white p-2 mb-2 rounded-md hover:scale-105 ease-in-out duration-300 shadow-md">
+            <h1 className=" text-4xl font-medium">{event.title}</h1>
           </div>
-          <div className="mt-6 items-center flex gap-2 m-auto">
-            <BiCurrentLocation />
-            <h2 className=" text-xl">{event.location}</h2>
+          <div className=" bg-white p-2 rounded-md shadow-md">
+            <div className="items-center flex gap-3 m-auto">
+              <BiCurrentLocation className=" text-primary" />
+              <h2 className=" text-xl hover:scale-105 ease-in-out duration-300">
+                {event.location}
+              </h2>
+            </div>
+            <div className="mt-3 items-center flex gap-3 m-auto">
+              <BiCalendar className=" text-primary" />
+              <h2 className="text-xl hover:scale-105 ease-in-out duration-300">
+                {event.date.iso}
+              </h2>
+            </div>
+            <div className="mt-3 items-center flex gap-3 m-auto">
+              <BiComment className=" text-primary" />
+              <h2 className="text-xl hover:scale-105 ease-in-out duration-300">
+                {event.description}
+              </h2>
+            </div>
           </div>
-          <div className="mt-3 items-center flex gap-2 m-auto">
-            <BiCalendar />
-            <h2 className="text-xl">{event.date.iso}</h2>
+        </div>
+
+        <div className="mt-10 h-[350px] bg-white rounded-md hover:scale-105 ease-in-out duration-300">
+          <div className=" bg-secundary p-3 flex">
+            <div className="bg-white w-fit py-1 px-10 m-auto rounded-lg flex items-center gap-3 font-medium">
+              <BiUser className=" text-primary" />
+              <h2 className="">Who's comming?...</h2>
+            </div>
           </div>
-          <div className="mt-3 items-center flex gap-2 m-auto">
-            <BiComment />
-            <h2 className="text-xl">{event.description}</h2>
-          </div>
-          <div className="mt-10 h-[300px] bg-white p-5">
+          <div className="p-5">
             <GuestList guests={guests} horizontal={false} />
           </div>
         </div>
+      </div>
+
+      <div className="flex m-auto gap-4 w-fit">
         <GoogleMapContainer direction={event.location} />
       </div>
     </div>
