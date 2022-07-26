@@ -52,7 +52,8 @@ const EventCreateForm = () => {
   });
 
   const makeRequest = (formData: EventForm) => {
-    mutate(formData);
+    // mutate(formData);
+    console.log(formData);
     navigate("/home");
   };
 

@@ -31,7 +31,7 @@ const EventGuestsContainer = ({
   } = useQuery<User[]>(["friends"], fetchFriends);
 
   return (
-    <div className=" w-8/12 m-auto">
+    <div className="">
       <label className="block text-4xl mx-auto mb-[50px]" htmlFor="description">
         Whos's going?...
       </label>

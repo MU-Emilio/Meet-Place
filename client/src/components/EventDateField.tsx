@@ -1,6 +1,7 @@
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { EventForm } from "../lib/types";
+import EventGuestsContainer from "./EventGuestsContainer";
 
 interface Props {
   data: EventForm;
@@ -14,7 +15,7 @@ const dateTimeFieldValSchema = Yup.object({
 
 const EventDateField = ({ data, handleNextField, handlePrevField }: Props) => {
   return (
-    <div className=" w-fit m-auto">
+    <div className=" w-[800px] m-auto">
       <Formik
         validationSchema={dateTimeFieldValSchema}
         initialValues={data}
@@ -24,39 +25,48 @@ const EventDateField = ({ data, handleNextField, handlePrevField }: Props) => {
       >
         {({ values }) => (
           <Form className="block">
-            <div className="flex gap-10">
-              <div>
-                <label className="block text-4xl mx-auto" htmlFor="date">
-                  When?
-                </label>
-                <Field
-                  className="block w-96 h-10 border-2 m-auto mt-4"
-                  id="date"
-                  name="date"
-                  type="date"
-                  placeholder="Date"
-                />
-                <Field
-                  className="block w-96 h-10 border-2 m-auto mt-4"
-                  id="time"
-                  name="time"
-                  type="time"
-                  placeholder="Date"
-                />
-                <ErrorMessage name="date" />
+            <div className="mb-12">
+              <div className="flex gap-10">
+                <div>
+                  <label className="block text-4xl mx-auto" htmlFor="date">
+                    When?
+                  </label>
+                  <Field
+                    className="block w-96 h-10 border-2 m-auto mt-4"
+                    id="date"
+                    name="date"
+                    type="date"
+                    placeholder="Date"
+                  />
+                  <Field
+                    className="block w-96 h-10 border-2 m-auto mt-4"
+                    id="time"
+                    name="time"
+                    type="time"
+                    placeholder="Date"
+                  />
+                  <ErrorMessage name="date" />
+                </div>
+              </div>
+              <div className="flex w-fit gap-6 m-auto">
+                <button
+                  type="button"
+                  className="mt-4"
+                  onClick={() => handlePrevField(values)}
+                >
+                  Back
+                </button>
+                <button type="submit" className="mt-4">
+                  Next
+                </button>
               </div>
             </div>
-            <div className="flex w-fit gap-6 m-auto">
-              <button
-                type="button"
-                className="mt-4"
-                onClick={() => handlePrevField(values)}
-              >
-                Back
-              </button>
-              <button type="submit" className="mt-4">
-                Next
-              </button>
+            <div className="w-full">
+              <EventGuestsContainer
+                data={data}
+                handleNextField={handleNextField}
+                handlePrevField={handlePrevField}
+              />
             </div>
           </Form>
         )}

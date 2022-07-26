@@ -17,17 +17,16 @@ const EventGuestsField = ({
   handleNextField,
   handlePrevField,
 }: Props) => {
-  const [addedGuests, setAddedGuests] = useState<User[]>([]);
-  const [notAddedGuests, setNotAddedGuests] = useState<User[]>(friends);
+  const [addedGuests, setAddedGuests] = useState<User[]>(data.guests);
+  const [notAddedGuests, setNotAddedGuests] = useState<User[]>(
+    friends.filter((item) => !data.guests.includes(item))
+  );
 
   const handleAddGuest = (user: User) => {
     if (!data.guests.find((item) => item == user)) {
       setAddedGuests((prev) => [...prev, user]);
       setNotAddedGuests((prev) => [...prev.filter((item) => item != user)]);
       data.guests = [...data.guests, user];
-    } else {
-      setAddedGuests((prev) => [...prev, user]);
-      setNotAddedGuests((prev) => [...prev.filter((item) => item != user)]);
     }
   };
 
