@@ -9,12 +9,12 @@ import {
   BiComment,
   BiUser,
 } from "react-icons/bi";
+import GuestContainer from "./GuestContainer";
 interface Props {
   event: EventType;
-  guests: User[];
 }
 
-const EventDetails = ({ event, guests }: Props) => {
+const EventDetails = ({ event }: Props) => {
   return (
     <div className=" bg-gray-100 m-auto w-3/4 p-8 flex ">
       <div className="">
@@ -52,7 +52,7 @@ const EventDetails = ({ event, guests }: Props) => {
             </div>
           </div>
           <div className="p-5">
-            <GuestList guests={guests} horizontal={false} />
+            <GuestContainer event={event} horizontal={true} />
           </div>
         </div>
       </div>

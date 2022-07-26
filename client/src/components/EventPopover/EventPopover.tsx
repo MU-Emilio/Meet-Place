@@ -4,6 +4,7 @@ import axios from "axios";
 import { SESSION_KEY } from "../../lib/constants";
 import { useQuery } from "react-query";
 import GuestList from "../GuestList";
+import GuestContainer from "../GuestContainer";
 import { useMutation, useQueryClient } from "react-query";
 import {
   BiTrash,
@@ -21,23 +22,6 @@ interface Props {
 
 const EventPopover = ({ event, isHover }: Props) => {
   const navigate = useNavigate();
-
-  const fetchGuests = async () => {
-    const response = await axios.get(
-      `http://localhost:3001/users/invited/${event?.objectId}`,
-      {
-        headers: {
-          authorization: localStorage.getItem(SESSION_KEY) || false,
-        },
-      }
-    );
-    return response.data;
-  };
-
-  const { isLoading, error, data } = useQuery<User[]>(
-    [`guests:${event?.objectId}`],
-    fetchGuests
-  );
 
   const deleteEvent = async () => {
     const { data: response } = await axios.post(
@@ -87,7 +71,7 @@ const EventPopover = ({ event, isHover }: Props) => {
   });
 
   {
-    isLoading || (viewerIsLoading && <p>Loading...</p>);
+    viewerIsLoading && <p>Loading...</p>;
   }
 
   const formatDate = (date: string) => {
@@ -127,11 +111,7 @@ const EventPopover = ({ event, isHover }: Props) => {
           <p className=" w-5/6">{event?.location}</p>
         </div>
         <div className=" align-bottom">
-          {isLoading || !data ? (
-            <p>Loading...</p>
-          ) : (
-            <GuestList guests={data} horizontal={true} />
-          )}
+          <GuestContainer event={event} horizontal={true} />
         </div>
       </div>
     </div>

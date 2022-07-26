@@ -28,37 +28,19 @@ const EventDetailsContainer = () => {
     fetchDetails
   );
 
-  const fetchGuests = async () => {
-    const response = await axios.get(
-      `http://localhost:3001/users/invited/${params.eventId}`,
-      {
-        headers: {
-          authorization: localStorage.getItem(SESSION_KEY) || false,
-        },
-      }
-    );
-    return response.data;
-  };
-
-  const {
-    isLoading: guestsIsLoading,
-    error: guestsError,
-    data: guests,
-  } = useQuery<User[]>([`guests:${params.eventId}`], fetchGuests);
-
-  if (error || guestsError) {
+  if (error) {
     return <NotFound />;
   }
 
-  if (isLoading || guestsIsLoading || !data) {
+  if (isLoading || !data) {
     return <Loading />;
   }
 
   return (
     <div>
-      {data && guests && (
+      {data && (
         <div className="h-[800px]">
-          <EventDetails event={data} guests={guests} />
+          <EventDetails event={data} />
         </div>
       )}
     </div>

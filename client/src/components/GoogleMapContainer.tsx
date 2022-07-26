@@ -11,11 +11,9 @@ const mapContainerStyle = {
 };
 
 const options = {
-  // fillscreenControl: false,
   disableDefaultUI: true,
   zoomControl: true,
   scrollwheel: true,
-  // gestureHandling: "none",
 };
 
 interface Props {
@@ -31,7 +29,6 @@ const GoogleMapContainer = ({ direction }: Props) => {
   const [map, setMap] = useState<google.maps.Map | null>(null);
 
   useEffect(() => {
-    console.log(direction);
     try {
       geocodeByAddress(direction)
         .then((results) => getLatLng(results[0]))
