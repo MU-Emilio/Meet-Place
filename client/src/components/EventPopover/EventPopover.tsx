@@ -97,26 +97,26 @@ const EventPopover = ({ event, isHover }: Props) => {
   }
 
   return (
-    <div className={`eventPop ${isHover ? "fadeIn" : "fadeOut"}`}>
-      <div className="flex justify-between bg-blue-500 text-white font-medium items-center p-2">
+    <div className={`eventPop ${isHover ? "fadeIn" : "fadeOut"} rounded-md`}>
+      <div className="flex justify-between bg-blue-500 text-white font-medium items-center p-2 rounded-t-md">
         <h1>{event.title}</h1>
         {isOwner(event) && (
           <BiTrash onClick={() => mutate()} className="cursor-pointer" />
         )}
       </div>
       <hr />
-      <div className="border flex flex-col gap-4 bg-white">
+      <div className="border flex flex-col gap-4 bg-white py-2">
         <div className="flex items-center">
-          <BiCalendar />
-          <p>{formatDate(event.date.iso)}</p>
+          <BiCalendar className="w-1/6 text-2xl" />
+          <p className="w-5/6">{formatDate(event.date.iso)}</p>
         </div>
         <div className="flex items-center">
-          <BiComment />
-          <p>{event?.description}</p>
+          <BiComment className="w-1/6 text-2xl" />
+          <p className="w-5/6">{event?.description}</p>
         </div>
-        <div className="flex items-center">
-          <BiCurrentLocation />
-          <p>{event?.location}</p>
+        <div className="flex items-center gap-0">
+          <BiCurrentLocation className=" w-1/6 text-2xl" />
+          <p className=" w-5/6">{event?.location}</p>
         </div>
         <div className=" align-bottom">
           {isLoading || !data ? (

@@ -16,10 +16,12 @@ const Event = ({ event }: Props) => {
     <div
       onMouseEnter={() => setIsHover(true)}
       onMouseLeave={() => setIsHover(false)}
-      onClick={() => navigate(`/event/${event.objectId}`)}
       className="relative"
     >
-      <div className=" text-sm bg-green-200 border border-green-300 flex justify-between mb-2 hover:scale-105 ease-in-out duration-300 cursor-pointer">
+      <div
+        className=" text-sm bg-green-200 border border-green-300 flex justify-between mb-2 hover:scale-105 ease-in-out duration-300 cursor-pointer"
+        onClick={() => navigate(`/event/${event.objectId}`)}
+      >
         <p>{event.title}</p>
         <p className=" text-xs">{format(new Date(event.date.iso), "k:mm")}</p>
       </div>
