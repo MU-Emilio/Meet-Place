@@ -21,6 +21,7 @@ export interface EventType {
   title: string;
   owner: User;
   location: string;
+  privacy: boolean;
 }
 
 export interface EventForm {
@@ -30,6 +31,7 @@ export interface EventForm {
   title: string;
   location: string;
   guests: User[];
+  privacy: boolean;
 }
 
 export interface Location {

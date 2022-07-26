@@ -319,8 +319,6 @@ app.post("/event/add", async (req, res) => {
 
   const event_info = req.body.event;
 
-  console.log(event_info);
-
   try {
     // Format everything
 
@@ -337,6 +335,7 @@ app.post("/event/add", async (req, res) => {
       description: event_info.description,
       location: event_info.location,
       owner: req.user,
+      privacy: event_info.privacy,
     };
 
     const eventPointer = await event.save(event_format, {
@@ -530,7 +529,6 @@ app.get("/event/:eventId", async (req, res) => {
 
       const isGuest = await query2.find();
 
-      console.log(isGuest);
       if (isGuest.length < 1) {
         res.status(404).send({ message: "Event details are not available" });
         return;
