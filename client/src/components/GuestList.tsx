@@ -12,7 +12,9 @@ const GuestList = ({ guests, horizontal }: Props) => {
     <div className="relative flex items-center">
       <div
         id="slider"
-        className="w-full h-full overflow-x-scroll whitespace-nowrap scroll-smooth"
+        className={`w-full ${
+          horizontal ? "h-full" : " h-[250px]"
+        } overflow-y-auto whitespace-nowrap scroll-smooth`}
       >
         {guests.map((item, index) => (
           <React.Fragment key={index}>

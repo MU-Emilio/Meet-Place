@@ -2,13 +2,12 @@ import { useEffect, useState } from "react";
 import { useJsApiLoader, GoogleMap, Marker } from "@react-google-maps/api";
 import { geocodeByAddress, getLatLng } from "react-google-places-autocomplete";
 import Loading from "./Loading";
-import { Location, EventForm } from "../lib/types";
-import { BiCurrentLocation } from "react-icons/bi";
+import { Location } from "../lib/types";
 
 const mapContainerStyle = {
   width: "100%",
   height: "700px",
-  borderRadius: "20px",
+  borderRadius: "0 40px 40px 0",
 };
 
 const options = {
@@ -40,7 +39,7 @@ const GoogleMapContainer = ({ direction }: Props) => {
           setCenter({ lat, lng });
         });
     } catch (error) {}
-  }, [map]);
+  }, [map, direction]);
 
   if (!isLoaded) {
     return <Loading />;
