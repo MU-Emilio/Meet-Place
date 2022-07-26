@@ -16,7 +16,8 @@ const PrivateEventMessage = () => {
           style={styles.icon}
         />
         <h1 className=" text-center font-medium text-4xl mt-4 ">
-          Ups! It looks like you don't have access to this event...
+          <span className="text-primary font-semibold">Oops!</span> Looks like
+          you don't have access to this event...
         </h1>
       </div>
     </div>

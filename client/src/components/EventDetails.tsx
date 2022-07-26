@@ -22,22 +22,22 @@ const EventDetails = ({ event, guests }: Props) => {
           <div className="bg-white p-2 mb-2 rounded-md hover:scale-105 ease-in-out duration-300 shadow-md">
             <h1 className=" text-4xl font-medium">{event.title}</h1>
           </div>
-          <div className=" bg-white p-2 rounded-md shadow-md">
+          <div className=" bg-white p-2 rounded-md shadow-md text-left">
             <div className="items-center flex gap-3 m-auto">
-              <BiCurrentLocation className=" text-primary" />
-              <h2 className=" text-xl hover:scale-105 ease-in-out duration-300">
+              <BiCurrentLocation className=" text-primary w-1/6" />
+              <h2 className=" text-xl hover:scale-105 ease-in-out duration-300 w-5/6">
                 {event.location}
               </h2>
             </div>
             <div className="mt-3 items-center flex gap-3 m-auto">
-              <BiCalendar className=" text-primary" />
-              <h2 className="text-xl hover:scale-105 ease-in-out duration-300">
+              <BiCalendar className=" text-primary w-1/6" />
+              <h2 className="text-xl hover:scale-105 ease-in-out duration-300 w-5/6">
                 {event.date.iso}
               </h2>
             </div>
             <div className="mt-3 items-center flex gap-3 m-auto">
-              <BiComment className=" text-primary" />
-              <h2 className="text-xl hover:scale-105 ease-in-out duration-300">
+              <BiComment className=" text-primary w-1/6" />
+              <h2 className="text-xl hover:scale-105 ease-in-out duration-300 w-5/6">
                 {event.description}
               </h2>
             </div>

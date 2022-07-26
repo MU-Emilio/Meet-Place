@@ -118,7 +118,6 @@ app.get("/user/:username", async (req, res) => {
 
   try {
     query1.equalTo("username", req.params.username);
-    console.log(query1);
 
     const user = await query1.first();
 
