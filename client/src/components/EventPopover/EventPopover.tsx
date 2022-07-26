@@ -12,6 +12,7 @@ import {
   BiComment,
 } from "react-icons/bi";
 import { format } from "date-fns";
+import { useNavigate } from "react-router-dom";
 
 interface Props {
   event: EventType | null;
@@ -19,6 +20,8 @@ interface Props {
 }
 
 const EventPopover = ({ event, isHover }: Props) => {
+  const navigate = useNavigate();
+
   const fetchGuests = async () => {
     const response = await axios.get(
       `http://localhost:3001/users/invited/${event?.objectId}`,
@@ -99,7 +102,12 @@ const EventPopover = ({ event, isHover }: Props) => {
   return (
     <div className={`eventPop ${isHover ? "fadeIn" : "fadeOut"} rounded-md`}>
       <div className="flex justify-between bg-blue-500 text-white font-medium items-center p-2 rounded-t-md">
-        <h1>{event.title}</h1>
+        <h1
+          className="cursor-pointer"
+          onClick={() => navigate(`/event/${event.objectId}`)}
+        >
+          {event.title}
+        </h1>
         {isOwner(event) && (
           <BiTrash onClick={() => mutate()} className="cursor-pointer" />
         )}
