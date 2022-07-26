@@ -3,20 +3,15 @@ import { User, EventForm } from "../lib/types";
 import AddGuestButton from "./AddGuestButton";
 import DeleteGuestButton from "./DeleteGuestButton";
 import FormGuestsList from "./FormGuestsList";
+import { format, setHours } from "date-fns";
 
 interface Props {
   friends: User[];
   data: EventForm;
-  handleNextField: (newData: EventForm) => void;
-  handlePrevField: (newData: EventForm) => void;
+  dateState: string;
 }
 
-const EventGuestsField = ({
-  friends,
-  data,
-  handleNextField,
-  handlePrevField,
-}: Props) => {
+const EventGuestsField = ({ friends, data, dateState }: Props) => {
   const [addedGuests, setAddedGuests] = useState<User[]>(data.guests);
   const [notAddedGuests, setNotAddedGuests] = useState<User[]>(
     friends.filter((item) => !data.guests.includes(item))
@@ -66,21 +61,19 @@ const EventGuestsField = ({
         </div>
       </div>
 
-      <div className="flex gap-6">
-        <button
-          type="button"
-          className="mt-4"
-          onClick={() => handlePrevField(data)}
-        >
-          Back
-        </button>
-        <button
-          type="button"
-          className="mt-4"
-          onClick={() => handleNextField(data)}
-        >
-          Next
-        </button>
+      <div className="flex gap-6 m-auto w-fit">
+        <p>
+          Add all friends available on
+          {data.date != "" ? (
+            <span className=" text-primary font-medium">
+              {" "}
+              {format(setHours(new Date(data.date), 10), "MMMMMM, dd")}
+            </span>
+          ) : (
+            "..."
+          )}
+        </p>
+        <button className=" bg-blue-300">Add</button>
       </div>
     </div>
   );

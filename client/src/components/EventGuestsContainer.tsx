@@ -6,12 +6,14 @@ import EventGuestsField from "./EventGuestsField";
 
 interface Props {
   data: EventForm;
+  dateState: string;
   handleNextField: (newData: EventForm) => void;
   handlePrevField: (newData: EventForm) => void;
 }
 
 const EventGuestsContainer = ({
   data,
+  dateState,
   handleNextField,
   handlePrevField,
 }: Props) => {
@@ -36,12 +38,7 @@ const EventGuestsContainer = ({
         Whos's going?...
       </label>
       {friends ? (
-        <EventGuestsField
-          friends={friends}
-          data={data}
-          handleNextField={handleNextField}
-          handlePrevField={handlePrevField}
-        />
+        <EventGuestsField friends={friends} data={data} dateState={dateState} />
       ) : (
         <p>Loading...</p>
       )}

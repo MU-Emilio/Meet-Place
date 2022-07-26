@@ -76,7 +76,7 @@ const EventPopover = ({ event, isHover }: Props) => {
 
   const formatDate = (date: string) => {
     const splited = date.split("T");
-    return format(new Date(splited[0]), "MMMMMM, dd");
+    return format(new Date(`${splited[0]}T10:00:00.000Z`), "MMMMMM, dd");
   };
 
   if (!event) {

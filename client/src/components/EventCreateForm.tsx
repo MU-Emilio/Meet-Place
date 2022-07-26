@@ -83,11 +83,6 @@ const EventCreateForm = () => {
       handleNextField={handleNextField}
       handlePrevField={handlePrevField}
     ></EventDescriptionField>,
-    <EventGuestsContainer
-      data={data}
-      handleNextField={handleNextField}
-      handlePrevField={handlePrevField}
-    />,
     <EventDateField
       data={data}
       handleNextField={handleNextField}
