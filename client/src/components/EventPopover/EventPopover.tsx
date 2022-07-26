@@ -4,6 +4,7 @@ import axios from "axios";
 import { SESSION_KEY } from "../../lib/constants";
 import { useQuery } from "react-query";
 import GuestList from "../GuestList";
+import GuestContainer from "../GuestContainer";
 import { useMutation, useQueryClient } from "react-query";
 import {
   BiTrash,
@@ -12,6 +13,7 @@ import {
   BiComment,
 } from "react-icons/bi";
 import { format } from "date-fns";
+import { useNavigate } from "react-router-dom";
 
 interface Props {
   event: EventType | null;
@@ -19,22 +21,7 @@ interface Props {
 }
 
 const EventPopover = ({ event, isHover }: Props) => {
-  const fetchGuests = async () => {
-    const response = await axios.get(
-      `http://localhost:3001/users/invited/${event?.objectId}`,
-      {
-        headers: {
-          authorization: localStorage.getItem(SESSION_KEY) || false,
-        },
-      }
-    );
-    return response.data;
-  };
-
-  const { isLoading, error, data } = useQuery<User[]>(
-    [`guests:${event?.objectId}`],
-    fetchGuests
-  );
+  const navigate = useNavigate();
 
   const deleteEvent = async () => {
     const { data: response } = await axios.post(
@@ -84,7 +71,7 @@ const EventPopover = ({ event, isHover }: Props) => {
   });
 
   {
-    isLoading || (viewerIsLoading && <p>Loading...</p>);
+    viewerIsLoading && <p>Loading...</p>;
   }
 
   const formatDate = (date: string) => {
@@ -97,29 +84,34 @@ const EventPopover = ({ event, isHover }: Props) => {
   }
 
   return (
-    <div className={`eventPop ${isHover ? "fadeIn" : "fadeOut"}`}>
-      <div className="flex justify-between bg-blue-500 text-white font-medium items-center p-2">
-        <h1>{event.title}</h1>
+    <div className={`eventPop ${isHover ? "fadeIn" : "fadeOut"} rounded-md`}>
+      <div className="flex justify-between bg-blue-500 text-white font-medium items-center p-2 rounded-t-md">
+        <h1
+          className="cursor-pointer"
+          onClick={() => navigate(`/event/${event.objectId}`)}
+        >
+          {event.title}
+        </h1>
         {isOwner(event) && (
           <BiTrash onClick={() => mutate()} className="cursor-pointer" />
         )}
       </div>
       <hr />
-      <div className="border flex flex-col gap-4 bg-white">
+      <div className="border flex flex-col gap-4 bg-white py-2">
         <div className="flex items-center">
-          <BiCalendar />
-          <p>{formatDate(event.date.iso)}</p>
+          <BiCalendar className="w-1/6 text-2xl" />
+          <p className="w-5/6">{formatDate(event.date.iso)}</p>
         </div>
         <div className="flex items-center">
-          <BiComment />
-          <p>{event?.description}</p>
+          <BiComment className="w-1/6 text-2xl" />
+          <p className="w-5/6">{event?.description}</p>
         </div>
-        <div className="flex items-center">
-          <BiCurrentLocation />
-          <p>{event?.location}</p>
+        <div className="flex items-center gap-0">
+          <BiCurrentLocation className=" w-1/6 text-2xl" />
+          <p className=" w-5/6">{event?.location}</p>
         </div>
         <div className=" align-bottom">
-          {isLoading || !data ? <p>Loading...</p> : <GuestList guests={data} />}
+          <GuestContainer event={event} horizontal={true} />
         </div>
       </div>
     </div>

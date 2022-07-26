@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { ProfileContainer } from "./ProfileContainer";
 
 const ProfilePage = () => {

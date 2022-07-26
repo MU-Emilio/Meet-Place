@@ -4,18 +4,25 @@ import UserCard from "./UserCard";
 import Carousel from "react-elastic-carousel";
 interface Props {
   guests: User[];
+  horizontal: boolean;
 }
 
-const GuestList = ({ guests }: Props) => {
+const GuestList = ({ guests, horizontal }: Props) => {
   return (
     <div className="relative flex items-center">
       <div
         id="slider"
-        className="w-full h-full overflow-x-scroll whitespace-nowrap scroll-smooth"
+        className={`w-full ${
+          horizontal ? "h-full" : " h-[250px]"
+        } overflow-y-auto whitespace-nowrap scroll-smooth`}
       >
         {guests.map((item, index) => (
           <React.Fragment key={index}>
-            <div className=" inline-block cursor-pointer hover:scale-105 ease-in-out duration-300 mr-2">
+            <div
+              className={`${
+                horizontal && "inline-block"
+              } cursor-pointer hover:scale-105 ease-in-out duration-300 mr-2 px-2`}
+            >
               <UserCard userCard={item} ButtonComponent={null} />
             </div>
           </React.Fragment>

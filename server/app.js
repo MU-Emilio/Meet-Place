@@ -3,6 +3,7 @@ const Parse = require("parse/node");
 const express = require("express");
 const app = express();
 const cors = require("cors");
+const { User } = require("parse/node");
 app.use(express.json());
 const APP_ID = process.env.APP_ID;
 const JS_KEY = process.env.JS_KEY;
@@ -106,6 +107,21 @@ app.use("/friends", async (req, res, next) => {
 
     req.friends = friendList;
     next();
+  } catch (error) {
+    res.status(404).send({ message: error.message });
+  }
+});
+
+app.get("/user/:username", async (req, res) => {
+  const User = new Parse.User();
+  const query1 = new Parse.Query(User);
+
+  try {
+    query1.equalTo("username", req.params.username);
+
+    const user = await query1.first();
+
+    res.send(user);
   } catch (error) {
     res.status(404).send({ message: error.message });
   }
@@ -319,8 +335,6 @@ app.post("/event/add", async (req, res) => {
 
   const event_info = req.body.event;
 
-  console.log(event_info);
-
   try {
     // Format everything
 
@@ -337,6 +351,7 @@ app.post("/event/add", async (req, res) => {
       description: event_info.description,
       location: event_info.location,
       owner: req.user,
+      privacy: event_info.privacy,
     };
 
     const eventPointer = await event.save(event_format, {
@@ -498,6 +513,47 @@ app.post("/event/deleteGuest", async (req, res) => {
   } catch (error) {
     res.status(409).set({ message: error.message });
     return;
+  }
+});
+
+app.get("/event/:eventId", async (req, res) => {
+  try {
+    const Event = Parse.Object.extend("Event");
+    const query = new Parse.Query(Event);
+
+    query.equalTo("objectId", req.params.eventId);
+    const eventDetails = await query.first();
+
+    if (eventDetails.get("privacy")) {
+      const eventPointer = {
+        __type: "Pointer",
+        className: "Event",
+        objectId: req.params.eventId,
+      };
+
+      const guestPointer = {
+        __type: "Pointer",
+        className: "_User",
+        objectId: req.user.id,
+      };
+
+      const Guests = Parse.Object.extend("Guests");
+      const query2 = new Parse.Query(Guests);
+
+      query2.equalTo("event", eventPointer);
+      query2.equalTo("guest", guestPointer);
+
+      const isGuest = await query2.find();
+
+      if (isGuest.length < 1) {
+        res.status(404).send({ message: "Event details are not available" });
+        return;
+      }
+    }
+
+    res.send(eventDetails);
+  } catch (error) {
+    res.status(404).set({ message: error });
   }
 });
 

@@ -40,6 +40,17 @@ const EventTitleField = ({ data, handleNextField }: Props) => {
               autoComplete="off"
             />
 
+            <div className="flex items-center mt-5 gap-5">
+              <label htmlFor="private">Is this a private event?</label>
+              <Field
+                className=""
+                id="privacy"
+                name="privacy"
+                placeholder="Title"
+                type="checkbox"
+              />
+            </div>
+
             <ErrorMessage name="title" />
 
             <button type="submit" className="block mt-4">

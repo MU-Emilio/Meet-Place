@@ -17,6 +17,7 @@ const EventCreateForm = () => {
     time: "",
     description: "",
     location: "",
+    privacy: false,
     guests: [],
   });
 

@@ -53,6 +53,13 @@ const GoogleMapsField = ({ data, handleNextField, handlePrevField }: Props) => {
               value={direction}
               onChange={(e) => {
                 setDirection(e.target.value);
+                try {
+                  geocodeByAddress(direction)
+                    .then((results) => getLatLng(results[0]))
+                    .then(({ lat, lng }) => {
+                      setCenter({ lat, lng });
+                    });
+                } catch (error) {}
               }}
               required
             ></input>
@@ -124,7 +131,7 @@ const GoogleMapsField = ({ data, handleNextField, handlePrevField }: Props) => {
             }
           }}
         >
-          Next
+          Submit
         </button>
       </div>
     </div>
