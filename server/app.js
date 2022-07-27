@@ -25,6 +25,7 @@ app.post("/users/login", async (req, res) => {
 
   try {
     const user = await Parse.User.logIn(body.username, body.password);
+
     res.send({ message: "User logged!", status: "success", payload: user });
   } catch (error) {
     res
@@ -49,6 +50,8 @@ app.post("/users/register", async (req, res) => {
     return;
   }
   user.set("email", body.email);
+  user.set("publicEmail", body.email);
+  user.set("fullName", body.fullName);
 
   try {
     await user.signUp();

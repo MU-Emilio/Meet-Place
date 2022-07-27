@@ -34,7 +34,7 @@ const AddAvailableFriends = ({ data, handleAddArrayGuests }: Props) => {
     isLoading,
     error,
     data: availableFriends,
-  } = useQuery<User[]>(["available"], fetchAvailable);
+  } = useQuery<User[]>([`available-${data.date}`], fetchAvailable);
 
   if (isLoading) {
     return <Loading />;
