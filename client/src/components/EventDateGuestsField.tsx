@@ -1,4 +1,4 @@
-import { Formik, Field, Form, ErrorMessage } from "formik";
+import { Formik, Field, Form } from "formik";
 import { useState } from "react";
 import * as Yup from "yup";
 import { EventForm } from "../lib/types";
@@ -14,9 +14,13 @@ const dateTimeFieldValSchema = Yup.object({
   date: Yup.string().required().label("Date"),
 });
 
-const EventDateField = ({ data, handleNextField, handlePrevField }: Props) => {
+const EventDateGuestsField = ({
+  data,
+  handleNextField,
+  handlePrevField,
+}: Props) => {
   const [dateState, setDateState] = useState<string>(data.date);
-  const [timeState, setTimeState] = useState<string>(data.time);
+  const [message, setMessage] = useState<string>("");
 
   return (
     <div className=" w-[800px] m-auto">
@@ -35,17 +39,6 @@ const EventDateField = ({ data, handleNextField, handlePrevField }: Props) => {
                   <label className="block text-4xl mx-auto" htmlFor="date">
                     When?
                   </label>
-                  {/* <Field
-                    className="block w-96 h-10 border-2 m-auto mt-4"
-                    id="date"
-                    name="date"
-                    type="date"
-                    placeholder="Date"
-                    onChange={(e: any) => {
-                      console.log(e);
-                      // data.date;
-                    }}
-                  /> */}
                   <input
                     className="block w-96 h-10 border-2 m-auto mt-4"
                     type="date"
@@ -55,7 +48,6 @@ const EventDateField = ({ data, handleNextField, handlePrevField }: Props) => {
                     onChange={(e: any) => {
                       data.date = e.target.value;
                       setDateState(e.target.value);
-                      console.log(data.date);
                     }}
                   />
                   <Field
@@ -65,17 +57,12 @@ const EventDateField = ({ data, handleNextField, handlePrevField }: Props) => {
                     type="time"
                     placeholder="Date"
                   />
-                  <ErrorMessage name="date" />
+                  <p>{message}</p>
                 </div>
               </div>
             </div>
             <div className="w-full">
-              <EventGuestsContainer
-                data={data}
-                dateState={dateState}
-                handleNextField={handleNextField}
-                handlePrevField={handlePrevField}
-              />
+              <EventGuestsContainer data={data} />
             </div>
             <div className="flex w-fit gap-6 m-auto">
               <button
@@ -88,7 +75,13 @@ const EventDateField = ({ data, handleNextField, handlePrevField }: Props) => {
               <button
                 type="button"
                 className="mt-4"
-                onClick={() => handleNextField(values)}
+                onClick={() => {
+                  if (dateState != "") {
+                    handleNextField(values);
+                  } else {
+                    setMessage("You have to select a date to continue");
+                  }
+                }}
               >
                 Next
               </button>
@@ -100,4 +93,4 @@ const EventDateField = ({ data, handleNextField, handlePrevField }: Props) => {
   );
 };
 
-export default EventDateField;
+export default EventDateGuestsField;

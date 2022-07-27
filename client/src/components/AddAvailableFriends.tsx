@@ -4,7 +4,6 @@ import { SESSION_KEY } from "../lib/constants";
 import axios from "axios";
 import { useQuery } from "react-query";
 import Loading from "./Loading";
-import { useEffect } from "react";
 
 interface Props {
   data: EventForm;

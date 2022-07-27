@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { User, EventForm } from "../lib/types";
-import { useQueryClient } from "react-query";
 import AddGuestButton from "./AddGuestButton";
 import DeleteGuestButton from "./DeleteGuestButton";
 import FormGuestsList from "./FormGuestsList";
@@ -9,10 +8,9 @@ import AddAvaiableFriends from "./AddAvailableFriends";
 interface Props {
   friends: User[];
   data: EventForm;
-  dateState: string;
 }
 
-const EventGuestsField = ({ friends, data, dateState }: Props) => {
+const EventGuestsField = ({ friends, data }: Props) => {
   const [addedGuests, setAddedGuests] = useState<User[]>(data.guests);
   const [notAddedGuests, setNotAddedGuests] = useState<User[]>(
     friends.filter((item) => !data.guests.includes(item))

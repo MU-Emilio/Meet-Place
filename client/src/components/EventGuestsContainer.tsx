@@ -6,17 +6,9 @@ import EventGuestsField from "./EventGuestsField";
 
 interface Props {
   data: EventForm;
-  dateState: string;
-  handleNextField: (newData: EventForm) => void;
-  handlePrevField: (newData: EventForm) => void;
 }
 
-const EventGuestsContainer = ({
-  data,
-  dateState,
-  handleNextField,
-  handlePrevField,
-}: Props) => {
+const EventGuestsContainer = ({ data }: Props) => {
   const fetchFriends = async () => {
     const response = await axios.get("http://localhost:3001/friends", {
       headers: {
@@ -38,7 +30,7 @@ const EventGuestsContainer = ({
         Whos's going?...
       </label>
       {friends ? (
-        <EventGuestsField friends={friends} data={data} dateState={dateState} />
+        <EventGuestsField friends={friends} data={data} />
       ) : (
         <p>Loading...</p>
       )}
