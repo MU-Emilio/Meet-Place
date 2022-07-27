@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { User, EventForm } from "../lib/types";
+import { useQueryClient } from "react-query";
 import AddGuestButton from "./AddGuestButton";
 import DeleteGuestButton from "./DeleteGuestButton";
 import FormGuestsList from "./FormGuestsList";
-import { format, startOfDay } from "date-fns";
+import AddAvaiableFriends from "./AddAvailableFriends";
 
 interface Props {
   friends: User[];
@@ -18,9 +19,11 @@ const EventGuestsField = ({ friends, data, dateState }: Props) => {
   );
 
   const handleAddGuest = (user: User) => {
-    if (!data.guests.find((item) => item == user)) {
-      setAddedGuests((prev) => [...prev, user]);
-      setNotAddedGuests((prev) => [...prev.filter((item) => item != user)]);
+    if (!data.guests.find((item) => item.objectId == user.objectId)) {
+      setAddedGuests([...data.guests, user]);
+      setNotAddedGuests((prev) => [
+        ...prev.filter((item) => item.objectId != user.objectId),
+      ]);
       data.guests = [...data.guests, user];
     }
   };
@@ -30,6 +33,20 @@ const EventGuestsField = ({ friends, data, dateState }: Props) => {
     setNotAddedGuests((prev) => [...prev, user]);
     data.guests = [...data.guests.filter((item) => item != user)];
   };
+
+  const handleAddArrayGuests = (availableFriends: User[]) => {
+    availableFriends.map((guest) => {
+      handleAddGuest(guest);
+    });
+  };
+
+  useEffect(() => {
+    addedGuests.map((friend) => {
+      setNotAddedGuests((prev) => [
+        ...prev.filter((item) => item.objectId != friend.objectId),
+      ]);
+    });
+  }, [data]);
 
   return (
     <div className="block">
@@ -61,20 +78,10 @@ const EventGuestsField = ({ friends, data, dateState }: Props) => {
         </div>
       </div>
 
-      <div className="flex gap-6 m-auto w-fit">
-        <p>
-          Add all friends available on
-          {data.date != "" ? (
-            <span className=" text-primary font-medium">
-              {" "}
-              {format(new Date(`${data.date}T10:00:00.000Z`), "MMMMMM, dd")}
-            </span>
-          ) : (
-            "..."
-          )}
-        </p>
-        <button className=" bg-blue-300">Add</button>
-      </div>
+      <AddAvaiableFriends
+        data={data}
+        handleAddArrayGuests={handleAddArrayGuests}
+      />
     </div>
   );
 };

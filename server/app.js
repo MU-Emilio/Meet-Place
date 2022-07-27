@@ -560,7 +560,6 @@ app.get("/event/:eventId", async (req, res) => {
 
 app.get("/guests/available/:date", async (req, res) => {
   // Get user's friends
-
   const friendList = [];
 
   const Friends = Parse.Object.extend("Friends");
@@ -639,7 +638,6 @@ app.get("/guests/available/:date", async (req, res) => {
 
     res.send(available);
   } catch (error) {
-    console.log(error);
     res.status(404).send({ message: error.message });
   }
 });
