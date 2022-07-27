@@ -620,21 +620,22 @@ app.get("/guests/available/:date", async (req, res) => {
     guests_values.map((relation) => {
       // Array of events in that date for the friend
       const events_on_date = [];
-
       // Iterates each relation [ {guest, event} , {...} , ...] in array of relations from Guests table
-      relation.map((item) => {
-        if (item.get("event")) {
-          // Check if the date of the event equals the date given
-          const event = item.get("event");
-          if (format(event.get("date"), "yyyy-MM-dd") === req.params.date) {
-            // Push event in the array of events of the given date
-            events_on_date.push(item.get("event"));
+      if (relation != []) {
+        relation.map((item) => {
+          if (item.get("event")) {
+            // Check if the date of the event equals the date given
+            const event = item.get("event");
+            if (format(event.get("date"), "yyyy-MM-dd") === req.params.date) {
+              // Push event in the array of events of the given date
+              events_on_date.push(item.get("event"));
+            }
           }
-        }
-      });
+        });
+      }
 
       // If the array of events is empty, the user is available
-      if (events_on_date.length === 0) {
+      if (events_on_date.length === 0 && relation[0]) {
         available.push(relation[0].get("guest"));
       }
     });

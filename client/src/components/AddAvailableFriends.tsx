@@ -40,6 +40,10 @@ const AddAvailableFriends = ({ data, handleAddArrayGuests }: Props) => {
     return <Loading />;
   }
 
+  if (error) {
+    return <p>Error</p>;
+  }
+
   return (
     <div className="flex gap-6 m-auto w-fit">
       <p>
