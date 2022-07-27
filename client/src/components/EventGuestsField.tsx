@@ -24,7 +24,6 @@ const EventGuestsField = ({ friends, data }: Props) => {
       ]);
       data.guests = [...data.guests, user];
     }
-    console.log(data);
   };
 
   const handleDeleteGuest = (user: User) => {

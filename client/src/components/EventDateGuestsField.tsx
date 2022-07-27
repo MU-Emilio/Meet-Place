@@ -20,6 +20,7 @@ const EventDateGuestsField = ({
   handlePrevField,
 }: Props) => {
   const [dateState, setDateState] = useState<string>(data.date);
+  const [timeState, setTimeState] = useState<string>(data.time);
   const [message, setMessage] = useState<string>("");
 
   return (
@@ -50,12 +51,17 @@ const EventDateGuestsField = ({
                       setDateState(e.target.value);
                     }}
                   />
-                  <Field
+                  <input
                     className="block w-96 h-10 border-2 m-auto mt-4"
-                    id="time"
                     name="time"
                     type="time"
                     placeholder="Date"
+                    value={timeState}
+                    onChange={(e: any) => {
+                      data.time = e.target.value;
+                      setTimeState(e.target.value);
+                      console.log(data.time);
+                    }}
                   />
                   <p>{message}</p>
                 </div>
