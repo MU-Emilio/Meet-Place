@@ -370,6 +370,8 @@ app.post("/event/add", async (req, res) => {
 
     const Guests = Parse.Object.extend("Guests");
 
+    const Friends = Parse.Object.extend("Friends");
+
     const userPointer = {
       __type: "Pointer",
       className: "_User",
@@ -377,6 +379,8 @@ app.post("/event/add", async (req, res) => {
     };
 
     const guests = [userPointer, ...req.body.event.guests];
+
+    const promisses = [];
 
     if (guests) {
       guests.map((item) => {
@@ -392,10 +396,37 @@ app.post("/event/add", async (req, res) => {
         guest.set("guest", guestPointer);
 
         guest.save();
+
+        const query1 = new Parse.Query(Friends);
+        const query2 = new Parse.Query(Friends);
+
+        query1.equalTo("user1Id", userPointer);
+        query1.equalTo("user2Id", guestPointer);
+
+        query2.equalTo("user1Id", guestPointer);
+        query2.equalTo("user2Id", userPointer);
+
+        const compoundQuery = Parse.Query.or(query1, query2);
+
+        const friendRelation = compoundQuery.first();
+
+        promisses.push(friendRelation);
       });
     }
 
-    res.send(eventPointer);
+    const relations = await Promise.all(promisses);
+
+    relations.map((item) => {
+      if (item) {
+        const closeness = item.get("closeness") + 1;
+
+        item.set("closeness", closeness);
+
+        item.save();
+      }
+    });
+
+    res.send(relations);
     return;
   } catch (error) {
     res.status(409).set({ message: error.message });
