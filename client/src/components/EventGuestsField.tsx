@@ -3,7 +3,7 @@ import { User, EventForm } from "../lib/types";
 import AddGuestButton from "./AddGuestButton";
 import DeleteGuestButton from "./DeleteGuestButton";
 import FormGuestsList from "./FormGuestsList";
-import { format, setHours } from "date-fns";
+import { format, startOfDay } from "date-fns";
 
 interface Props {
   friends: User[];
@@ -67,7 +67,7 @@ const EventGuestsField = ({ friends, data, dateState }: Props) => {
           {data.date != "" ? (
             <span className=" text-primary font-medium">
               {" "}
-              {format(setHours(new Date(data.date), 10), "MMMMMM, dd")}
+              {format(new Date(`${data.date}T10:00:00.000Z`), "MMMMMM, dd")}
             </span>
           ) : (
             "..."
