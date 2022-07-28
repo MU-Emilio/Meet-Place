@@ -4,7 +4,7 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 const { User } = require("parse/node");
-const { format } = require("date-fns");
+const { format, addMonths, startOfDay } = require("date-fns");
 app.use(express.json());
 const APP_ID = process.env.APP_ID;
 const JS_KEY = process.env.JS_KEY;
@@ -672,6 +672,116 @@ app.get("/guests/available/:date", async (req, res) => {
     });
 
     res.send(available);
+  } catch (error) {
+    res.status(404).send({ message: error.message });
+  }
+});
+
+const getDates = (startDate, endDate) => {
+  const dates = [];
+  let currentDate = startDate;
+  const addDays = function (days) {
+    const date = new Date(this.valueOf());
+    date.setDate(date.getDate() + days);
+    return date;
+  };
+  while (currentDate <= endDate) {
+    dates.push(format(currentDate, "yyyy-MM-dd"));
+    currentDate = addDays.call(currentDate, 1);
+  }
+  return dates;
+};
+
+app.get("/guests/suggested", async (req, res) => {
+  const friendList = [];
+
+  const Friends = Parse.Object.extend("Friends");
+  const query1 = new Parse.Query(Friends);
+  const query2 = new Parse.Query(Friends);
+
+  if (!req.user) {
+    res.status(401).send({ message: "Unauthorized" });
+    return;
+  }
+  try {
+    const user = req.user;
+    query1.equalTo("user1Id", user);
+    query2.equalTo("user2Id", user);
+
+    const compoundQuery = Parse.Query.or(query1, query2);
+
+    compoundQuery.includeAll();
+
+    const friends = await compoundQuery.find();
+
+    friends.map((item) => {
+      if (item.get("user1Id").id == user.id) {
+        friendList.push(item.get("user2Id"));
+      } else {
+        friendList.push(item.get("user1Id"));
+      }
+    });
+
+    // Get relation of Event - Guest from Guests table for each friend
+
+    const promisses = [];
+
+    friendList.map((item) => {
+      const Guests = Parse.Object.extend("Guests");
+      const query = new Parse.Query(Guests);
+
+      query.equalTo("guest", item);
+      query.include(["event"]);
+      const events = query.find();
+
+      promisses.push(events);
+    });
+
+    const guests_values = await Promise.all(promisses).then((values) => {
+      return values;
+    });
+
+    var merged = [].concat.apply([], guests_values);
+
+    const events_json = {};
+    merged.map((relation) => {
+      const event = relation.get("event");
+      const date = format(new Date(event.get("date")), "yyyy-MM-dd");
+      if (events_json[date]) {
+        events_json[date] = [...events_json[date], event];
+      } else {
+        events_json[date] = [event];
+      }
+    });
+
+    // Get dates for a month
+
+    const today = new Date();
+
+    const dates = getDates(startOfDay(today), addMonths(startOfDay(today), 1));
+
+    const suggestedDates = [];
+    const number_of_events = merged.length;
+
+    dates.map((date) => {
+      if (events_json[date]) {
+        console.log(number_of_events - events_json[date].length);
+        suggestedDates.push({
+          date: date,
+          points: number_of_events - events_json[date].length,
+        });
+      } else {
+        suggestedDates.push({
+          date: date,
+          points: number_of_events,
+        });
+      }
+    });
+
+    suggestedDates.sort((a, b) => (a.date < b.date ? 1 : -1));
+    suggestedDates.sort((a, b) => (a.points < b.points ? 1 : -1));
+
+    res.send(suggestedDates);
   } catch (error) {
     res.status(404).send({ message: error.message });
   }

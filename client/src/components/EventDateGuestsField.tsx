@@ -3,6 +3,7 @@ import { useState } from "react";
 import * as Yup from "yup";
 import { EventForm } from "../lib/types";
 import EventGuestsContainer from "./EventGuestsContainer";
+import SuggestedDate from "./SuggestedDate";
 
 interface Props {
   data: EventForm;
@@ -24,7 +25,7 @@ const EventDateGuestsField = ({
   const [message, setMessage] = useState<string>("");
 
   return (
-    <div className=" w-[800px] m-auto">
+    <div className=" w-[800px] m-auto ">
       <Formik
         validationSchema={dateTimeFieldValSchema}
         initialValues={data}
@@ -34,7 +35,7 @@ const EventDateGuestsField = ({
       >
         {({ values }) => (
           <Form className="block">
-            <div className="mb-12">
+            <div className="mb-12 flex gap-5">
               <div className="flex gap-10">
                 <div>
                   <label className="block text-4xl mx-auto" htmlFor="date">
@@ -60,12 +61,13 @@ const EventDateGuestsField = ({
                     onChange={(e: any) => {
                       data.time = e.target.value;
                       setTimeState(e.target.value);
-                      console.log(data.time);
                     }}
                   />
                   <p>{message}</p>
                 </div>
               </div>
+
+              <SuggestedDate data={data} />
             </div>
             <div className="w-full">
               <EventGuestsContainer data={data} />

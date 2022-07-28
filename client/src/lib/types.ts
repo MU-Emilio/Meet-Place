@@ -38,3 +38,8 @@ export interface Location {
   lat: number;
   lng: number;
 }
+
+export interface SuggestedDateType {
+  date: string;
+  points: number;
+}
