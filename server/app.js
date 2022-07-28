@@ -677,6 +677,8 @@ app.get("/guests/available/:date", async (req, res) => {
   }
 });
 
+// Function
+
 const getDates = (startDate, endDate) => {
   const dates = [];
   let currentDate = startDate;
@@ -693,16 +695,17 @@ const getDates = (startDate, endDate) => {
 };
 
 app.get("/guests/suggested", async (req, res) => {
+  if (!req.user) {
+    res.status(401).send({ message: "Unauthorized" });
+    return;
+  }
+
   const friendList = [];
 
   const Friends = Parse.Object.extend("Friends");
   const query1 = new Parse.Query(Friends);
   const query2 = new Parse.Query(Friends);
 
-  if (!req.user) {
-    res.status(401).send({ message: "Unauthorized" });
-    return;
-  }
   try {
     const user = req.user;
     query1.equalTo("user1Id", user);
@@ -713,12 +716,23 @@ app.get("/guests/suggested", async (req, res) => {
     compoundQuery.includeAll();
 
     const friends = await compoundQuery.find();
+    const friendWeights = {};
 
     friends.map((item) => {
       if (item.get("user1Id").id == user.id) {
-        friendList.push(item.get("user2Id"));
+        const friend = item.get("user2Id");
+
+        friendList.push(friend);
+        friendWeights[friend.id] = item.get("closeness");
+        // friendWeights.push({
+        //   closeness: item.get("closeness"),
+        //   friend: item.get("user2Id"),
+        // });
       } else {
-        friendList.push(item.get("user1Id"));
+        const friend = item.get("user1Id");
+
+        friendList.push(friend);
+        friendWeights[friend.id] = item.get("closeness");
       }
     });
 
@@ -741,20 +755,38 @@ app.get("/guests/suggested", async (req, res) => {
       return values;
     });
 
-    var merged = [].concat.apply([], guests_values);
+    // Add friends weight
+
+    const merged = [];
+
+    guests_values.map((relations) => {
+      // console.log(relations);
+      relations.map((relation) => {
+        merged.push({
+          user: relation.get("guest"),
+          event: relation.get("event"),
+          closeness: friendWeights[relation.get("guest").id],
+        });
+      });
+    });
+
+    // var merged = [].concat.apply([], guests_values);
 
     const events_json = {};
     merged.map((relation) => {
-      const event = relation.get("event");
+      const event = relation.event;
       const date = format(new Date(event.get("date")), "yyyy-MM-dd");
       if (events_json[date]) {
-        events_json[date] = [...events_json[date], event];
+        events_json[date] = [
+          ...events_json[date],
+          { event: event, weight: relation.closeness },
+        ];
       } else {
-        events_json[date] = [event];
+        events_json[date] = [{ event: event, weight: relation.closeness }];
       }
     });
 
-    // Get dates for a month
+    // // Get dates for today + 1 month
 
     const today = new Date();
 
@@ -763,17 +795,43 @@ app.get("/guests/suggested", async (req, res) => {
     const suggestedDates = [];
     const number_of_events = merged.length;
 
+    const queryTotalCloseness = new Parse.Query(Friends);
+
+    const friendships = await queryTotalCloseness.find();
+
+    // console.log(
+    //   friendships.reduce((a, b) => a.get("closeness") + b.get("closeness"))
+    // );
+
+    let total_closeness_points = 0;
+    friendships.map((a) => {
+      console.log(a.get("closeness"));
+      total_closeness_points += a.get("closeness");
+    });
+
+    // const total_closeness_points = friendships.reduce(
+    //   (a, b) => a.get("closeness") + b.get("closeness")
+    // );
+
+    // friendships.map((item) => {
+    //   console.log(item.get("closeness"));
+    // });
+
     dates.map((date) => {
       if (events_json[date]) {
-        console.log(number_of_events - events_json[date].length);
+        const res = [].concat(...events_json[date]).map(({ weight }) => weight);
+        // console.log(res.reduce((a, b) => a * b));
+        const weight = res.reduce((a, b) => a * b);
+        // console.log((number_of_events - events_json[date].length) * weight);
         suggestedDates.push({
           date: date,
-          points: number_of_events - events_json[date].length,
+          points: (number_of_events - events_json[date].length) * weight,
         });
       } else {
+        // console.log(number_of_events);
         suggestedDates.push({
           date: date,
-          points: number_of_events,
+          points: number_of_events * total_closeness_points,
         });
       }
     });

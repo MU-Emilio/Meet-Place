@@ -17,14 +17,14 @@ const SuggestedDate = ({ data }: Props) => {
         authorization: localStorage.getItem(SESSION_KEY) || false,
       },
     });
-    return response.data.slice(0, 3);
+    return response.data;
   };
 
   const {
     isLoading,
     error,
     data: suggestedDates,
-  } = useQuery<SuggestedDateType[]>([`suggested-${data.date}`], fetchSuggested);
+  } = useQuery<SuggestedDateType[]>([`suggested`], fetchSuggested);
 
   if (isLoading) {
     return <Loading />;
@@ -32,14 +32,14 @@ const SuggestedDate = ({ data }: Props) => {
 
   return (
     <div className="text-center">
-      <div className=" bg-green-200">
+      <div className=" bg-green-200 w-[400px]">
         <h1>Don't feel confident?...</h1>
         <p>
           Here you have some suggested dates based on your friend's availability
         </p>
       </div>
 
-      <div>
+      <div className="flex gap-6 w-[400px] overflow-auto">
         {suggestedDates?.map((item, index) => (
           <React.Fragment key={index}>
             <p>{format(new Date(item.date + "T10:00"), "MMMMMM, dd")}</p>

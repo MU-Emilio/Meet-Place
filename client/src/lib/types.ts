@@ -3,6 +3,7 @@ interface Image {
 }
 
 export interface User {
+  fullName: string;
   username: string;
   objectId: string;
   email: string;

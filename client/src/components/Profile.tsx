@@ -26,7 +26,7 @@ const Profile = ({ user }: Props) => {
               <p>Full Name</p>
             </div>
             <div className="">
-              <p>Full Name</p>
+              <p>{user.fullName}</p>
             </div>
           </div>
 
@@ -50,10 +50,10 @@ const Profile = ({ user }: Props) => {
 
           <div className=" bg-gray-50 mb-5 hover:scale-105 ease-in-out duration-300">
             <div className=" text-xs">
-              <p>Event</p>
+              <p>Created:</p>
             </div>
             <div className="">
-              <p>0 event</p>
+              <p>0 events</p>
             </div>
           </div>
 
