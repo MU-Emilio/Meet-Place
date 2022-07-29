@@ -93,7 +93,7 @@ const Calendar = () => {
 
   return (
     <div>
-      <div className=" bg-gray-100 flex justify-around w-[770px] h-[100px] px-3 py-5 align-middle mb-5 rounded-md shadow-sm">
+      <div className=" bg-gray-100 flex justify-around w-[770px] h-[100px] px-3 py-5 align-middle mb-5 rounded-md shadow-sm border-4 border-primary">
         <div className="flex gap-3">
           <div>
             <h1 className=" text-3xl font-bold">

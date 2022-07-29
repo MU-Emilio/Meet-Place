@@ -848,7 +848,7 @@ app.post("/guests/suggested", async (req, res) => {
     let friends = req.body.guests;
     const friends_promisses = [];
 
-    if (!friends || friends === []) {
+    if (!friends || friends.length < 1) {
       const query1 = new Parse.Query(Friends);
       const query2 = new Parse.Query(Friends);
       query1.equalTo("user1Id", user);
