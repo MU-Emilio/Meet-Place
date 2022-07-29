@@ -1,8 +1,7 @@
 import { useState } from "react";
 import EventTitleField from "./EventTitleField";
 import EventDescriptionField from "./EventDescriptionField";
-import EventDateField from "./EventDateField";
-import EventGuestsContainer from "./EventGuestsContainer";
+import EventDateGuestsField from "./EventDateGuestsField";
 import { EventForm } from "../lib/types";
 import axios from "axios";
 import { SESSION_KEY } from "../lib/constants";
@@ -82,12 +81,7 @@ const EventCreateForm = () => {
       handleNextField={handleNextField}
       handlePrevField={handlePrevField}
     ></EventDescriptionField>,
-    <EventGuestsContainer
-      data={data}
-      handleNextField={handleNextField}
-      handlePrevField={handlePrevField}
-    />,
-    <EventDateField
+    <EventDateGuestsField
       data={data}
       handleNextField={handleNextField}
       handlePrevField={handlePrevField}

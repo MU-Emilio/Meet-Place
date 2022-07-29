@@ -4,6 +4,7 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 const { User } = require("parse/node");
+const { format } = require("date-fns");
 app.use(express.json());
 const APP_ID = process.env.APP_ID;
 const JS_KEY = process.env.JS_KEY;
@@ -554,6 +555,90 @@ app.get("/event/:eventId", async (req, res) => {
     res.send(eventDetails);
   } catch (error) {
     res.status(404).set({ message: error });
+  }
+});
+
+app.get("/guests/available/:date", async (req, res) => {
+  // Get user's friends
+  const friendList = [];
+
+  const Friends = Parse.Object.extend("Friends");
+  const query1 = new Parse.Query(Friends);
+  const query2 = new Parse.Query(Friends);
+
+  if (!req.user) {
+    res.status(401).send({ message: "Unauthorized" });
+    return;
+  }
+  try {
+    const user = req.user;
+    query1.equalTo("user1Id", user);
+    query2.equalTo("user2Id", user);
+
+    const compoundQuery = Parse.Query.or(query1, query2);
+
+    compoundQuery.includeAll();
+
+    const friends = await compoundQuery.find();
+
+    friends.map((item) => {
+      if (item.get("user1Id").id == user.id) {
+        friendList.push(item.get("user2Id"));
+      } else {
+        friendList.push(item.get("user1Id"));
+      }
+    });
+
+    // Get relation of Event - Guest from Guests table for each friend
+
+    const promisses = [];
+
+    friendList.map((item) => {
+      const Guests = Parse.Object.extend("Guests");
+      const query = new Parse.Query(Guests);
+
+      query.equalTo("guest", item);
+      query.includeAll();
+      const events = query.find();
+
+      promisses.push(events);
+    });
+
+    const guests_values = await Promise.all(promisses).then((values) => {
+      return values;
+    });
+
+    // List of friends available
+
+    const available = [];
+
+    // Iterates each array of relations from Guests table [ [{guest, event}, {...}, ...] , [...] ]
+
+    guests_values.map((relation) => {
+      // Array of events in that date for the friend
+      const events_on_date = [];
+
+      // Iterates each relation [ {guest, event} , {...} , ...] in array of relations from Guests table
+      relation.map((item) => {
+        if (item.get("event")) {
+          // Check if the date of the event equals the date given
+          const event = item.get("event");
+          if (format(event.get("date"), "yyyy-MM-dd") === req.params.date) {
+            // Push event in the array of events of the given date
+            events_on_date.push(item.get("event"));
+          }
+        }
+      });
+
+      // If the array of events is empty, the user is available
+      if (events_on_date.length === 0) {
+        available.push(relation[0].get("guest"));
+      }
+    });
+
+    res.send(available);
+  } catch (error) {
+    res.status(404).send({ message: error.message });
   }
 });
 

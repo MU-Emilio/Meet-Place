@@ -1,33 +1,28 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { User, EventForm } from "../lib/types";
 import AddGuestButton from "./AddGuestButton";
 import DeleteGuestButton from "./DeleteGuestButton";
 import FormGuestsList from "./FormGuestsList";
+import AddAvaiableFriends from "./AddAvailableFriends";
 
 interface Props {
   friends: User[];
   data: EventForm;
-  handleNextField: (newData: EventForm) => void;
-  handlePrevField: (newData: EventForm) => void;
 }
 
-const EventGuestsField = ({
-  friends,
-  data,
-  handleNextField,
-  handlePrevField,
-}: Props) => {
-  const [addedGuests, setAddedGuests] = useState<User[]>([]);
-  const [notAddedGuests, setNotAddedGuests] = useState<User[]>(friends);
+const EventGuestsField = ({ friends, data }: Props) => {
+  const [addedGuests, setAddedGuests] = useState<User[]>(data.guests);
+  const [notAddedGuests, setNotAddedGuests] = useState<User[]>(
+    friends.filter((item) => !data.guests.includes(item))
+  );
 
   const handleAddGuest = (user: User) => {
-    if (!data.guests.find((item) => item == user)) {
-      setAddedGuests((prev) => [...prev, user]);
-      setNotAddedGuests((prev) => [...prev.filter((item) => item != user)]);
+    if (!data.guests.find((item) => item.objectId == user.objectId)) {
+      setAddedGuests([...data.guests, user]);
+      setNotAddedGuests((prev) => [
+        ...prev.filter((item) => item.objectId != user.objectId),
+      ]);
       data.guests = [...data.guests, user];
-    } else {
-      setAddedGuests((prev) => [...prev, user]);
-      setNotAddedGuests((prev) => [...prev.filter((item) => item != user)]);
     }
   };
 
@@ -36,6 +31,20 @@ const EventGuestsField = ({
     setNotAddedGuests((prev) => [...prev, user]);
     data.guests = [...data.guests.filter((item) => item != user)];
   };
+
+  const handleAddArrayGuests = (availableFriends: User[]) => {
+    availableFriends.map((guest) => {
+      handleAddGuest(guest);
+    });
+  };
+
+  useEffect(() => {
+    addedGuests.map((friend) => {
+      setNotAddedGuests((prev) => [
+        ...prev.filter((item) => item.objectId != friend.objectId),
+      ]);
+    });
+  }, [data]);
 
   return (
     <div className="block">
@@ -67,22 +76,10 @@ const EventGuestsField = ({
         </div>
       </div>
 
-      <div className="flex gap-6">
-        <button
-          type="button"
-          className="mt-4"
-          onClick={() => handlePrevField(data)}
-        >
-          Back
-        </button>
-        <button
-          type="button"
-          className="mt-4"
-          onClick={() => handleNextField(data)}
-        >
-          Next
-        </button>
-      </div>
+      <AddAvaiableFriends
+        data={data}
+        handleAddArrayGuests={handleAddArrayGuests}
+      />
     </div>
   );
 };

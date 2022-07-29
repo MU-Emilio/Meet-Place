@@ -8,6 +8,7 @@ interface Props {
 const DeleteGuestButton = ({ userCard, handleDeleteButton }: Props) => {
   return (
     <button
+      type="button"
       className=" bg-red-200 rounded-sm text-xs h-fit px-2 py-1"
       onClick={() => handleDeleteButton(userCard)}
     >

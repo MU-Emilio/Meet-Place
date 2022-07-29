@@ -10,6 +10,7 @@ import {
   BiUser,
 } from "react-icons/bi";
 import GuestContainer from "./GuestContainer";
+import { format } from "date-fns";
 interface Props {
   event: EventType;
 }
@@ -32,7 +33,10 @@ const EventDetails = ({ event }: Props) => {
             <div className="mt-3 items-center flex gap-3 m-auto">
               <BiCalendar className=" text-primary w-1/6" />
               <h2 className="text-xl hover:scale-105 ease-in-out duration-300 w-5/6">
-                {event.date.iso}
+                {format(
+                  new Date(`${event.date.iso.split("T")[0]}T10:00:00.000Z`),
+                  "MMMMMM, dd"
+                )}
               </h2>
             </div>
             <div className="mt-3 items-center flex gap-3 m-auto">

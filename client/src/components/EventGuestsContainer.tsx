@@ -6,15 +6,9 @@ import EventGuestsField from "./EventGuestsField";
 
 interface Props {
   data: EventForm;
-  handleNextField: (newData: EventForm) => void;
-  handlePrevField: (newData: EventForm) => void;
 }
 
-const EventGuestsContainer = ({
-  data,
-  handleNextField,
-  handlePrevField,
-}: Props) => {
+const EventGuestsContainer = ({ data }: Props) => {
   const fetchFriends = async () => {
     const response = await axios.get("http://localhost:3001/friends", {
       headers: {
@@ -31,17 +25,12 @@ const EventGuestsContainer = ({
   } = useQuery<User[]>(["friends"], fetchFriends);
 
   return (
-    <div className=" w-8/12 m-auto">
+    <div className="">
       <label className="block text-4xl mx-auto mb-[50px]" htmlFor="description">
         Whos's going?...
       </label>
       {friends ? (
-        <EventGuestsField
-          friends={friends}
-          data={data}
-          handleNextField={handleNextField}
-          handlePrevField={handlePrevField}
-        />
+        <EventGuestsField friends={friends} data={data} />
       ) : (
         <p>Loading...</p>
       )}
