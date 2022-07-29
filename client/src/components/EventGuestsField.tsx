@@ -4,6 +4,7 @@ import AddGuestButton from "./AddGuestButton";
 import DeleteGuestButton from "./DeleteGuestButton";
 import FormGuestsList from "./FormGuestsList";
 import AddAvaiableFriends from "./AddAvailableFriends";
+import SuggestedDate from "./SuggestedDate";
 
 interface Props {
   friends: User[];
@@ -48,34 +49,37 @@ const EventGuestsField = ({ friends, data }: Props) => {
 
   return (
     <div className="block">
-      <div className="flex justify-around">
-        <div>
-          <p>Not Added</p>
-          <FormGuestsList
-            users={notAddedGuests}
-            ButtonComponent={(userInfo: User) => (
-              <AddGuestButton
-                userCard={userInfo}
-                handleAddGuest={handleAddGuest}
-              />
-            )}
-          />
+      <div className="flex justify-between">
+        <div className="flex">
+          <div>
+            <p>Not Added</p>
+            <FormGuestsList
+              users={notAddedGuests}
+              ButtonComponent={(userInfo: User) => (
+                <AddGuestButton
+                  userCard={userInfo}
+                  handleAddGuest={handleAddGuest}
+                />
+              )}
+            />
+          </div>
+
+          <div>
+            <p>Added</p>
+            <FormGuestsList
+              users={addedGuests}
+              ButtonComponent={(userInfo: User) => (
+                <DeleteGuestButton
+                  userCard={userInfo}
+                  handleDeleteButton={handleDeleteGuest}
+                />
+              )}
+            />
+          </div>
         </div>
 
-        <div>
-          <p>Added</p>
-          <FormGuestsList
-            users={addedGuests}
-            ButtonComponent={(userInfo: User) => (
-              <DeleteGuestButton
-                userCard={userInfo}
-                handleDeleteButton={handleDeleteGuest}
-              />
-            )}
-          />
-        </div>
+        <SuggestedDate data={data} addedGuests={addedGuests} />
       </div>
-
       <AddAvaiableFriends
         data={data}
         handleAddArrayGuests={handleAddArrayGuests}

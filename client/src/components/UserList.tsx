@@ -16,7 +16,12 @@ const UserList = ({ users, ButtonComponent }: Props) => {
       {users.map((user: User, index: number) => {
         return (
           <React.Fragment key={index}>
-            <UserCard userCard={user} ButtonComponent={ButtonComponent(user)} />
+            <div className="hover:scale-105 ease-in-out duration-300 mr-2 px-2">
+              <UserCard
+                userCard={user}
+                ButtonComponent={ButtonComponent(user)}
+              />
+            </div>
           </React.Fragment>
         );
       })}

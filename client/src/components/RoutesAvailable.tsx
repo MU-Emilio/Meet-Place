@@ -28,7 +28,6 @@ const RoutesAvailable = () => {
         <TopBar />
         <Routes>
           <Route path="/home" element={<Home />} />
-          <Route path="/friends" element={<Users />} />
           <Route path="/users/:username" element={<ProfilePage />} />
           <Route path="/addEvent" element={<EventCreateForm />} />
           <Route path="/event/:eventId" element={<EventDetailsContainer />} />

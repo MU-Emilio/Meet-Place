@@ -4,6 +4,7 @@ import axios from "axios";
 import { useQuery } from "react-query";
 import UserList from "./UserList";
 import AddFriendButton from "./AddFriendButton";
+import { BiGroup } from "react-icons/bi";
 
 const NotFriendsContainer = () => {
   const fetchUsers = async () => {
@@ -21,17 +22,24 @@ const NotFriendsContainer = () => {
   const { isLoading, error, data } = useQuery<User[]>(["users"], fetchUsers);
 
   return (
-    <div className="border w-full p-5">
-      {data && !isLoading ? (
-        <UserList
-          users={data}
-          ButtonComponent={(userInfo) => (
-            <AddFriendButton userCard={userInfo} />
-          )}
-        />
-      ) : (
-        <p>Loading...</p>
-      )}
+    <div className="border w-full h-[310px] overflow-y-auto">
+      <div className="bg-secundary flex gap-2 items-center pl-3">
+        <BiGroup className=" font-medium text-white" />
+        <h2 className=" p-2 text-white font-medium">Other Users</h2>
+      </div>
+
+      <div className="p-5">
+        {data && !isLoading ? (
+          <UserList
+            users={data}
+            ButtonComponent={(userInfo) => (
+              <AddFriendButton userCard={userInfo} />
+            )}
+          />
+        ) : (
+          <p>Loading...</p>
+        )}
+      </div>
     </div>
   );
 };

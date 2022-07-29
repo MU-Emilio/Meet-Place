@@ -37,6 +37,7 @@ const Register = () => {
   const handleRegister = (values: any, callback: () => void) => {
     axios
       .post(`http://localhost:3001/users/register`, {
+        fullName: values.fullName,
         email: values.email,
         username: values.username,
         password: values.password,
@@ -60,6 +61,7 @@ const Register = () => {
         <h1 className="text-center">Register</h1>
         <Formik
           initialValues={{
+            fullName: "",
             username: "",
             password: "",
             email: "",
@@ -79,6 +81,19 @@ const Register = () => {
                 type="email"
               />
             </div>
+
+            <div className="mb-5" style={styles.field}>
+              <label className="block" htmlFor="username">
+                Full Name
+              </label>
+              <Field
+                className="block w-full"
+                id="fullName"
+                name="fullName"
+                placeholder="Full Name"
+              />
+            </div>
+
             <div className="mb-5" style={styles.field}>
               <label className="block" htmlFor="username">
                 Username
