@@ -657,7 +657,9 @@ app.get("/guests/available/:date", async (req, res) => {
           if (item.get("event")) {
             // Check if the date of the event equals the date given
             const event = item.get("event");
-            if (format(event.get("date"), "yyyy-MM-dd") === req.params.date) {
+            if (
+              event.get("date").toISOString().split("T")[0] === req.params.date
+            ) {
               // Push event in the array of events of the given date
               events_on_date.push(item.get("event"));
             }
