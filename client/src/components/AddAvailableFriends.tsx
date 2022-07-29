@@ -11,10 +11,6 @@ interface Props {
 }
 
 const AddAvailableFriends = ({ data, handleAddArrayGuests }: Props) => {
-  if (data.date === "") {
-    return <p>Please select a date</p>;
-  }
-
   const fetchAvailable = async () => {
     const response = await axios.get(
       `http://localhost:3001/guests/available/${format(
@@ -35,6 +31,10 @@ const AddAvailableFriends = ({ data, handleAddArrayGuests }: Props) => {
     error,
     data: availableFriends,
   } = useQuery<User[]>([`available-${data.date}`], fetchAvailable);
+
+  if (data.date === "") {
+    return <p>Please select a date</p>;
+  }
 
   if (isLoading) {
     return <Loading />;

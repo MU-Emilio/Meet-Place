@@ -13,7 +13,6 @@ interface Props {
 
 const SuggestedDate = ({ data, addedGuests }: Props) => {
   const fetchSuggested = async () => {
-    console.log("si");
     const response = await axios.post(
       `http://localhost:3001/guests/suggested`,
       {
@@ -27,12 +26,6 @@ const SuggestedDate = ({ data, addedGuests }: Props) => {
     );
     return response.data;
   };
-
-  //   const {
-  //     isLoading,
-  //     error,
-  //     data: suggestedDates,
-  //   } = useQuery<SuggestedDateType[]>([`suggested`], fetchSuggested);
 
   const queryClient = useQueryClient();
 
