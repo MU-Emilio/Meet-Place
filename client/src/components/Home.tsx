@@ -1,11 +1,11 @@
 import axios from "axios";
 import { SESSION_KEY } from "../lib/constants";
 import { useQuery } from "react-query";
-import Calendar from "./Calendar";
 import { User } from "../lib/types";
-import Logo from "./Logo";
-import Loading from "./Loading";
-import TopBar from "./TopBar";
+import GeneralLoading from "./GeneralLoading";
+import React, { Suspense } from "react";
+
+const Calendar = React.lazy(() => import("./Calendar"));
 
 const Home = () => {
   const fetchData = async () => {
@@ -20,7 +20,7 @@ const Home = () => {
   const { isLoading, error, data } = useQuery<User | null>(["user"], fetchData);
 
   if (isLoading) {
-    return <Loading />;
+    return <GeneralLoading />;
   }
 
   if (error instanceof Error) {
@@ -33,8 +33,9 @@ const Home = () => {
 
   return (
     <div className="h-[800px]">
-      <Calendar />
-      <footer className=" bg-primary h-8"></footer>
+      <Suspense fallback={<GeneralLoading />}>
+        <Calendar />
+      </Suspense>
     </div>
   );
 };
