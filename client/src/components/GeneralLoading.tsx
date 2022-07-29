@@ -1,4 +1,4 @@
-import MEET_PLACE from "../../../assets/MEET_PLACE.gif";
+import MEET_PLACE from "../../assets/MEET_PLACE.gif";
 
 export default function Loader() {
   return (
