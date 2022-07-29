@@ -9,6 +9,7 @@ import EventCreateForm from "./EventCreateForm";
 import TopBar from "./TopBar";
 import ProfilePage from "./ProfilePage";
 import EventDetailsContainer from "./EventDetailsContainer";
+import GeneralLoading from "./GeneralLoading/GeneralLoading";
 
 const RoutesAvailable = () => {
   const { user } = useContext(UserContext);
@@ -28,10 +29,10 @@ const RoutesAvailable = () => {
         <TopBar />
         <Routes>
           <Route path="/home" element={<Home />} />
-          <Route path="/friends" element={<Users />} />
           <Route path="/users/:username" element={<ProfilePage />} />
           <Route path="/addEvent" element={<EventCreateForm />} />
           <Route path="/event/:eventId" element={<EventDetailsContainer />} />
+          <Route path="/loading" element={<GeneralLoading />} />
           <Route path="/*" element={<Navigate to="/home" />} />
         </Routes>
       </div>
