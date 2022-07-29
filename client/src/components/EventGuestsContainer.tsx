@@ -25,7 +25,7 @@ const EventGuestsContainer = ({ data }: Props) => {
   } = useQuery<User[]>(["friends"], fetchFriends);
 
   return (
-    <div className="">
+    <div>
       <label className="block text-4xl mx-auto mb-[50px]" htmlFor="description">
         Whos's going?...
       </label>

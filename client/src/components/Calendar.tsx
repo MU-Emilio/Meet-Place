@@ -7,6 +7,8 @@ import axios from "axios";
 import { SESSION_KEY } from "../lib/constants";
 import { EventType } from "../lib/types";
 import { Navigate, useNavigate } from "react-router-dom";
+import GeneralLoading from "./GeneralLoading";
+import { Suspense } from "react";
 
 const styles = {
   button: {
@@ -91,69 +93,81 @@ const Calendar = () => {
     return events_json;
   };
 
+  if (isLoading) {
+    return <GeneralLoading />;
+  }
+
   return (
     <div>
-      <div className=" bg-gray-100 flex justify-around w-[770px] h-[100px] px-3 py-5 align-middle mb-5 rounded-md shadow-sm">
-        <div className="flex gap-3">
-          <div>
-            <h1 className=" text-3xl font-bold">
-              Calendar {format(calendarDate, "MMMMMM yyyy")}
-            </h1>
-            <p>Today: {format(selectedDate, "MM/dd/yyyy'")}</p>
+      <div>
+        <div className=" bg-gray-100 flex justify-around w-[800px] h-[100px] px-3 py-5 align-middle mb-5 rounded-md shadow-md">
+          <div className="flex gap-3 w-[500px]">
+            <div>
+              <h1 className=" text-3xl font-medium">
+                Calendar{" "}
+                <span className=" text-primary text-4xl font-bold">
+                  {format(calendarDate, "MMMMMM yyyy")}
+                </span>
+              </h1>
+              <p className=" text-sm">
+                Today: {format(selectedDate, "MM/dd/yyyy'")}
+              </p>
+            </div>
+          </div>
+
+          <div className="flex gap-2 h-fit w-[420px]">
+            <div className="flex gap-1 h-fit">
+              <button
+                onClick={subToDate}
+                className=" bg-gray-200 p-2 rounded-l-md shadow-md hover:scale-105 ease-in-out duration-300"
+              >
+                {"<"}
+              </button>
+              <button
+                onClick={resetDate}
+                className=" bg-gray-200 p-2 shadow-md hover:scale-105 ease-in-out duration-300"
+              >
+                Today
+              </button>
+              <button
+                onClick={addToDate}
+                className=" bg-gray-200 p-2 rounded-r-md shadow-md hover:scale-105 ease-in-out duration-300"
+              >
+                {">"}
+              </button>
+            </div>
+            <button
+              onClick={changeDisplay}
+              className=" h-fit bg-gray-200 p-2 rounded-md shadow-md hover:scale-105 ease-in-out duration-300"
+            >
+              {monthView ? "Week View" : "Month View"}
+            </button>
+            <button
+              onClick={() => {
+                navigate("/addEvent");
+              }}
+              className=" h-fit bg-gray-200 p-2 rounded-md shadow-md hover:scale-105 ease-in-out duration-300"
+            >
+              Create Event
+            </button>
           </div>
         </div>
 
-        <div className="flex gap-2 h-fit">
-          <div className="flex gap-1 h-fit">
-            <button
-              onClick={subToDate}
-              className=" bg-gray-200 p-2 rounded-l-md shadow-md hover:scale-105 ease-in-out duration-300"
-            >
-              {"<"}
-            </button>
-            <button
-              onClick={resetDate}
-              className=" bg-gray-200 p-2 shadow-md hover:scale-105 ease-in-out duration-300"
-            >
-              Today
-            </button>
-            <button
-              onClick={addToDate}
-              className=" bg-gray-200 p-2 rounded-r-md shadow-md hover:scale-105 ease-in-out duration-300"
-            >
-              {">"}
-            </button>
-          </div>
-          <button
-            onClick={changeDisplay}
-            className=" h-fit bg-gray-200 p-2 rounded-md shadow-md hover:scale-105 ease-in-out duration-300"
-          >
-            {monthView ? "Week View" : "Month View"}
-          </button>
-          <button
-            onClick={() => {
-              navigate("/addEvent");
-            }}
-            className=" h-fit bg-gray-200 p-2 rounded-md shadow-md hover:scale-105 ease-in-out duration-300"
-          >
-            Create Event
-          </button>
-        </div>
+        {!isLoading && data != null ? (
+          <>
+            <CalendarDisplay
+              startDate={startDate}
+              monthView={monthView}
+              calendarDate={calendarDate}
+              events={data}
+              changeDisplay={changeDisplay}
+            />
+          </>
+        ) : (
+          <p>Loading...</p>
+        )}
       </div>
-
-      {!isLoading && data != null ? (
-        <>
-          <CalendarDisplay
-            startDate={startDate}
-            monthView={monthView}
-            calendarDate={calendarDate}
-            events={data}
-            changeDisplay={changeDisplay}
-          />
-        </>
-      ) : (
-        <p>Loading...</p>
-      )}
+      <footer className=" bg-primary h-8"></footer>
     </div>
   );
 };

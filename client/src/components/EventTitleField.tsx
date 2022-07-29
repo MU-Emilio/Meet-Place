@@ -1,7 +1,7 @@
-import { Dispatch, SetStateAction, useState } from "react";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import { User, EventForm } from "../lib/types";
+import { EventForm } from "../lib/types";
+import { BiCaretRight } from "react-icons/bi";
 
 interface Props {
   data: EventForm;
@@ -28,34 +28,52 @@ const EventTitleField = ({ data, handleNextField }: Props) => {
       >
         {() => (
           <Form className="block">
-            <label className="block text-4xl mx-auto" htmlFor="title">
-              Give it a good title for your friends
+            <label
+              className="block text-4xl mx-auto font-medium"
+              htmlFor="title"
+            >
+              Give it a good{" "}
+              <span className=" text-primary font-semibold">title</span> for
+              your friends
             </label>
 
             <Field
-              className="block text-2xl border-2 m-auto mt-4"
+              className="block text-2xl border-2 mx-auto mt-[50px] w-[500px] px-5 py-2"
               id="title"
               name="title"
               placeholder="Title"
               autoComplete="off"
             />
 
-            <div className="flex items-center mt-5 gap-5">
-              <label htmlFor="private">Is this a private event?</label>
-              <Field
-                className=""
-                id="privacy"
-                name="privacy"
-                placeholder="Title"
-                type="checkbox"
-              />
+            <div className=" text-red-400 w-[500px] mx-auto">
+              <ErrorMessage name="title" />
             </div>
 
-            <ErrorMessage name="title" />
+            <div className="flex items-center mx-auto mt-5">
+              <div className="flex items-center mx-auto gap-5 border-l-8 px-5 py-2 border-secundary rounded-md">
+                <label htmlFor="private">
+                  Is this a{" "}
+                  <span className=" text-secundary font-medium">private</span>{" "}
+                  event?
+                </label>
+                <Field
+                  className=""
+                  id="privacy"
+                  name="privacy"
+                  placeholder="Title"
+                  type="checkbox"
+                />
+              </div>
+            </div>
 
-            <button type="submit" className="block mt-4">
-              Next
-            </button>
+            <div className="mx-auto w-fit mt-[100px]">
+              <button
+                type="submit"
+                className="block mt-4 bg-secundary px-5 py-2 text-white font-medium rounded-md hover:opacity-50 hover:text-gray-800 hover:scale-105 ease-in-out duration-300"
+              >
+                <BiCaretRight />
+              </button>
+            </div>
           </Form>
         )}
       </Formik>

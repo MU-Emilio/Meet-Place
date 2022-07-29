@@ -23,7 +23,9 @@ const Event = ({ event }: Props) => {
         onClick={() => navigate(`/event/${event.objectId}`)}
       >
         <p>{event.title}</p>
-        <p className=" text-xs">{format(new Date(event.date.iso), "k:mm")}</p>
+        <p className=" text-xs">{`${
+          event.date.iso.split("T")[1].split(":")[0]
+        }:${event.date.iso.split("T")[1].split(":")[1]}`}</p>
       </div>
 
       <EventPopover event={event} isHover={isHover} />

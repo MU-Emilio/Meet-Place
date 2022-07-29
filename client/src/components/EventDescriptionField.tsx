@@ -1,7 +1,7 @@
-import { Dispatch, SetStateAction } from "react";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { User, EventForm } from "../lib/types";
+import { BiCaretRight, BiCaretLeft } from "react-icons/bi";
 
 interface Props {
   data: EventForm;
@@ -30,28 +30,34 @@ const EventDescriptionField = ({
         {({ values }) => (
           <Form className="block">
             <label className="block text-4xl mx-auto" htmlFor="description">
-              What is it about?...
+              What is it{" "}
+              <span className=" text-primary font-semibold">about</span> ?...
             </label>
             <Field
-              className="block w-96 h-10 border-2 m-auto mt-4"
+              className="block text-2xl border-2 mx-auto mt-[50px] w-[500px] px-5 py-2"
               id="description"
               name="description"
               placeholder="Give it a nice description!"
               autoComplete="off"
             />
 
-            <ErrorMessage name="description" />
+            <div className=" text-red-400 w-[500px] mx-auto">
+              <ErrorMessage name="description" />
+            </div>
 
-            <div className="flex gap-6">
+            <div className="mx-auto flex gap-6 w-fit mt-[100px]">
               <button
+                className="block mt-4 bg-secundary px-5 py-2 text-white font-medium rounded-md hover:opacity-50 hover:text-gray-800 hover:scale-105 ease-in-out duration-300"
                 type="button"
-                className="mt-4"
                 onClick={() => handlePrevField(values)}
               >
-                Back
+                <BiCaretLeft />
               </button>
-              <button type="submit" className="mt-4">
-                Next
+              <button
+                type="submit"
+                className="block mt-4 bg-secundary px-5 py-2 text-white font-medium rounded-md hover:opacity-50 hover:text-gray-800 hover:scale-105 ease-in-out duration-300"
+              >
+                <BiCaretRight />
               </button>
             </div>
           </Form>

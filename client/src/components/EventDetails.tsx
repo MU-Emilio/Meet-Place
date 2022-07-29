@@ -56,7 +56,7 @@ const EventDetails = ({ event }: Props) => {
             </div>
           </div>
           <div className="p-5">
-            <GuestContainer event={event} horizontal={true} />
+            <GuestContainer event={event} horizontal={false} />
           </div>
         </div>
       </div>
