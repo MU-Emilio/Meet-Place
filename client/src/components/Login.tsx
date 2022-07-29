@@ -62,8 +62,11 @@ const Login = () => {
         className="block bg-primary rounded-lg mx-auto mb-0"
         style={styles.formContainer}
       >
-        <Logo />
-        <h1 className="text-center">Login</h1>
+        <div className=" bg-white p-5">
+          <Logo />
+          <h1 className="text-center font-medium text-4xl">Login</h1>
+        </div>
+
         <Formik
           initialValues={{
             username: "",

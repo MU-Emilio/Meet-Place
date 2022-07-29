@@ -1,7 +1,4 @@
-import React from "react";
 import { User } from "../lib/types";
-import FriendsContainer from "./FriendsContainer";
-import { BiEditAlt } from "react-icons/bi";
 import { format } from "date-fns";
 
 interface Props {
