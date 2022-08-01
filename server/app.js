@@ -3,7 +3,7 @@ const Parse = require("parse/node");
 const express = require("express");
 const app = express();
 const cors = require("cors");
-const { User } = require("parse/node");
+const { User, Query } = require("parse/node");
 const { format, addMonths, startOfDay } = require("date-fns");
 app.use(express.json());
 const APP_ID = process.env.APP_ID;
@@ -885,6 +885,45 @@ app.post("/guests/suggested", async (req, res) => {
     suggestedDates.sort((a, b) => (a.points < b.points ? 1 : -1));
 
     res.send(suggestedDates);
+  } catch (error) {
+    res.status(404).send({ message: error.message });
+  }
+});
+
+app.get("/events/:userId/:page", async (req, res) => {
+  try {
+    const userId = req.params.userId;
+
+    const Guests = Parse.Object.extend("Guests");
+    const query = new Parse.Query(Guests);
+
+    const userPointer = {
+      __type: "Pointer",
+      className: "_User",
+      objectId: userId,
+    };
+
+    query.equalTo("guest", userPointer);
+    query.include("event");
+
+    const events = await query.find();
+
+    events.sort((a, b) =>
+      a.get("event").get("date") < b.get("event").get("date") ? 1 : -1
+    );
+
+    const events_pages = [];
+
+    const chunkSize = 2;
+    for (let i = 0; i < events.length; i += chunkSize) {
+      const chunk = events.slice(i, i + chunkSize);
+      events_pages.push(chunk);
+    }
+
+    const isLastPage = req.params.page == events_pages.length;
+    page = req.params.page;
+
+    res.send(events_pages[page]);
   } catch (error) {
     res.status(404).send({ message: error.message });
   }
