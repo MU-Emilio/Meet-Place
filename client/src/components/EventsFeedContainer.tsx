@@ -3,14 +3,13 @@ import axios from "axios";
 import { SESSION_KEY } from "../lib/constants";
 import { useQuery } from "react-query";
 import Loading from "./Loading";
-import { User } from "../lib/types";
-import Profile from "./Profile";
+import EventsFeed from "./EventsFeed";
+
 import { useParams } from "react-router-dom";
-import FriendsContainer from "./FriendsContainer";
-import NotFriendsContainer from "./NotFriendsContainer";
 
 const EventsFeedContainer = () => {
   const params = useParams();
+  const userId = params.userId;
 
   const fetchData = async () => {
     const response = await axios.get(
@@ -21,10 +20,12 @@ const EventsFeedContainer = () => {
         },
       }
     );
-    return response.data;
+
+    // Convert response to number
+    return response.data * 1;
   };
 
-  const { isLoading, error, data } = useQuery<string>(
+  const { isLoading, error, data } = useQuery<number>(
     [`eventNumber`],
     fetchData
   );
@@ -41,7 +42,11 @@ const EventsFeedContainer = () => {
     return null;
   }
 
-  return <div>{data}</div>;
+  return (
+    <div className="h-[800px]">
+      <EventsFeed userId={userId as string} pages={data} />
+    </div>
+  );
 };
 
 export default EventsFeedContainer;
