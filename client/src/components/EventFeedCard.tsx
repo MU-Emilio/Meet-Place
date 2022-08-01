@@ -10,6 +10,7 @@ import {
   BiLockOpenAlt,
   BiLockAlt,
 } from "react-icons/bi";
+import UserCard from "./UserCard";
 
 interface Prop {
   event: EventType;
@@ -22,38 +23,50 @@ const EventFeedCard = ({ event, owner }: Prop) => {
       <div className=" bg-blue-500 text-xl text-white font-medium px-3 py-2">
         {event.title}
       </div>
-      <div className="mt-3 items-center flex gap-3 m-auto">
-        <BiCalendar className=" text-primary w-1/6" />
-        <h2 className="text-xl hover:scale-105 ease-in-out duration-300 w-5/6">
-          {format(
-            new Date(`${event.date.iso.split("T")[0]}T10:00:00.000Z`),
-            "MMMMMM, dd"
+      <div className="flex justify-around">
+        <div className="w-[400px]">
+          <div className="mt-3 items-center flex gap-3 m-auto">
+            <BiCalendar className=" text-primary w-1/6" />
+            <h2 className="text-xl hover:scale-105 ease-in-out duration-300 w-5/6">
+              {format(
+                new Date(`${event.date.iso.split("T")[0]}T10:00:00.000Z`),
+                "MMMMMM, dd"
+              )}
+            </h2>
+          </div>
+          <div className="items-center flex gap-3 m-auto">
+            <BiCurrentLocation className=" text-primary w-1/6" />
+            <h2 className=" text-xl hover:scale-105 ease-in-out duration-300 w-5/6">
+              {event.location}
+            </h2>
+          </div>
+          <div className="items-center flex gap-3 m-auto">
+            <BiComment className=" text-primary w-1/6" />
+            <h2 className="text-xl hover:scale-105 ease-in-out duration-300 w-5/6">
+              {event.description}
+            </h2>
+          </div>
+          <div className="items-center flex gap-3 m-auto">
+            {event.privacy ? (
+              <BiLockAlt className=" text-primary w-1/6" />
+            ) : (
+              <BiLockOpenAlt className=" text-primary w-1/6" />
+            )}
+            <h2 className="text-xl hover:scale-105 ease-in-out duration-300 w-5/6">
+              {event.privacy ? "Private" : "Public"}
+            </h2>
+          </div>
+        </div>
+
+        <div>
+          <h1 className="font-medium text-xl">Owner:</h1>
+          {owner && (
+            <div className="hover:scale-105 ease-in-out duration-300 mr-2 px-2">
+              <UserCard userCard={owner} ButtonComponent={null} />
+            </div>
           )}
-        </h2>
+        </div>
       </div>
-      <div className="items-center flex gap-3 m-auto">
-        <BiCurrentLocation className=" text-primary w-1/6" />
-        <h2 className=" text-xl hover:scale-105 ease-in-out duration-300 w-5/6">
-          {event.location}
-        </h2>
-      </div>
-      <div className="items-center flex gap-3 m-auto">
-        <BiComment className=" text-primary w-1/6" />
-        <h2 className="text-xl hover:scale-105 ease-in-out duration-300 w-5/6">
-          {event.description}
-        </h2>
-      </div>
-      <div className="items-center flex gap-3 m-auto">
-        {event.privacy ? (
-          <BiLockAlt className=" text-primary w-1/6" />
-        ) : (
-          <BiLockOpenAlt className=" text-primary w-1/6" />
-        )}
-        <h2 className="text-xl hover:scale-105 ease-in-out duration-300 w-5/6">
-          {event.privacy ? "Private" : "Public"}
-        </h2>
-      </div>
-      <div className="items-center flex gap-3 m-auto">{owner?.fullName}</div>
     </div>
   );
 };
