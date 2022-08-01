@@ -1,4 +1,3 @@
-import React from "react";
 import { EventType, User } from "../lib/types";
 import { format } from "date-fns";
 import {
@@ -11,6 +10,7 @@ import {
   BiLockAlt,
 } from "react-icons/bi";
 import UserCard from "./UserCard";
+import { useNavigate } from "react-router-dom";
 
 interface Prop {
   event: EventType;
@@ -18,10 +18,15 @@ interface Prop {
 }
 
 const EventFeedCard = ({ event, owner }: Prop) => {
+  const navigate = useNavigate();
+
   return (
     <div className=" m-auto bg-white w-[900px] h-[230px] mt-2">
-      <div className=" bg-blue-500 text-xl text-white font-medium px-3 py-2">
-        {event.title}
+      <div
+        className=" bg-blue-500 text-xl text-white font-medium px-3 py-2 cursor-pointer hover:underline ease-in-out duration-300"
+        onClick={() => navigate(`/event/${event.objectId}`)}
+      >
+        <p> {event.title}</p>
       </div>
       <div className="flex justify-around">
         <div className="w-[400px]">

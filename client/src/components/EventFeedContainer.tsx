@@ -5,6 +5,7 @@ import { useQuery } from "react-query";
 import Loading from "./Loading";
 import React from "react";
 import EventFeedCard from "./EventFeedCard";
+import id from "date-fns/esm/locale/id/index.js";
 
 interface Props {
   event: EventType;
@@ -24,10 +25,18 @@ export const EventFeedContainer = ({ event }: Props) => {
   };
 
   const {
-    isLoading: ownerIsLoading,
-    error: ownerError,
+    isLoading,
+    error,
     data: owner,
   } = useQuery<User>([`owner-${event.owner.objectId}}`], fetchOwner);
+
+  if (isLoading || error) {
+    return (
+      <div className=" m-auto bg-white w-[900px] h-[230px] mt-2">
+        <Loading />
+      </div>
+    );
+  }
 
   return (
     <div>
