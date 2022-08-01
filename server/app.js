@@ -131,12 +131,26 @@ app.get("/user/:username", async (req, res) => {
   }
 });
 
+app.get("/owner/:userId", async (req, res) => {
+  const query1 = new Parse.Query(Parse.User);
+
+  try {
+    query1.equalTo("objectId", req.params.userId);
+
+    const user = await query1.first();
+
+    res.send(user);
+  } catch (error) {
+    res.status(404).send({ message: error.message });
+  }
+});
+
 app.get("/friends/notFriends", async (req, res) => {
   const user = req.user;
   const friends = req.friends;
   const friendIds = [];
 
-  friends.map((friend, index) => {
+  friends.map((friend) => {
     if (friend) {
       friendIds.push(friend.id);
     }

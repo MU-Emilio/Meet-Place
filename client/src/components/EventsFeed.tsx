@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { User } from "../lib/types";
-import UserFeedEventsContainer from "./UserFeedEventsContainer";
+import UserEventsContainer from "./UserEventsContainer";
 
 interface Props {
   userId: string;
@@ -13,7 +13,7 @@ const EventsFeed = ({ userId, pages }: Props) => {
   const page_cards = [];
   for (let i = 1; i <= pages; i++) {
     page_cards.push(
-      <React.Fragment>
+      <React.Fragment key={i}>
         <div
           className={`h-[40px] min-w-[40px] ${
             i === currentPage ? "bg-blue-200" : "bg-gray-300"
@@ -28,7 +28,7 @@ const EventsFeed = ({ userId, pages }: Props) => {
 
   return (
     <div className=" bg-gray-200 w-[1000px] h-[700px] p-5">
-      <UserFeedEventsContainer page={currentPage} />
+      <UserEventsContainer userId={userId} page={currentPage} />
 
       <div className="w-[950px] h-[50px] bg-white flex gap-3 overflow-x-auto items-center p-2 m-auto">
         {page_cards}

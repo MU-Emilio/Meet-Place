@@ -4,15 +4,17 @@ import axios from "axios";
 import { useQuery } from "react-query";
 import Loading from "./Loading";
 import React from "react";
+import { EventFeedContainer } from "./EventFeedContainer";
 
 interface Props {
+  userId: string;
   page: number;
 }
 
-const UserEventsContainer = ({ page }: Props) => {
-  const fetchFriends = async () => {
+const UserEventsContainer = ({ userId, page }: Props) => {
+  const fetchPages = async () => {
     const response = await axios.get(
-      `http://localhost:3001/events/${"mqAM6IbpGn"}/${1}`,
+      `http://localhost:3001/events/${userId}/${page - 1}`,
       {
         headers: {
           authorization: localStorage.getItem(SESSION_KEY) || false,
@@ -24,20 +26,27 @@ const UserEventsContainer = ({ page }: Props) => {
 
   const { isLoading, error, data } = useQuery<any[]>(
     [`events-${page}`],
-    fetchFriends
+    fetchPages
   );
 
   if (isLoading || !data) {
-    return <Loading />;
+    return (
+      <div className="bg-gray-300 h-[600px] w-[950px] m-auto">
+        <Loading />
+      </div>
+    );
   }
 
   return (
-    <div>
-      {data?.map((item, index) => (
-        <React.Fragment key={index}>
-          <p>{item.event.title}</p>
-        </React.Fragment>
-      ))}
+    <div className="bg-gray-300 h-[600px] w-[950px] m-auto p-5">
+      <h1>Events:</h1>
+      <div className="mt-5">
+        {data?.map((item, index) => (
+          <React.Fragment key={index}>
+            <EventFeedContainer event={item.event} />
+          </React.Fragment>
+        ))}
+      </div>
     </div>
   );
 };
