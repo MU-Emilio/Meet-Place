@@ -939,7 +939,10 @@ app.get("/events/:username", async (req, res) => {
 
     const pages = events_pages.length;
 
-    res.send(pages.toString());
+    res.send({
+      pages: pages.toString(),
+      number_events: events.length.toString(),
+    });
   } catch (error) {
     res.status(404).send({ message: error.message });
   }
@@ -984,8 +987,6 @@ app.get("/events/:username/:page", async (req, res) => {
 
     const isLastPage = req.params.page == events_pages.length;
     const page = req.params.page;
-
-    console.log(page);
 
     res.send(events_pages[page]);
   } catch (error) {

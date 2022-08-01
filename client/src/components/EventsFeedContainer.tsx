@@ -9,9 +9,10 @@ import { useParams } from "react-router-dom";
 
 interface Props {
   username: string | undefined;
+  setNumberEvents: React.Dispatch<React.SetStateAction<number>>;
 }
 
-const EventsFeedContainer = ({ username }: Props) => {
+const EventsFeedContainer = ({ username, setNumberEvents }: Props) => {
   const params = useParams();
 
   const fetchData = async () => {
@@ -24,8 +25,10 @@ const EventsFeedContainer = ({ username }: Props) => {
       }
     );
 
+    setNumberEvents(response.data.number_events * 1);
+
     // Convert response to number
-    return response.data * 1;
+    return response.data.pages * 1;
   };
 
   const { isLoading, error, data } = useQuery<number>(

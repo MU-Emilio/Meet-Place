@@ -6,9 +6,12 @@ import { User } from "../lib/types";
 import Profile from "./Profile";
 import { useParams } from "react-router-dom";
 import EventsFeedContainer from "./EventsFeedContainer";
+import { useState } from "react";
 
 export const ProfileContainer = () => {
   const params = useParams();
+
+  const [numberEvents, setNumberEvents] = useState(0);
 
   const fetchViewer = async () => {
     const response = await axios.get("http://localhost:3001/viewer", {
@@ -56,8 +59,13 @@ export const ProfileContainer = () => {
 
   return (
     <div className="flex justify-around">
-      <Profile user={data} />
-      {dataViewer && <EventsFeedContainer username={params.username} />}
+      <Profile user={data} numberEvents={numberEvents} />
+      {dataViewer && (
+        <EventsFeedContainer
+          username={params.username}
+          setNumberEvents={setNumberEvents}
+        />
+      )}
     </div>
   );
 };
