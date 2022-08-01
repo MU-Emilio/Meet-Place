@@ -890,6 +890,40 @@ app.post("/guests/suggested", async (req, res) => {
   }
 });
 
+app.get("/events/:userId", async (req, res) => {
+  try {
+    const userId = req.params.userId;
+
+    const Guests = Parse.Object.extend("Guests");
+    const query = new Parse.Query(Guests);
+
+    const userPointer = {
+      __type: "Pointer",
+      className: "_User",
+      objectId: userId,
+    };
+
+    query.equalTo("guest", userPointer);
+    query.include("event");
+
+    const events = await query.find();
+
+    const events_pages = [];
+
+    const chunkSize = 2;
+    for (let i = 0; i < events.length; i += chunkSize) {
+      const chunk = events.slice(i, i + chunkSize);
+      events_pages.push(chunk);
+    }
+
+    const pages = events_pages.length;
+
+    res.send(pages.toString());
+  } catch (error) {
+    res.status(404).send({ message: error.message });
+  }
+});
+
 app.get("/events/:userId/:page", async (req, res) => {
   try {
     const userId = req.params.userId;
@@ -921,7 +955,9 @@ app.get("/events/:userId/:page", async (req, res) => {
     }
 
     const isLastPage = req.params.page == events_pages.length;
-    page = req.params.page;
+    const page = req.params.page;
+
+    console.log(page);
 
     res.send(events_pages[page]);
   } catch (error) {

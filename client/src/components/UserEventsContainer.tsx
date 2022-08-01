@@ -12,7 +12,7 @@ interface Props {
 const UserEventsContainer = ({ page }: Props) => {
   const fetchFriends = async () => {
     const response = await axios.get(
-      "http://localhost:3001/events/:userId/:page",
+      `http://localhost:3001/events/${"mqAM6IbpGn"}/${1}`,
       {
         headers: {
           authorization: localStorage.getItem(SESSION_KEY) || false,
