@@ -32,7 +32,7 @@ export const EventFeedContainer = ({ event }: Props) => {
 
   if (isLoading || error) {
     return (
-      <div className=" m-auto bg-white w-[900px] h-[230px] mt-2">
+      <div className=" m-auto bg-white w-[800px] h-[230px] mt-2">
         <Loading />
       </div>
     );

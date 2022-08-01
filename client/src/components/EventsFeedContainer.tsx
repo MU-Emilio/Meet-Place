@@ -7,13 +7,17 @@ import EventsFeed from "./EventsFeed";
 
 import { useParams } from "react-router-dom";
 
-const EventsFeedContainer = () => {
+interface Props {
+  username: string | undefined;
+}
+
+const EventsFeedContainer = ({ username }: Props) => {
   const params = useParams();
-  const userId = params.userId;
+  //   const userId = params.userId;
 
   const fetchData = async () => {
     const response = await axios.get(
-      `http://localhost:3001/events/${params.userId}`,
+      `http://localhost:3001/events/${username}`,
       {
         headers: {
           authorization: localStorage.getItem(SESSION_KEY) || false,
@@ -26,7 +30,7 @@ const EventsFeedContainer = () => {
   };
 
   const { isLoading, error, data } = useQuery<number>(
-    [`eventNumber`],
+    [`eventNumber-${username}`],
     fetchData
   );
 
@@ -38,13 +42,9 @@ const EventsFeedContainer = () => {
     return <p>{`An error has occurred: ${error.message}`}</p>;
   }
 
-  if (!data) {
-    return null;
-  }
-
   return (
-    <div className="h-[800px]">
-      <EventsFeed userId={userId as string} pages={data} />
+    <div className="h-[800px] ">
+      <EventsFeed username={username as string} pages={data ? data : 1} />
     </div>
   );
 };

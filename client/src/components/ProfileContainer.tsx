@@ -5,8 +5,7 @@ import Loading from "./Loading";
 import { User } from "../lib/types";
 import Profile from "./Profile";
 import { useParams } from "react-router-dom";
-import FriendsContainer from "./FriendsContainer";
-import NotFriendsContainer from "./NotFriendsContainer";
+import EventsFeedContainer from "./EventsFeedContainer";
 
 export const ProfileContainer = () => {
   const params = useParams();
@@ -58,15 +57,7 @@ export const ProfileContainer = () => {
   return (
     <div className="flex justify-around">
       <Profile user={data} />
-      {dataViewer?.objectId === data.objectId && (
-        <div className="h-[750px] w-2/6 p-10 bg-gray-100 rounded-lg">
-          <h1 className=" font-medium text-2xl">Users:</h1>
-          <div className=" mx-auto h-[650px] py-3 px-10 bg-white rounded-md border-4 border-primary">
-            <FriendsContainer />
-            <NotFriendsContainer />
-          </div>
-        </div>
-      )}
+      {dataViewer && <EventsFeedContainer username={params.username} />}
     </div>
   );
 };

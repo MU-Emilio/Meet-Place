@@ -904,9 +904,16 @@ app.post("/guests/suggested", async (req, res) => {
   }
 });
 
-app.get("/events/:userId", async (req, res) => {
+app.get("/events/:username", async (req, res) => {
   try {
-    const userId = req.params.userId;
+    const username = req.params.username;
+
+    const User = new Parse.User();
+    const query1 = new Parse.Query(User);
+
+    query1.equalTo("username", req.params.username);
+
+    const user = await query1.first();
 
     const Guests = Parse.Object.extend("Guests");
     const query = new Parse.Query(Guests);
@@ -914,7 +921,7 @@ app.get("/events/:userId", async (req, res) => {
     const userPointer = {
       __type: "Pointer",
       className: "_User",
-      objectId: userId,
+      objectId: user.id,
     };
 
     query.equalTo("guest", userPointer);
@@ -938,9 +945,16 @@ app.get("/events/:userId", async (req, res) => {
   }
 });
 
-app.get("/events/:userId/:page", async (req, res) => {
+app.get("/events/:username/:page", async (req, res) => {
   try {
-    const userId = req.params.userId;
+    const username = req.params.username;
+
+    const User = new Parse.User();
+    const query1 = new Parse.Query(User);
+
+    query1.equalTo("username", req.params.username);
+
+    const user = await query1.first();
 
     const Guests = Parse.Object.extend("Guests");
     const query = new Parse.Query(Guests);
@@ -948,7 +962,7 @@ app.get("/events/:userId/:page", async (req, res) => {
     const userPointer = {
       __type: "Pointer",
       className: "_User",
-      objectId: userId,
+      objectId: user.id,
     };
 
     query.equalTo("guest", userPointer);

@@ -21,7 +21,7 @@ const EventFeedCard = ({ event, owner }: Prop) => {
   const navigate = useNavigate();
 
   return (
-    <div className=" m-auto bg-white w-[900px] h-[230px] mt-2">
+    <div className=" m-auto bg-white w-[800px] h-[230px] mt-8">
       <div
         className=" bg-blue-500 text-xl text-white font-medium px-3 py-2 cursor-pointer hover:underline ease-in-out duration-300"
         onClick={() => navigate(`/event/${event.objectId}`)}

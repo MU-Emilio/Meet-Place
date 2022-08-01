@@ -3,11 +3,11 @@ import { User } from "../lib/types";
 import UserEventsContainer from "./UserEventsContainer";
 
 interface Props {
-  userId: string;
+  username: string;
   pages: number;
 }
 
-const EventsFeed = ({ userId, pages }: Props) => {
+const EventsFeed = ({ username, pages }: Props) => {
   const [currentPage, setCurrentPage] = useState(1);
 
   const page_cards = [];
@@ -27,10 +27,10 @@ const EventsFeed = ({ userId, pages }: Props) => {
   }
 
   return (
-    <div className=" bg-gray-200 w-[1000px] h-[700px] p-5">
-      <UserEventsContainer userId={userId} page={currentPage} />
+    <div className=" bg-gray-200 w-[900px] h-[750px] p-5 rounded-lg">
+      <UserEventsContainer username={username} page={currentPage} />
 
-      <div className="w-[950px] h-[50px] bg-white flex gap-3 overflow-x-auto items-center p-2 m-auto">
+      <div className="w-[850px] h-[50px] bg-white flex gap-3 overflow-x-auto items-center p-2 m-auto">
         {page_cards}
       </div>
     </div>
