@@ -44,3 +44,8 @@ export interface SuggestedDateType {
   date: string;
   points: number;
 }
+
+export interface EventFeedType {
+  guest: { objectId: string };
+  event: EventType;
+}

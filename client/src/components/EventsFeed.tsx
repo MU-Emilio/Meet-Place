@@ -15,8 +15,8 @@ const EventsFeed = ({ username, pages }: Props) => {
     page_cards.push(
       <React.Fragment key={i}>
         <div
-          className={`h-[40px] min-w-[40px] ${
-            i === currentPage ? "bg-blue-200" : "bg-gray-300"
+          className={` rounded-md h-[40px] min-w-[40px] ${
+            i === currentPage ? "bg-secundary" : "bg-gray-300"
           } p-1 flex items-center cursor-pointer hover:bg-blue-300 hover:scale-105 ease-in-out duration-300`}
           onClick={() => setCurrentPage(i)}
         >

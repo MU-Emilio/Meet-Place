@@ -5,28 +5,85 @@ import {
   BiCalendar,
   BiCurrentLocation,
   BiComment,
-  BiUser,
   BiLockOpenAlt,
   BiLockAlt,
 } from "react-icons/bi";
 import UserCard from "./UserCard";
 import { useNavigate } from "react-router-dom";
+import { useQuery } from "react-query";
+import axios from "axios";
+import { SESSION_KEY } from "../lib/constants";
+import { useMutation, useQueryClient } from "react-query";
 
 interface Prop {
   event: EventType;
   owner: User | undefined;
+  username: string;
+  page: number;
 }
 
-const EventFeedCard = ({ event, owner }: Prop) => {
+const EventFeedCard = ({ event, owner, username, page }: Prop) => {
   const navigate = useNavigate();
+
+  const fetchViewer = async () => {
+    const response = await axios.get("http://localhost:3001/viewer", {
+      headers: {
+        authorization: localStorage.getItem(SESSION_KEY) || false,
+      },
+    });
+    return response.data;
+  };
+
+  const {
+    isLoading: isLoadingUser,
+    error: errorUser,
+    data: dataViewer,
+  } = useQuery<User | null>(["user"], fetchViewer);
+
+  const deleteEvent = async () => {
+    const { data: response } = await axios.post(
+      "http://localhost:3001/event/delete",
+      {
+        event: event,
+      },
+      {
+        headers: {
+          authorization: localStorage.getItem(SESSION_KEY) || false,
+        },
+      }
+    );
+    return response.data;
+  };
+
+  const queryClient = useQueryClient();
+
+  const { mutate, isLoading: deleteLoading } = useMutation(deleteEvent, {
+    onError: () => {
+      alert("there was an error");
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries(["events", `events-${username}-${page}`]);
+    },
+  });
+
+  const isOwner = (event: EventType | null) => {
+    if (event) {
+      return dataViewer?.objectId === event.owner.objectId;
+    }
+  };
 
   return (
     <div className=" m-auto bg-white w-[800px] h-[230px] mt-8">
-      <div
-        className=" bg-secundary text-xl text-white font-medium px-3 py-2 cursor-pointer hover:underline ease-in-out duration-300"
-        onClick={() => navigate(`/event/${event.objectId}`)}
-      >
-        <p> {event.title}</p>
+      <div className=" bg-secundary text-xl text-white font-medium px-3 py-2 flex justify-between">
+        <p
+          className="cursor-pointer hover:underline"
+          onClick={() => navigate(`/event/${event.objectId}`)}
+        >
+          {event.title}
+        </p>
+        {isOwner(event) && (
+          <BiTrash onClick={() => mutate()} className="cursor-pointer" />
+        )}
       </div>
       <div className="flex justify-around">
         <div className="w-[400px]">

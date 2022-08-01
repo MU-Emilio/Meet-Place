@@ -1,4 +1,4 @@
-import { User } from "../lib/types";
+import { EventFeedType } from "../lib/types";
 import { SESSION_KEY } from "../lib/constants";
 import axios from "axios";
 import { useQuery } from "react-query";
@@ -24,7 +24,7 @@ const UserEventsContainer = ({ username, page }: Props) => {
     return response.data;
   };
 
-  const { isLoading, error, data } = useQuery<any[]>(
+  const { isLoading, error, data } = useQuery<EventFeedType[]>(
     [`events-${username}-${page}`],
     fetchPages
   );
@@ -42,7 +42,11 @@ const UserEventsContainer = ({ username, page }: Props) => {
       <div className="mt-5">
         {data?.map((item, index) => (
           <React.Fragment key={index}>
-            <EventFeedContainer event={item.event} />
+            <EventFeedContainer
+              event={item.event}
+              username={username}
+              page={page}
+            />
           </React.Fragment>
         ))}
       </div>

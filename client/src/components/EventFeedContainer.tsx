@@ -5,13 +5,14 @@ import { useQuery } from "react-query";
 import Loading from "./Loading";
 import React from "react";
 import EventFeedCard from "./EventFeedCard";
-import id from "date-fns/esm/locale/id/index.js";
 
 interface Props {
   event: EventType;
+  username: string;
+  page: number;
 }
 
-export const EventFeedContainer = ({ event }: Props) => {
+export const EventFeedContainer = ({ event, username, page }: Props) => {
   const fetchOwner = async () => {
     const response = await axios.get(
       `http://localhost:3001/owner/${event.owner.objectId}`,
@@ -40,7 +41,12 @@ export const EventFeedContainer = ({ event }: Props) => {
 
   return (
     <div>
-      <EventFeedCard event={event} owner={owner} />
+      <EventFeedCard
+        event={event}
+        owner={owner}
+        username={username}
+        page={page}
+      />
     </div>
   );
 };
