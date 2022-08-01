@@ -28,6 +28,10 @@ const EventsFeed = ({ username, pages }: Props) => {
 
   return (
     <div className=" bg-gray-200 w-[900px] h-[750px] p-5 rounded-lg">
+      <h1 className="bg-primary px-5 py-3 rounded-t-md font-medium text-xl text-white text-center w-[850px] m-auto">
+        Events
+      </h1>
+
       <UserEventsContainer username={username} page={currentPage} />
 
       <div className="w-[850px] h-[50px] bg-white flex gap-3 overflow-x-auto items-center p-2 m-auto">

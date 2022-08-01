@@ -23,7 +23,7 @@ const EventFeedCard = ({ event, owner }: Prop) => {
   return (
     <div className=" m-auto bg-white w-[800px] h-[230px] mt-8">
       <div
-        className=" bg-blue-500 text-xl text-white font-medium px-3 py-2 cursor-pointer hover:underline ease-in-out duration-300"
+        className=" bg-secundary text-xl text-white font-medium px-3 py-2 cursor-pointer hover:underline ease-in-out duration-300"
         onClick={() => navigate(`/event/${event.objectId}`)}
       >
         <p> {event.title}</p>

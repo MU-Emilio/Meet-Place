@@ -13,7 +13,6 @@ interface Props {
 
 const EventsFeedContainer = ({ username }: Props) => {
   const params = useParams();
-  //   const userId = params.userId;
 
   const fetchData = async () => {
     const response = await axios.get(

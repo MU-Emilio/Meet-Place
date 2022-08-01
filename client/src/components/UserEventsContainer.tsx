@@ -25,23 +25,20 @@ const UserEventsContainer = ({ username, page }: Props) => {
   };
 
   const { isLoading, error, data } = useQuery<any[]>(
-    [`events-${page}`],
+    [`events-${username}-${page}`],
     fetchPages
   );
 
   if (isLoading || !data) {
     return (
-      <div className="bg-gray-300 h-[600px] w-[850px] m-auto">
+      <div className="bg-gray-100 h-[600px] w-[850px] m-auto">
         <Loading />
       </div>
     );
   }
 
   return (
-    <div className="bg-gray-100 h-[650px] w-[850px] m-auto p-5">
-      <h1 className="bg-primary px-5 py-3 rounded-md font-medium text-xl text-white text-center">
-        Events
-      </h1>
+    <div className="bg-gray-100 h-[600px] w-[850px] m-auto p-5">
       <div className="mt-5">
         {data?.map((item, index) => (
           <React.Fragment key={index}>
