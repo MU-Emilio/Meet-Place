@@ -5,7 +5,6 @@ const router = express.Router();
 const {
   userLogin,
   userRegister,
-  userInfo,
   viewerInfo,
   userDetailsByUsername,
   ownerDetails,
@@ -13,10 +12,12 @@ const {
   notUserFriends,
 } = require("../controllers/user.controller");
 
+const { getInformationUser } = require("../models/AuthClass");
+
 // Core
 router.post("/login", userLogin);
 router.post("/register", userRegister);
-router.use("*", userInfo);
+router.use("*", getInformationUser);
 router.get("/viewer", viewerInfo);
 router.get("/username/:username", userDetailsByUsername);
 router.get("/owner/:userId", ownerDetails);
