@@ -49,9 +49,11 @@ controller.ownerDetails = async (req, res) => {
 };
 
 controller.userFriends = async (req, res) => {
-  const user = await getFriends(req.params.username);
+  const user = req.user;
 
-  res.send(user);
+  const friends = await getFriends(user);
+
+  res.send(friends);
 };
 
 module.exports = controller;

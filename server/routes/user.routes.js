@@ -9,7 +9,7 @@ const {
   viewerInfo,
   userDetailsByUsername,
   ownerDetails,
-  getFriends,
+  userFriends,
   getNotFriends,
 } = require("../controllers/user.controller");
 
@@ -18,9 +18,9 @@ router.post("/login", userLogin);
 router.post("/register", userRegister);
 router.use("*", userInfo);
 router.get("/viewer", viewerInfo);
-router.get("/:username", userDetailsByUsername);
+router.get("/username/:username", userDetailsByUsername);
 router.get("/owner/:userId", ownerDetails);
-// router.get("/friends", getFriends);
+router.get("/friends", userFriends);
 // router.get("/friends/notFriends", getNotFriends);
 
 module.exports = router;
