@@ -127,63 +127,35 @@ class UserClass {
     }
   }
 
-  //   static getNotFriends(user) {
+  static async getNotFriends(user) {
+    try {
+      const friends = await UserClass.getFriends(user);
 
-  //     try {
-  //         const friendList = [];
+      const friendIds = [];
 
-  //         const Friends = Parse.Object.extend("Friends");
-  //         const query1 = new Parse.Query(Friends);
-  //         const query2 = new Parse.Query(Friends);
+      friends.map((friend) => {
+        if (friend) {
+          friendIds.push(friend.id);
+        }
+      });
 
-  //         if (!user) {
-  //             return (new BadRequestError("Unauthorized"));
-  //         }
+      const query = new Parse.Query(Parse.User);
+      query.notEqualTo("objectId", user.id);
+      const users = await query.find();
 
-  //         query1.equalTo("user1Id", user);
-  //         query2.equalTo("user2Id", user);
+      const usersNotFriends = [];
 
-  //         const compoundQuery = Parse.Query.or(query1, query2);
+      users.map((item, index) => {
+        if (!friendIds.includes(item.id)) {
+          usersNotFriends.push(item);
+        }
+      });
 
-  //         compoundQuery.include("*");
-
-  //         const friends = await compoundQuery.find();
-
-  //         friends.map((item) => {
-  //         if (item.get("user1Id").id == user.id) {
-  //             friendList.push(item.get("user2Id"));
-  //         } else {
-  //             friendList.push(item.get("user1Id"));
-  //         }
-  //         });
-
-  //         const friendIds = [];
-
-  //         friendList.map((friend) => {
-  //         if (friend) {
-  //             friendIds.push(friend.id);
-  //         }
-  //         });
-
-  //         const query = new Parse.Query(Parse.User);
-  //         query.notEqualTo("objectId", user.id);
-  //         const users = await query.find();
-
-  //         const usersNotFriends = [];
-
-  //         users.map((item, index) => {
-  //         if (!friendIds.includes(item.id)) {
-  //             usersNotFriends.push(item);
-  //         }
-  //         });
-
-  //         return (usersNotFriends)
-
-  //     } catch(error) {
-  //         throw (new BadRequestError(error.message))
-  //     }
-  //   }
-  // }
+      return usersNotFriends;
+    } catch (error) {
+      return new BadRequestError(error.message);
+    }
+  }
 }
 
 module.exports = UserClass;
