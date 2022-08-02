@@ -1,6 +1,5 @@
 const { BadRequestError } = require("../utils/error");
 const Parse = require("../utils/parse_config");
-const { User, Query } = require("parse/node");
 
 class UserClass {
   static async loginUser(body) {
