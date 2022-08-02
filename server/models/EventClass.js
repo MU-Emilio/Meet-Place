@@ -2,17 +2,17 @@ const { BadRequestError } = require("../utils/error");
 const Parse = require("../utils/parse_config");
 
 class EventClass {
-  static async getEvents() {
-    const event_list = [];
-
-    const Guests = Parse.Object.extend("Guests");
-    const query = new Parse.Query(Guests);
-
-    if (!req.user) {
-      return new BadRequestError(error.message, 401);
-    }
+  static async getEvents(user) {
     try {
-      const user = req.user;
+      const event_list = [];
+
+      const Guests = Parse.Object.extend("Guests");
+      const query = new Parse.Query(Guests);
+
+      if (!user) {
+        return new BadRequestError("Unauthorized", 401);
+      }
+
       query.equalTo("guest", user);
       query.include(["event"]);
       const events = await query.find();

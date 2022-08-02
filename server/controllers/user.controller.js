@@ -1,7 +1,6 @@
 const {
   registerUser,
   loginUser,
-  getInformationUser,
   getInformationViewer,
   getUserDetails,
   getOwnerDetails,
@@ -21,12 +20,6 @@ controller.userRegister = async (req, res) => {
   const response = await registerUser(req.body);
 
   res.send(response);
-};
-
-controller.userInfo = async (req, res, next) => {
-  req.user = await getInformationUser(req.headers.authorization);
-
-  next();
 };
 
 controller.viewerInfo = async (req, res) => {

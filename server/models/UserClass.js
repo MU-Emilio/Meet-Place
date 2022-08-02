@@ -37,17 +37,6 @@ class UserClass {
     }
   }
 
-  static async getInformationUser(myToken) {
-    if (!myToken) {
-      return null;
-    } else {
-      const query = new Parse.Query(Parse.Session);
-      query.include(["user"]);
-      const results = await query.first({ sessionToken: myToken });
-      return results.get("user");
-    }
-  }
-
   static async getInformationViewer(user) {
     const userID = user.id;
     if (!userID) {

@@ -3,10 +3,11 @@ const router = express.Router();
 
 // Controller
 const { eventsList } = require("../controllers/event.controller");
-const { userInfo } = require("../controllers/user.controller");
+
+const { getInformationUser } = require("../models/AuthClass");
 
 // Core
-router.use("*", userInfo);
+router.use("*", getInformationUser);
 router.get("/", eventsList);
 
 module.exports = router;
