@@ -1,8 +1,9 @@
 const {
   registerUser,
   loginUser,
-  getUser,
-  getViewer,
+  getInformationUser,
+  getInformationViewer,
+  getUserDetails,
 } = require("../models/UserClass");
 
 controller = {};
@@ -20,7 +21,7 @@ controller.userRegister = async (req, res) => {
 };
 
 controller.getUser = async (req, res, next) => {
-  req.user = await getUser(req.headers.authorization);
+  req.user = await getInformationUser(req.headers.authorization);
 
   next();
 };
@@ -28,11 +29,15 @@ controller.getUser = async (req, res, next) => {
 controller.getViewer = async (req, res) => {
   const user = req.user;
 
-  const viewer = await getViewer(user);
+  const viewer = await getInformationViewer(user);
 
   res.send(viewer);
 };
 
-controller;
+controller.getDetailsUser = async (req, res) => {
+  const user = await getUserDetails(req.params.username);
+
+  res.send(user);
+};
 
 module.exports = controller;

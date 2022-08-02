@@ -7,7 +7,7 @@ const {
   userRegister,
   getUser,
   getViewer,
-  getUserDetails,
+  getDetailsUser,
   getOwnerDetails,
   getFriends,
   getNotFriends,
@@ -18,7 +18,7 @@ router.post("/login", userLogin);
 router.post("/register", userRegister);
 router.use("*", getUser);
 router.get("/viewer", getViewer);
-// router.get("/:username", getUserDetails);
+router.get("/:username", getDetailsUser);
 // router.get("/owner/:userId", getOwnerDetails);
 // router.get("/friends", getFriends);
 // router.get("/friends/notFriends", getNotFriends);

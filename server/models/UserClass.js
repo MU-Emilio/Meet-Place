@@ -38,7 +38,7 @@ class UserClass {
     }
   }
 
-  static async getUser(myToken) {
+  static async getInformationUser(myToken) {
     if (!myToken) {
       return null;
     } else {
@@ -49,7 +49,7 @@ class UserClass {
     }
   }
 
-  static async getViewer(user) {
+  static async getInformationViewer(user) {
     const userID = user.id;
     if (!userID) {
       return new BadRequestError("Unauthorized");
@@ -64,34 +64,34 @@ class UserClass {
     }
   }
 
-  //   static getUserDetails(username) {
-  //     const User = new Parse.User();
-  //     const query1 = new Parse.Query(User);
+  static async getUserDetails(username) {
+    const User = new Parse.User();
+    const query1 = new Parse.Query(User);
 
-  //     try {
-  //       query1.equalTo("username", username);
+    try {
+      query1.equalTo("username", username);
 
-  //       const user = await query1.first();
+      const user = await query1.first();
 
-  //       return (user)
-  //     } catch (error) {
-  //       return (new BadRequestError(error.message))
-  //     }
+      return user;
+    } catch (error) {
+      return new BadRequestError(error.message);
+    }
+  }
+
+  // static getOwnerDetails(userId) {
+  //   const query1 = new Parse.Query(Parse.User);
+
+  //   try {
+  //     query1.equalTo("objectId", userId);
+
+  //     const user = await query1.first();
+
+  //     return(user)
+  //   } catch (error) {
+  //     return (new BadRequestError(error.message))
   //   }
-
-  //   static getOwnerDetails(userId) {
-  //     const query1 = new Parse.Query(Parse.User);
-
-  //     try {
-  //       query1.equalTo("objectId", userId);
-
-  //       const user = await query1.first();
-
-  //       return(user)
-  //     } catch (error) {
-  //       return (new BadRequestError(error.message))
-  //     }
-  //   }
+  // }
 
   //   static getFriends(user) {
 
