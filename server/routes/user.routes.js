@@ -15,9 +15,9 @@ const {
 
 // Core
 router.post("/login", userLogin);
-// router.post("/register", userRegister);
-// router.use("*", getUser);
-// router.get("/viewer", getViewer);
+router.post("/register", userRegister);
+router.use("*", getUser);
+router.get("/viewer", getViewer);
 // router.get("/:username", getUserDetails);
 // router.get("/owner/:userId", getOwnerDetails);
 // router.get("/friends", getFriends);

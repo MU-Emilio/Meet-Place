@@ -3,67 +3,66 @@ const Parse = require("../utils/parse_config");
 const { User, Query } = require("parse/node");
 
 class UserClass {
-  static async userLogin(body) {
+  static async loginUser(body) {
     try {
       const user = await Parse.User.logIn(body.username, body.password);
 
       return { message: "User logged!", status: "success", payload: user };
     } catch (error) {
-      return { message: error.message, status: "danger", payload: body };
+      return new BadRequestError(error.message);
     }
   }
 
-  //   static userRegister(body) {
-  //     const user = new Parse.User();
+  static async registerUser(body) {
+    const user = new Parse.User();
 
-  //     user.set("username", body.username);
-  //     user.set("password", body.password);
-  //     if (body.email == null) {
-  //       return({
-  //         message: "Cannot register with empty email",
-  //         status: "danger",
-  //         payload: body,
-  //       });
-  //     }
-  //     user.set("email", body.email);
-  //     user.set("publicEmail", body.email);
-  //     user.set("fullName", body.fullName);
+    user.set("username", body.username);
+    user.set("password", body.password);
+    if (body.email == null) {
+      return {
+        message: "Cannot register with empty email",
+        status: "danger",
+        payload: body,
+      };
+    }
+    user.set("email", body.email);
+    user.set("publicEmail", body.email);
+    user.set("fullName", body.fullName);
 
-  //     try {
-  //       await user.signUp();
+    try {
+      await user.signUp();
 
-  //       return({ message: "User created!", status: "success", payload: body })
+      return { message: "User created!", status: "success", payload: body };
+    } catch (error) {
+      return new BadRequestError(error.message);
+    }
+  }
 
-  //     } catch (error) {
-  //       throw ({ message: error.message, status: "danger", payload: body })
-  //     }
-  //   }
+  static async getUser(myToken) {
+    if (!myToken) {
+      return null;
+    } else {
+      const query = new Parse.Query(Parse.Session);
+      query.include(["user"]);
+      const results = await query.first({ sessionToken: myToken });
+      return results.get("user");
+    }
+  }
 
-  //   static getUser(myToken) {
-  //     if (!myToken) {
-  //       return null;
-  //     } else {
-  //       const query = new Parse.Query(Parse.Session);
-  //       query.include(["user"]);
-  //       const results = await query.first({ sessionToken: myToken });
-  //        return results.get("user");
-  //     }
-  //   }
-
-  //   static getViewer(user) {
-  //     const userID = user.id;
-  //     if (!userID) {
-  //       return (new BadRequestError("Unauthorized"));
-  //     }
-  //     try {
-  //       const query = new Parse.Query(Parse.User);
-  //       query.equalTo("objectId", userID);
-  //       const userObject = await query.first();
-  //       return (userObject)
-  //     } catch (error) {
-  //         throw (new BadRequestError(error.message, 404))
-  //     }
-  //   }
+  static async getViewer(user) {
+    const userID = user.id;
+    if (!userID) {
+      return new BadRequestError("Unauthorized");
+    }
+    try {
+      const query = new Parse.Query(Parse.User);
+      query.equalTo("objectId", userID);
+      const userObject = await query.first();
+      return userObject;
+    } catch (error) {
+      throw new BadRequestError(error.message, 404);
+    }
+  }
 
   //   static getUserDetails(username) {
   //     const User = new Parse.User();

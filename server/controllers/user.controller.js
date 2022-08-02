@@ -1,6 +1,6 @@
 const {
-  userLogin,
-  userRegister,
+  registerUser,
+  loginUser,
   getUser,
   getViewer,
 } = require("../models/UserClass");
@@ -8,26 +8,29 @@ const {
 controller = {};
 
 controller.userLogin = async (req, res) => {
-  const response = await userLogin(req.body);
+  const response = await loginUser(req.body);
 
   res.send(response);
 };
 
-controller.userRegister = (req, res) => {
-  const response = userRegister(req.body);
+controller.userRegister = async (req, res) => {
+  const response = await registerUser(req.body);
 
   res.send(response);
 };
 
-controller.getUser = (req, res, next) => {
-  req.user = getUser(req.headers.authorization);
+controller.getUser = async (req, res, next) => {
+  req.user = await getUser(req.headers.authorization);
 
   next();
 };
 
-controller.getViewer = (req, res) => {
+controller.getViewer = async (req, res) => {
   const user = req.user;
-  res.send(getViewer(user));
+
+  const viewer = await getViewer(user);
+
+  res.send(viewer);
 };
 
 controller;
