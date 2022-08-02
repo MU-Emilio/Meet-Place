@@ -4,6 +4,8 @@ const {
   getInformationUser,
   getInformationViewer,
   getUserDetails,
+  getFriends,
+  getOwnerDetails,
 } = require("../models/UserClass");
 
 controller = {};
@@ -20,13 +22,13 @@ controller.userRegister = async (req, res) => {
   res.send(response);
 };
 
-controller.getUser = async (req, res, next) => {
+controller.userInfo = async (req, res, next) => {
   req.user = await getInformationUser(req.headers.authorization);
 
   next();
 };
 
-controller.getViewer = async (req, res) => {
+controller.viewerInfo = async (req, res) => {
   const user = req.user;
 
   const viewer = await getInformationViewer(user);
@@ -34,8 +36,20 @@ controller.getViewer = async (req, res) => {
   res.send(viewer);
 };
 
-controller.getDetailsUser = async (req, res) => {
+controller.userDetailsByUsername = async (req, res) => {
   const user = await getUserDetails(req.params.username);
+
+  res.send(user);
+};
+
+controller.ownerDetails = async (req, res) => {
+  const user = await getOwnerDetails(req.params.userId);
+
+  res.send(user);
+};
+
+controller.userFriends = async (req, res) => {
+  const user = await getFriends(req.params.username);
 
   res.send(user);
 };

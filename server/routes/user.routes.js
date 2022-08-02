@@ -5,10 +5,10 @@ const router = express.Router();
 const {
   userLogin,
   userRegister,
-  getUser,
-  getViewer,
-  getDetailsUser,
-  getOwnerDetails,
+  userInfo,
+  viewerInfo,
+  userDetailsByUsername,
+  ownerDetails,
   getFriends,
   getNotFriends,
 } = require("../controllers/user.controller");
@@ -16,10 +16,10 @@ const {
 // Core
 router.post("/login", userLogin);
 router.post("/register", userRegister);
-router.use("*", getUser);
-router.get("/viewer", getViewer);
-router.get("/:username", getDetailsUser);
-// router.get("/owner/:userId", getOwnerDetails);
+router.use("*", userInfo);
+router.get("/viewer", viewerInfo);
+router.get("/:username", userDetailsByUsername);
+router.get("/owner/:userId", ownerDetails);
 // router.get("/friends", getFriends);
 // router.get("/friends/notFriends", getNotFriends);
 

@@ -79,55 +79,53 @@ class UserClass {
     }
   }
 
-  // static getOwnerDetails(userId) {
-  //   const query1 = new Parse.Query(Parse.User);
+  static async getOwnerDetails(userId) {
+    const query1 = new Parse.Query(Parse.User);
 
-  //   try {
-  //     query1.equalTo("objectId", userId);
+    try {
+      query1.equalTo("objectId", userId);
 
-  //     const user = await query1.first();
+      const user = await query1.first();
 
-  //     return(user)
-  //   } catch (error) {
-  //     return (new BadRequestError(error.message))
-  //   }
-  // }
+      return user;
+    } catch (error) {
+      return new BadRequestError(error.message);
+    }
+  }
 
-  //   static getFriends(user) {
+  static async getFriends(user) {
+    const friendList = [];
 
-  //     const friendList = [];
+    const Friends = Parse.Object.extend("Friends");
+    const query1 = new Parse.Query(Friends);
+    const query2 = new Parse.Query(Friends);
 
-  //     const Friends = Parse.Object.extend("Friends");
-  //     const query1 = new Parse.Query(Friends);
-  //     const query2 = new Parse.Query(Friends);
+    if (!user) {
+      return new BadRequestError("Unauthorized");
+    }
+    try {
+      query1.equalTo("user1Id", user);
+      query2.equalTo("user2Id", user);
 
-  //     if (!user) {
-  //       return(new BadRequestError("Unauthorized"));
-  //     }
-  //     try {
-  //       query1.equalTo("user1Id", user);
-  //       query2.equalTo("user2Id", user);
+      const compoundQuery = Parse.Query.or(query1, query2);
 
-  //       const compoundQuery = Parse.Query.or(query1, query2);
+      compoundQuery.include("*");
 
-  //       compoundQuery.include("*");
+      const friends = await compoundQuery.find();
 
-  //       const friends = await compoundQuery.find();
+      friends.map((item) => {
+        if (item.get("user1Id").id == user.id) {
+          friendList.push(item.get("user2Id"));
+        } else {
+          friendList.push(item.get("user1Id"));
+        }
+      });
 
-  //       friends.map((item) => {
-  //         if (item.get("user1Id").id == user.id) {
-  //           friendList.push(item.get("user2Id"));
-  //         } else {
-  //           friendList.push(item.get("user1Id"));
-  //         }
-  //       });
-
-  //       return (friendList)
-  //     } catch (error) {
-  //         throw (new BadRequestError(error.message))
-  //     }
-
-  //   }
+      return friendList;
+    } catch (error) {
+      return new BadRequestError(error.message);
+    }
+  }
 
   //   static getNotFriends(user) {
 
