@@ -67,9 +67,7 @@ const EventFeedCard = ({ event, owner, username, page }: Prop) => {
   });
 
   const isOwner = (event: EventType | null) => {
-    if (event) {
-      return dataViewer?.objectId === event.owner.objectId;
-    }
+    return event && dataViewer?.objectId === event.owner.objectId;
   };
 
   return (

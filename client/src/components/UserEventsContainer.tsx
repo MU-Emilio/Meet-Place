@@ -14,7 +14,7 @@ interface Props {
 const UserEventsContainer = ({ username, page }: Props) => {
   const fetchPages = async () => {
     const response = await axios.get(
-      `http://localhost:3001/events/${username}/${page - 1}`,
+      `http://localhost:3001/events/${username}/${page}`,
       {
         headers: {
           authorization: localStorage.getItem(SESSION_KEY) || false,
