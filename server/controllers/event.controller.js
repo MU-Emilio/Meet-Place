@@ -1,4 +1,4 @@
-const { getEvents, addEvent } = require("../models/EventClass");
+const { getEvents, addEvent, deleteEvent } = require("../models/EventClass");
 
 controller = {};
 
@@ -15,9 +15,19 @@ controller.postEvent = async (req, res) => {
 
   const event = req.body.event;
 
-  const events = await addEvent(event, user);
+  const eventObject = await addEvent(event, user);
 
-  res.send(events);
+  res.send(eventObject);
+};
+
+controller.eraseEvent = async (req, res) => {
+  const user = req.user;
+
+  const event = req.body.event;
+
+  const eventObject = await deleteEvent(event, user);
+
+  res.send(eventObject);
 };
 
 module.exports = controller;

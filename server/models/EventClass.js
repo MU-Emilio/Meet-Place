@@ -29,10 +29,6 @@ class EventClass {
     }
   }
 
-  static addUser() {}
-
-  static deleteUser() {}
-
   static async addEvent(event, user) {
     const Event = Parse.Object.extend("Event");
     const newEvent = new Event();
@@ -127,6 +123,45 @@ class EventClass {
       });
 
       return relations;
+    } catch (error) {
+      return new BadRequestError(error.message, 409);
+    }
+  }
+
+  static async deleteEvent(eventObject, user) {
+    try {
+      // Delete event
+
+      const Event = Parse.Object.extend("Event");
+      const query = new Parse.Query(Event);
+
+      query.equalTo("objectId", eventObject.objectId);
+
+      const event = await query.first();
+
+      if (event.get("owner").id === user.id) {
+        Parse.Object.destroyAll(event);
+
+        // Delete guests
+
+        const Guests = Parse.Object.extend("Guests");
+        const query2 = new Parse.Query(Guests);
+
+        const eventPointer = {
+          __type: "Pointer",
+          className: "Event",
+          objectId: event.objectId,
+        };
+
+        query2.equalTo("event", eventPointer);
+        const guests = await query2.find();
+
+        Parse.Object.destroyAll(guests);
+
+        return eventPointer;
+      } else {
+        return new BadRequestError("Only owner can delete event");
+      }
     } catch (error) {
       return new BadRequestError(error.message, 409);
     }
