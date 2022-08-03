@@ -3,7 +3,6 @@ import "./EventPopover.css";
 import axios from "axios";
 import { SESSION_KEY } from "../../lib/constants";
 import { useQuery } from "react-query";
-import GuestList from "../GuestList";
 import GuestContainer from "../GuestContainer";
 import { useMutation, useQueryClient } from "react-query";
 import {
@@ -14,6 +13,8 @@ import {
 } from "react-icons/bi";
 import { format } from "date-fns";
 import { useNavigate } from "react-router-dom";
+import { API_URL } from "../../lib/constants";
+import Loading from "../Loading";
 
 interface Props {
   event: EventType | null;
@@ -25,7 +26,7 @@ const EventPopover = ({ event, isHover }: Props) => {
 
   const deleteEvent = async () => {
     const { data: response } = await axios.post(
-      "http://localhost:3001/event/delete",
+      `${API_URL}/event/delete`,
       {
         event: event,
       },
@@ -39,7 +40,7 @@ const EventPopover = ({ event, isHover }: Props) => {
   };
 
   const fetchViewer = async () => {
-    const response = await axios.get("http://localhost:3001/viewer", {
+    const response = await axios.get(`${API_URL}/user/viewer`, {
       headers: {
         authorization: localStorage.getItem(SESSION_KEY) || false,
       },
@@ -71,7 +72,7 @@ const EventPopover = ({ event, isHover }: Props) => {
   });
 
   {
-    viewerIsLoading && <p>Loading...</p>;
+    viewerIsLoading && <Loading />;
   }
 
   const formatDate = (date: string) => {
