@@ -84,39 +84,60 @@ const EventFeedCard = ({ event, owner, username, page }: Prop) => {
         )}
       </div>
       <div className="flex justify-around">
-        <div className="w-[400px]">
-          <div className="mt-3 items-center flex gap-3 m-auto">
-            <BiCalendar className=" text-primary w-1/6" />
-            <h2 className="text-xl hover:scale-105 ease-in-out duration-300 w-5/6">
-              {format(
-                new Date(`${event.date.iso.split("T")[0]}T10:00:00.000Z`),
-                "MMMMMM, dd"
-              )}
-            </h2>
-          </div>
-          <div className="items-center flex gap-3 m-auto">
-            <BiCurrentLocation className=" text-primary w-1/6" />
-            <h2 className=" text-xl hover:scale-105 ease-in-out duration-300 w-5/6">
-              {event.location}
-            </h2>
-          </div>
-          <div className="items-center flex gap-3 m-auto">
-            <BiComment className=" text-primary w-1/6" />
-            <h2 className="text-xl hover:scale-105 ease-in-out duration-300 w-5/6">
-              {event.description}
-            </h2>
-          </div>
-          <div className="items-center flex gap-3 m-auto">
-            {event.privacy ? (
+        {event.privacy ? (
+          <div className="w-[400px]">
+            <div className="items-center flex gap-3 m-auto h-full">
               <BiLockAlt className=" text-primary w-1/6" />
-            ) : (
-              <BiLockOpenAlt className=" text-primary w-1/6" />
-            )}
-            <h2 className="text-xl hover:scale-105 ease-in-out duration-300 w-5/6">
-              {event.privacy ? "Private" : "Public"}
-            </h2>
+
+              <h2 className="text-xl hover:scale-105 ease-in-out duration-300 w-5/6">
+                This event is private
+              </h2>
+            </div>
+            <div className="items-center flex gap-3 m-auto">
+              <BiComment className=" text-primary w-1/6" />
+              <h2
+                className="text-xl hover:scale-105 ease-in-out duration-300 w-5/6 cursor-pointer hover:underline"
+                onClick={() => navigate(`/event/${event.objectId}`)}
+              >
+                Click to access event information
+              </h2>
+            </div>
           </div>
-        </div>
+        ) : (
+          <div className="w-[400px]">
+            <div className="mt-3 items-center flex gap-3 m-auto">
+              <BiCalendar className=" text-primary w-1/6" />
+              <h2 className="text-xl hover:scale-105 ease-in-out duration-300 w-5/6">
+                {format(
+                  new Date(`${event.date.iso.split("T")[0]}T10:00:00.000Z`),
+                  "MMMMMM, dd"
+                )}
+              </h2>
+            </div>
+            <div className="items-center flex gap-3 m-auto">
+              <BiCurrentLocation className=" text-primary w-1/6" />
+              <h2 className=" text-xl hover:scale-105 ease-in-out duration-300 w-5/6">
+                {event.location}
+              </h2>
+            </div>
+            <div className="items-center flex gap-3 m-auto">
+              <BiComment className=" text-primary w-1/6" />
+              <h2 className="text-xl hover:scale-105 ease-in-out duration-300 w-5/6">
+                {event.description}
+              </h2>
+            </div>
+            <div className="items-center flex gap-3 m-auto">
+              {event.privacy ? (
+                <BiLockAlt className=" text-primary w-1/6" />
+              ) : (
+                <BiLockOpenAlt className=" text-primary w-1/6" />
+              )}
+              <h2 className="text-xl hover:scale-105 ease-in-out duration-300 w-5/6">
+                {event.privacy ? "Private" : "Public"}
+              </h2>
+            </div>
+          </div>
+        )}
 
         <div>
           <h1 className="font-medium text-xl">Owner:</h1>
