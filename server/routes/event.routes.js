@@ -6,6 +6,7 @@ const {
   eventsList,
   postEvent,
   eraseEvent,
+  eventInformation,
 } = require("../controllers/event.controller");
 
 const { getInformationUser } = require("../models/AuthClass");
@@ -15,5 +16,6 @@ router.use("*", getInformationUser);
 router.get("/", eventsList);
 router.post("/add", postEvent);
 router.post("/delete", eraseEvent);
+router.get("/details/:eventId", eventInformation);
 
 module.exports = router;

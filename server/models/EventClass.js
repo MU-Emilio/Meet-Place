@@ -166,6 +166,46 @@ class EventClass {
       return new BadRequestError(error.message, 409);
     }
   }
+
+  static async getEventInfo(eventId, user) {
+    try {
+      const Event = Parse.Object.extend("Event");
+      const query = new Parse.Query(Event);
+
+      query.equalTo("objectId", eventId);
+      const eventDetails = await query.first();
+
+      if (eventDetails.get("privacy")) {
+        const eventPointer = {
+          __type: "Pointer",
+          className: "Event",
+          objectId: eventId,
+        };
+
+        const guestPointer = {
+          __type: "Pointer",
+          className: "_User",
+          objectId: user.id,
+        };
+
+        const Guests = Parse.Object.extend("Guests");
+        const query2 = new Parse.Query(Guests);
+
+        query2.equalTo("event", eventPointer);
+        query2.equalTo("guest", guestPointer);
+
+        const isGuest = await query2.find();
+
+        if (isGuest.length < 1) {
+          return new BadRequestError("Event details are not available", 404);
+        }
+      }
+
+      return eventDetails;
+    } catch (error) {
+      return new BadRequestError(error.message);
+    }
+  }
 }
 
 module.exports = EventClass;
