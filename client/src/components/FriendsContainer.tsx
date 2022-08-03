@@ -5,7 +5,7 @@ import { useQuery } from "react-query";
 import UserList from "./UserList";
 import DeleteFriendButton from "./DeleteFriendButton";
 import { BiUser } from "react-icons/bi";
-import Loading from "./Loading";
+import Loading from "./Loading/Loading";
 
 const FriendsContainer = () => {
   const fetchFriends = async () => {

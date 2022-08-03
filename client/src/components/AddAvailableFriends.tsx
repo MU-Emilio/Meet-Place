@@ -3,7 +3,7 @@ import { User, EventForm } from "../lib/types";
 import { SESSION_KEY } from "../lib/constants";
 import axios from "axios";
 import { useQuery } from "react-query";
-import Loading from "./Loading";
+import Loading from "./Loading/Loading";
 import { API_URL } from "../lib/constants";
 
 interface Props {

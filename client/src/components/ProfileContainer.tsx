@@ -1,7 +1,7 @@
 import axios from "axios";
 import { API_URL, SESSION_KEY } from "../lib/constants";
 import { useQuery } from "react-query";
-import Loading from "./Loading";
+import Loading from "./Loading/Loading";
 import { User } from "../lib/types";
 import Profile from "./Profile";
 import { useParams } from "react-router-dom";
@@ -93,12 +93,14 @@ export const ProfileContainer = () => {
         )}
       </div>
 
-      {dataViewer && (
-        <EventsFeedContainer
-          username={params.username}
-          setNumberEvents={setNumberEvents}
-        />
-      )}
+      <div className="mt-[40px]">
+        {dataViewer && (
+          <EventsFeedContainer
+            username={params.username}
+            setNumberEvents={setNumberEvents}
+          />
+        )}
+      </div>
     </div>
   );
 };

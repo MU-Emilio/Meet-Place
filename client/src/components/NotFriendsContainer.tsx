@@ -5,7 +5,7 @@ import { useQuery } from "react-query";
 import UserList from "./UserList";
 import AddFriendButton from "./AddFriendButton";
 import { BiGroup } from "react-icons/bi";
-import Loading from "./Loading";
+import Loading from "./Loading/Loading";
 
 const NotFriendsContainer = () => {
   const fetchUsers = async () => {

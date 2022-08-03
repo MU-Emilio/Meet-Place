@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useJsApiLoader, GoogleMap, Marker } from "@react-google-maps/api";
 import { geocodeByAddress, getLatLng } from "react-google-places-autocomplete";
-import Loading from "./Loading";
+import Loading from "./Loading/Loading";
 import { Location } from "../lib/types";
 
 const mapContainerStyle = {

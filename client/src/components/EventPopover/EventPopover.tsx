@@ -14,7 +14,7 @@ import {
 import { format } from "date-fns";
 import { useNavigate } from "react-router-dom";
 import { API_URL } from "../../lib/constants";
-import Loading from "../Loading";
+import Loading from "../Loading/Loading";
 
 interface Props {
   event: EventType | null;

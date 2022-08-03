@@ -3,7 +3,7 @@ import { API_URL, SESSION_KEY } from "../lib/constants";
 import { useQuery } from "react-query";
 import GuestList from "./GuestList";
 import { EventType, User } from "../lib/types";
-import Loading from "./Loading";
+import Loading from "./Loading/Loading";
 
 interface Props {
   event: EventType;

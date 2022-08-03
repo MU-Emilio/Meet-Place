@@ -4,7 +4,7 @@ import { API_URL, SESSION_KEY } from "../lib/constants";
 import axios from "axios";
 import { useQuery } from "react-query";
 import { EventType, User } from "../lib/types";
-import Loading from "./Loading";
+import Loading from "./Loading/Loading";
 import PrivateEventMessage from "./PrivateEventMessage";
 
 const EventDetailsContainer = () => {
