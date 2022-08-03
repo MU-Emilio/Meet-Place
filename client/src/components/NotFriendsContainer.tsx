@@ -5,7 +5,7 @@ import { useQuery } from "react-query";
 import UserList from "./UserList";
 import AddFriendButton from "./AddFriendButton";
 import { BiGroup } from "react-icons/bi";
-import Loading from "./Loading";
+import Loading from "./Loading/Loading";
 
 const NotFriendsContainer = () => {
   const fetchUsers = async () => {
@@ -20,13 +20,13 @@ const NotFriendsContainer = () => {
   const { isLoading, error, data } = useQuery<User[]>(["users"], fetchUsers);
 
   return (
-    <div className="border w-full h-[310px] overflow-y-auto">
+    <div className="border w-full h-[310px]">
       <div className="bg-secundary flex gap-2 items-center pl-3">
         <BiGroup className=" font-medium text-white" />
         <h2 className=" p-2 text-white font-medium">Other Users</h2>
       </div>
 
-      <div className="p-5">
+      <div className="p-5 h-[270px] overflow-y-auto">
         {data && !isLoading ? (
           <UserList
             users={data}

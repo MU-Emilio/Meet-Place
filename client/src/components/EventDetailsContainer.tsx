@@ -4,8 +4,8 @@ import { API_URL, SESSION_KEY } from "../lib/constants";
 import axios from "axios";
 import { useQuery } from "react-query";
 import { EventType, User } from "../lib/types";
-import Loading from "./Loading";
-import NotFound from "./PrivateEventMessage";
+import Loading from "./Loading/Loading";
+import PrivateEventMessage from "./PrivateEventMessage";
 
 const EventDetailsContainer = () => {
   const params = useParams();
@@ -28,7 +28,7 @@ const EventDetailsContainer = () => {
   );
 
   if (error) {
-    return <NotFound />;
+    return <PrivateEventMessage />;
   }
 
   if (isLoading || !data) {

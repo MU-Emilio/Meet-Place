@@ -8,7 +8,7 @@ interface Props {
 
 const Profile = ({ user, numberEvents }: Props) => {
   return (
-    <div className="h-[750px] w-2/6 p-10 bg-gray-100 rounded-lg">
+    <div className="h-[750px] p-10 bg-gray-100 rounded-lg">
       <div className=" mx-auto h-[650px] py-3 px-10 bg-white rounded-md border-4 border-primary">
         <div>
           <img

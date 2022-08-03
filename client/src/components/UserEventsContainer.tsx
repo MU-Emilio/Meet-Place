@@ -2,7 +2,7 @@ import { EventFeedType } from "../lib/types";
 import { API_URL, SESSION_KEY } from "../lib/constants";
 import axios from "axios";
 import { useQuery } from "react-query";
-import Loading from "./Loading";
+import Loading from "./Loading/Loading";
 import React from "react";
 import { EventFeedContainer } from "./EventFeedContainer";
 

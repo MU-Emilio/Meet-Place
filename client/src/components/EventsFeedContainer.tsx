@@ -2,7 +2,7 @@ import React from "react";
 import axios from "axios";
 import { API_URL, SESSION_KEY } from "../lib/constants";
 import { useQuery } from "react-query";
-import Loading from "./Loading";
+import Loading from "./Loading/Loading";
 import EventsFeed from "./EventsFeed";
 
 import { useParams } from "react-router-dom";
@@ -42,7 +42,7 @@ const EventsFeedContainer = ({ username, setNumberEvents }: Props) => {
   }
 
   return (
-    <div className="h-[800px] ">
+    <div className="h-[800px]">
       {username && <EventsFeed username={username} pages={data ? data : 1} />}
     </div>
   );

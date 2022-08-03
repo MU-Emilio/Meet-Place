@@ -3,7 +3,7 @@ import TopBarButtonContainer from "./TopBarButtonContainer";
 import axios from "axios";
 import { API_URL, SESSION_KEY } from "../lib/constants";
 import { useQuery } from "react-query";
-import Loading from "./Loading";
+import Loading from "./Loading/Loading";
 import { User } from "../lib/types";
 
 const TopBar = () => {

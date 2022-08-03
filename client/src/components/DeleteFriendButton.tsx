@@ -13,7 +13,7 @@ const DeleteFriendButton = ({ userCard }: Props) => {
 
   const deleteFriend = async () => {
     const { data: response } = await axios.post(
-      `${API_URL}/deleteFriend`,
+      `${API_URL}/friends/deleteFriend`,
       {
         userCard: userCard,
       },
