@@ -1,0 +1,13 @@
+const express = require("express");
+const router = express.Router();
+
+// Controller
+const { newGuest } = require("../controllers/guest.controller");
+
+const { getInformationUser } = require("../models/AuthClass");
+
+// Core
+router.use("*", getInformationUser);
+router.post("/addGuest", newGuest);
+
+module.exports = router;
