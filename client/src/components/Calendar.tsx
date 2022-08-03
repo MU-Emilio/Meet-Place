@@ -4,11 +4,10 @@ import { useState } from "react";
 import CalendarDisplay from "./CalendarDisplay";
 import { useQuery } from "react-query";
 import axios from "axios";
-import { SESSION_KEY } from "../lib/constants";
+import { API_URL, SESSION_KEY } from "../lib/constants";
 import { EventType } from "../lib/types";
 import { Navigate, useNavigate } from "react-router-dom";
 import GeneralLoading from "./GeneralLoading";
-import { Suspense } from "react";
 
 const styles = {
   button: {
@@ -63,7 +62,7 @@ const Calendar = () => {
   };
 
   const fetchEvents = async () => {
-    const response = await axios.get("http://localhost:3001/events", {
+    const response = await axios.get(`${API_URL}/events`, {
       headers: {
         authorization: localStorage.getItem(SESSION_KEY) || false,
       },

@@ -1,7 +1,6 @@
 import React from "react";
 import { User } from "../lib/types";
 import UserCard from "./UserCard";
-import Carousel from "react-elastic-carousel";
 interface Props {
   guests: User[];
   horizontal: boolean;

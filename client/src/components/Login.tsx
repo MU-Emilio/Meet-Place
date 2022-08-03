@@ -1,4 +1,3 @@
-import React, { useEffect } from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -7,7 +6,7 @@ import { useContext } from "react";
 import { UserContext } from "./UserContext";
 
 import Logo from "./Logo";
-import { SESSION_KEY } from "../lib/constants";
+import { API_URL, SESSION_KEY } from "../lib/constants";
 
 // Styles
 
@@ -40,7 +39,7 @@ const Login = () => {
   // Handlers
   const handleLogin = (values: any, callback: () => void) => {
     axios
-      .post(`http://localhost:3001/users/login`, {
+      .post(`${API_URL}/user/login`, {
         username: values.username,
         password: values.password,
       })

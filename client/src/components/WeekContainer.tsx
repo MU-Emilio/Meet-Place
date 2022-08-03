@@ -1,5 +1,4 @@
 import React from "react";
-import CalendarDate from "./CalendarDate";
 import { generateWeek } from "../utils/calendar_utils";
 import { EventType } from "../lib/types";
 import WeekDate from "./WeekDate";

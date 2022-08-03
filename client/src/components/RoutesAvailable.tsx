@@ -1,6 +1,5 @@
 import { useContext } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
-import Users from "./Users";
 import Login from "./Login";
 import Register from "./Register";
 import Home from "./Home";
@@ -9,8 +8,6 @@ import EventCreateForm from "./EventCreateForm";
 import TopBar from "./TopBar";
 import ProfilePage from "./ProfilePage";
 import EventDetailsContainer from "./EventDetailsContainer";
-import UserEventsContainer from "./UserEventsContainer";
-import EventsFeedContainer from "./EventsFeedContainer";
 
 const RoutesAvailable = () => {
   const { user } = useContext(UserContext);

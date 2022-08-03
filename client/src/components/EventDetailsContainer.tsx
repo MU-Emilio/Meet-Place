@@ -1,7 +1,6 @@
-import React from "react";
 import { useParams } from "react-router-dom";
 import EventDetails from "./EventDetails";
-import { SESSION_KEY } from "../lib/constants";
+import { API_URL, SESSION_KEY } from "../lib/constants";
 import axios from "axios";
 import { useQuery } from "react-query";
 import { EventType, User } from "../lib/types";
@@ -13,7 +12,7 @@ const EventDetailsContainer = () => {
 
   const fetchDetails = async () => {
     const response = await axios.get(
-      `http://localhost:3001/event/${params.eventId}`,
+      `${API_URL}/events/details/${params.eventId}`,
       {
         headers: {
           authorization: localStorage.getItem(SESSION_KEY) || false,

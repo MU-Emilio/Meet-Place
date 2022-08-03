@@ -1,8 +1,9 @@
 import { User, EventForm } from "../lib/types";
-import { SESSION_KEY } from "../lib/constants";
+import { API_URL, SESSION_KEY } from "../lib/constants";
 import axios from "axios";
 import { useQuery } from "react-query";
 import EventGuestsField from "./EventGuestsField";
+import Loading from "./Loading";
 
 interface Props {
   data: EventForm;
@@ -10,7 +11,7 @@ interface Props {
 
 const EventGuestsContainer = ({ data }: Props) => {
   const fetchFriends = async () => {
-    const response = await axios.get("http://localhost:3001/friends", {
+    const response = await axios.get(`${API_URL}/friends`, {
       headers: {
         authorization: localStorage.getItem(SESSION_KEY) || false,
       },
@@ -32,7 +33,7 @@ const EventGuestsContainer = ({ data }: Props) => {
       {friends ? (
         <EventGuestsField friends={friends} data={data} />
       ) : (
-        <p>Loading...</p>
+        <Loading />
       )}
     </div>
   );

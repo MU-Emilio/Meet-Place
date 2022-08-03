@@ -4,7 +4,7 @@ import EventDescriptionField from "./EventDescriptionField";
 import EventDateGuestsField from "./EventDateGuestsField";
 import { EventForm } from "../lib/types";
 import axios from "axios";
-import { SESSION_KEY } from "../lib/constants";
+import { API_URL, SESSION_KEY } from "../lib/constants";
 import { useMutation, useQueryClient } from "react-query";
 import { useNavigate } from "react-router-dom";
 import GoogleMapsField from "./GoogleMapsField";
@@ -26,7 +26,7 @@ const EventCreateForm = () => {
 
   const createEvent = async (formData: EventForm) => {
     const { data: response } = await axios.post(
-      "http://localhost:3001/event/add",
+      `${API_URL}/events/add`,
       {
         event: formData,
       },

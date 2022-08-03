@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { EventType } from "../lib/types";
 import EventPopover from "./EventPopover/EventPopover";
-import { format } from "date-fns";
 import { useNavigate } from "react-router-dom";
 
 interface Props {
