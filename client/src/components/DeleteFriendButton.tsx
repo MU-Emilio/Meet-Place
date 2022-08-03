@@ -1,7 +1,7 @@
 import React from "react";
 import axios from "axios";
 import { User } from "../lib/types";
-import { SESSION_KEY } from "../lib/constants";
+import { API_URL, SESSION_KEY } from "../lib/constants";
 import { useMutation, useQueryClient } from "react-query";
 
 interface Props {
@@ -13,7 +13,7 @@ const DeleteFriendButton = ({ userCard }: Props) => {
 
   const deleteFriend = async () => {
     const { data: response } = await axios.post(
-      "http://localhost:3001/deleteFriend",
+      `${API_URL}/deleteFriend`,
       {
         userCard: userCard,
       },

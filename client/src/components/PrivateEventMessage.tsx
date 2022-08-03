@@ -1,4 +1,3 @@
-import React from "react";
 import { RiChatPrivateFill } from "react-icons/ri";
 
 const styles = {

@@ -1,18 +1,20 @@
 import axios from "axios";
-import { SESSION_KEY } from "../lib/constants";
+import { API_URL, SESSION_KEY } from "../lib/constants";
 import { useQuery } from "react-query";
 import Loading from "./Loading";
 import { User } from "../lib/types";
 import Profile from "./Profile";
 import { useParams } from "react-router-dom";
-import FriendsContainer from "./FriendsContainer";
-import NotFriendsContainer from "./NotFriendsContainer";
+import EventsFeedContainer from "./EventsFeedContainer";
+import { useState } from "react";
 
 export const ProfileContainer = () => {
   const params = useParams();
 
+  const [numberEvents, setNumberEvents] = useState(0);
+
   const fetchViewer = async () => {
-    const response = await axios.get("http://localhost:3001/viewer", {
+    const response = await axios.get(`${API_URL}/user/viewer`, {
       headers: {
         authorization: localStorage.getItem(SESSION_KEY) || false,
       },
@@ -28,7 +30,7 @@ export const ProfileContainer = () => {
 
   const fetchData = async () => {
     const response = await axios.get(
-      `http://localhost:3001/user/${params.username}`,
+      `${API_URL}/user/username/${params.username}`,
       {
         headers: {
           authorization: localStorage.getItem(SESSION_KEY) || false,
@@ -57,15 +59,12 @@ export const ProfileContainer = () => {
 
   return (
     <div className="flex justify-around">
-      <Profile user={data} />
-      {dataViewer?.objectId === data.objectId && (
-        <div className="h-[750px] w-2/6 p-10 bg-gray-100 rounded-lg">
-          <h1 className=" font-medium text-2xl">Users:</h1>
-          <div className=" mx-auto h-[650px] py-3 px-10 bg-white rounded-md border-4 border-primary">
-            <FriendsContainer />
-            <NotFriendsContainer />
-          </div>
-        </div>
+      <Profile user={data} numberEvents={numberEvents} />
+      {dataViewer && (
+        <EventsFeedContainer
+          username={params.username}
+          setNumberEvents={setNumberEvents}
+        />
       )}
     </div>
   );

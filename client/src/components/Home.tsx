@@ -1,5 +1,5 @@
 import axios from "axios";
-import { SESSION_KEY } from "../lib/constants";
+import { API_URL, SESSION_KEY } from "../lib/constants";
 import { useQuery } from "react-query";
 import { User } from "../lib/types";
 import GeneralLoading from "./GeneralLoading";
@@ -9,7 +9,7 @@ const Calendar = React.lazy(() => import("./Calendar"));
 
 const Home = () => {
   const fetchData = async () => {
-    const response = await axios.get("http://localhost:3001/viewer", {
+    const response = await axios.get(`${API_URL}/user/viewer`, {
       headers: {
         authorization: localStorage.getItem(SESSION_KEY) || false,
       },

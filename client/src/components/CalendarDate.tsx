@@ -1,5 +1,4 @@
 import { startOfDay, format, isEqual } from "date-fns";
-import { useNavigate } from "react-router-dom";
 import { EventType } from "../lib/types";
 import EventsContainer from "./EventsContainer";
 
