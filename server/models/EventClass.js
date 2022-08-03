@@ -206,6 +206,48 @@ class EventClass {
       return new BadRequestError(error.message);
     }
   }
+
+  static async getNumberOfPages(username, user) {
+    try {
+      const User = new Parse.User();
+      const query1 = new Parse.Query(User);
+
+      query1.equalTo("username", username);
+
+      const user = await query1.first();
+
+      const Guests = Parse.Object.extend("Guests");
+      const query = new Parse.Query(Guests);
+
+      const userPointer = {
+        __type: "Pointer",
+        className: "_User",
+        objectId: user.id,
+      };
+
+      query.equalTo("guest", userPointer);
+      query.include("event");
+
+      const events = await query.find();
+
+      const events_pages = [];
+
+      const chunkSize = 2;
+      for (let i = 0; i < events.length; i += chunkSize) {
+        const chunk = events.slice(i, i + chunkSize);
+        events_pages.push(chunk);
+      }
+
+      const pages = events_pages.length;
+
+      return {
+        pages: pages.toString(),
+        number_events: events.length.toString(),
+      };
+    } catch (error) {
+      return new BadRequestError(error.message, 404);
+    }
+  }
 }
 
 module.exports = EventClass;

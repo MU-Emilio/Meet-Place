@@ -3,6 +3,7 @@ const {
   addEvent,
   deleteEvent,
   getEventInfo,
+  getNumberOfPages,
 } = require("../models/EventClass");
 
 controller = {};
@@ -43,6 +44,16 @@ controller.eventInformation = async (req, res) => {
   const eventObject = await getEventInfo(eventId, user);
 
   res.send(eventObject);
+};
+
+controller.eventsPages = async (req, res) => {
+  const user = req.user;
+
+  const username = req.params.username;
+
+  const pages = await getNumberOfPages(username, user);
+
+  res.send(pages);
 };
 
 module.exports = controller;
