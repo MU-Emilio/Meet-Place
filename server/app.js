@@ -11,6 +11,7 @@ app.use(cors());
 
 app.use("/user", require("./routes/user.routes"));
 app.use("/events", require("./routes/event.routes"));
+app.use("/friends", require("./routes/friend.routes"));
 
 // // Request the Log in passing the email and password
 // app.post("/users/login", async (req, res) => {
