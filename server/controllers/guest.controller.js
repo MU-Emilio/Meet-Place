@@ -1,4 +1,8 @@
-const { addGuest, deleteGuest } = require("../models/GuestClass");
+const {
+  addGuest,
+  deleteGuest,
+  getAvaiableFriends,
+} = require("../models/GuestClass");
 
 controller = {};
 
@@ -26,4 +30,13 @@ controller.eraseGuest = async (req, res) => {
   res.send(response);
 };
 
+controller.availableFriends = async (req, res) => {
+  const user = req.user;
+
+  const date = req.params.date;
+
+  const available = await getAvaiableFriends(date, user);
+
+  res.send(available);
+};
 module.exports = controller;

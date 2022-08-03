@@ -2,7 +2,11 @@ const express = require("express");
 const router = express.Router();
 
 // Controller
-const { newGuest, eraseGuest } = require("../controllers/guest.controller");
+const {
+  newGuest,
+  eraseGuest,
+  availableFriends,
+} = require("../controllers/guest.controller");
 
 const { getInformationUser } = require("../models/AuthClass");
 
@@ -10,5 +14,6 @@ const { getInformationUser } = require("../models/AuthClass");
 router.use("*", getInformationUser);
 router.post("/addGuest", newGuest);
 router.post("/deleteGuest", eraseGuest);
+router.get("/available/:date", availableFriends);
 
 module.exports = router;
