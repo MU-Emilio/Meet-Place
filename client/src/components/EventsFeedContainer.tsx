@@ -22,7 +22,7 @@ const EventsFeedContainer = ({ username, setNumberEvents }: Props) => {
       },
     });
 
-    setNumberEvents(response.data.number_events * 1);
+    setNumberEvents(response.data.number_events as number);
 
     // Convert response to number
     return response.data.pages * 1;
@@ -43,7 +43,7 @@ const EventsFeedContainer = ({ username, setNumberEvents }: Props) => {
 
   return (
     <div className="h-[800px] ">
-      <EventsFeed username={username as string} pages={data ? data : 1} />
+      {username && <EventsFeed username={username} pages={data ? data : 1} />}
     </div>
   );
 };
