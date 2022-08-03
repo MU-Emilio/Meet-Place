@@ -4,6 +4,7 @@ const {
   deleteEvent,
   getEventInfo,
   getNumberOfPages,
+  getEventsPage,
 } = require("../models/EventClass");
 
 controller = {};
@@ -54,6 +55,17 @@ controller.eventsPages = async (req, res) => {
   const pages = await getNumberOfPages(username, user);
 
   res.send(pages);
+};
+
+controller.pageEvents = async (req, res) => {
+  const user = req.user;
+
+  const username = req.params.username;
+  const page = req.params.page;
+
+  const eventPage = await getEventsPage(username, page, user);
+
+  res.send(eventPage);
 };
 
 module.exports = controller;

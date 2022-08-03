@@ -8,6 +8,7 @@ const {
   eraseEvent,
   eventInformation,
   eventsPages,
+  pageEvents,
 } = require("../controllers/event.controller");
 
 const { getInformationUser } = require("../models/AuthClass");
@@ -19,5 +20,6 @@ router.post("/add", postEvent);
 router.post("/delete", eraseEvent);
 router.get("/details/:eventId", eventInformation);
 router.get("/pages/:username", eventsPages);
+router.get("/:username/:page", pageEvents);
 
 module.exports = router;
