@@ -48,6 +48,45 @@ class FriendsClass {
       return new BadRequestError(error.message, 409);
     }
   }
+
+  static async deleteFriend(user, friendObject) {
+    try {
+      const userPointer = {
+        __type: "Pointer",
+        className: "_User",
+        objectId: user.id,
+      };
+
+      const friendPointer = {
+        __type: "Pointer",
+        className: "_User",
+        objectId: friendObject.objectId,
+      };
+
+      const Friends = Parse.Object.extend("Friends");
+
+      // Check if already friends
+
+      const query1 = new Parse.Query(Friends);
+      const query2 = new Parse.Query(Friends);
+
+      query1.equalTo("user1Id", userPointer);
+      query1.equalTo("user2Id", friendPointer);
+
+      query2.equalTo("user1Id", friendPointer);
+      query2.equalTo("user2Id", userPointer);
+
+      const compoundQuery = Parse.Query.or(query1, query2);
+
+      const friendRelation = await compoundQuery.first();
+
+      Parse.Object.destroyAll(friendRelation);
+
+      return friendRelation;
+    } catch (error) {
+      return new BadRequestError(error.message, 409);
+    }
+  }
 }
 
 module.exports = FriendsClass;
