@@ -63,7 +63,30 @@ export const ProfileContainer = () => {
   return (
     <div className="flex justify-around">
       <div className="w-2/6">
-        <div className="flex items-end">
+        {dataViewer?.objectId === data.objectId ? (
+          <div className="flex items-end">
+            <button
+              onClick={() => setSelectedTab("profile")}
+              className={`${
+                selectedTab === "profile"
+                  ? "bg-secundary text-white h-[40px]"
+                  : "bg-blue-50 text-gray-400 h-[30px]"
+              }  px-5 rounded-t-xl font-medium hover:scale-y-105 ease-in-out duration-300`}
+            >
+              Profile
+            </button>
+            <button
+              onClick={() => setSelectedTab("friends")}
+              className={`${
+                selectedTab === "friends"
+                  ? "bg-secundary text-white h-[40px]"
+                  : "bg-blue-100 text-gray-400 h-[30px]"
+              } px-5 rounded-t-xl font-medium hover:scale-y-105 ease-in-out duration-300`}
+            >
+              Friends
+            </button>
+          </div>
+        ) : (
           <button
             onClick={() => setSelectedTab("profile")}
             className={`${
@@ -74,17 +97,7 @@ export const ProfileContainer = () => {
           >
             Profile
           </button>
-          <button
-            onClick={() => setSelectedTab("friends")}
-            className={`${
-              selectedTab === "friends"
-                ? "bg-secundary text-white h-[40px]"
-                : "bg-blue-100 text-gray-400 h-[30px]"
-            } px-5 rounded-t-xl font-medium hover:scale-y-105 ease-in-out duration-300`}
-          >
-            Friends
-          </button>
-        </div>
+        )}
 
         {selectedTab === "profile" ? (
           <Profile user={data} numberEvents={numberEvents} />
