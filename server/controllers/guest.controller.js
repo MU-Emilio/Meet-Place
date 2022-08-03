@@ -2,6 +2,7 @@ const {
   addGuest,
   deleteGuest,
   getAvaiableFriends,
+  getGuests,
 } = require("../models/GuestClass");
 
 controller = {};
@@ -28,6 +29,16 @@ controller.eraseGuest = async (req, res) => {
   const response = await deleteGuest(event, guestObject);
 
   res.send(response);
+};
+
+controller.eventGuests = async (req, res) => {
+  const user = req.user;
+
+  const eventId = req.params.eventId;
+
+  const guests = await getGuests(eventId, user);
+
+  res.send(guests);
 };
 
 controller.availableFriends = async (req, res) => {

@@ -75,6 +75,38 @@ class GuestClass {
     }
   }
 
+  static async getGuests(eventId, user) {
+    const guestsList = [];
+
+    const eventPointer = {
+      __type: "Pointer",
+      className: "Event",
+      objectId: eventId,
+    };
+
+    const Guests = Parse.Object.extend("Guests");
+    const query = new Parse.Query(Guests);
+
+    if (!user) {
+      return new BadRequestError(error.message, 401);
+    }
+    try {
+      query.equalTo("event", eventPointer);
+      query.include(["guest"]);
+      const guests = await query.find();
+
+      guests.map((item) => {
+        if (item.get("guest")) {
+          guestsList.push(item.get("guest"));
+        }
+      });
+
+      return guestsList;
+    } catch (error) {
+      return new BadRequestError(error.message, 404);
+    }
+  }
+
   static async getAvaiableFriends(date, user) {
     // Get user's friends
     const friendList = [];
