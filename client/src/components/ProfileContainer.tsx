@@ -1,5 +1,5 @@
 import axios from "axios";
-import { SESSION_KEY } from "../lib/constants";
+import { API_URL, SESSION_KEY } from "../lib/constants";
 import { useQuery } from "react-query";
 import Loading from "./Loading";
 import { User } from "../lib/types";
@@ -14,7 +14,7 @@ export const ProfileContainer = () => {
   const [numberEvents, setNumberEvents] = useState(0);
 
   const fetchViewer = async () => {
-    const response = await axios.get("http://localhost:3001/viewer", {
+    const response = await axios.get(`${API_URL}/user/viewer`, {
       headers: {
         authorization: localStorage.getItem(SESSION_KEY) || false,
       },
@@ -30,7 +30,7 @@ export const ProfileContainer = () => {
 
   const fetchData = async () => {
     const response = await axios.get(
-      `http://localhost:3001/user/${params.username}`,
+      `${API_URL}/user/username/${params.username}`,
       {
         headers: {
           authorization: localStorage.getItem(SESSION_KEY) || false,

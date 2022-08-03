@@ -12,7 +12,7 @@ import UserCard from "./UserCard";
 import { useNavigate } from "react-router-dom";
 import { useQuery } from "react-query";
 import axios from "axios";
-import { SESSION_KEY } from "../lib/constants";
+import { API_URL, SESSION_KEY } from "../lib/constants";
 import { useMutation, useQueryClient } from "react-query";
 
 interface Prop {
@@ -26,7 +26,7 @@ const EventFeedCard = ({ event, owner, username, page }: Prop) => {
   const navigate = useNavigate();
 
   const fetchViewer = async () => {
-    const response = await axios.get("http://localhost:3001/viewer", {
+    const response = await axios.get(`${API_URL}/user/viewer`, {
       headers: {
         authorization: localStorage.getItem(SESSION_KEY) || false,
       },
@@ -42,7 +42,7 @@ const EventFeedCard = ({ event, owner, username, page }: Prop) => {
 
   const deleteEvent = async () => {
     const { data: response } = await axios.post(
-      "http://localhost:3001/event/delete",
+      `${API_URL}/events/delete`,
       {
         event: event,
       },

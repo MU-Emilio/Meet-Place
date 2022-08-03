@@ -1,9 +1,6 @@
-import React from "react";
-import GuestList from "./GuestList";
 import GoogleMapContainer from "./GoogleMapContainer";
-import { EventType, User } from "../lib/types";
+import { EventType } from "../lib/types";
 import {
-  BiTrash,
   BiCalendar,
   BiCurrentLocation,
   BiComment,

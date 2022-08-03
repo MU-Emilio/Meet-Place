@@ -79,7 +79,6 @@ class EventClass {
 
       if (guests) {
         guests.map((item) => {
-          console.log(guests);
           const guest = new Guests();
 
           const guestPointer = {
@@ -150,7 +149,7 @@ class EventClass {
         const eventPointer = {
           __type: "Pointer",
           className: "Event",
-          objectId: event.objectId,
+          objectId: event.id,
         };
 
         query2.equalTo("event", eventPointer);

@@ -1,5 +1,5 @@
 import { EventFeedType } from "../lib/types";
-import { SESSION_KEY } from "../lib/constants";
+import { API_URL, SESSION_KEY } from "../lib/constants";
 import axios from "axios";
 import { useQuery } from "react-query";
 import Loading from "./Loading";
@@ -14,7 +14,7 @@ interface Props {
 const UserEventsContainer = ({ username, page }: Props) => {
   const fetchPages = async () => {
     const response = await axios.get(
-      `http://localhost:3001/events/${username}/${page - 1}`,
+      `${API_URL}/events/${username}/${page - 1}`,
       {
         headers: {
           authorization: localStorage.getItem(SESSION_KEY) || false,

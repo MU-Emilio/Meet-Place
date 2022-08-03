@@ -4,6 +4,7 @@ import { SESSION_KEY } from "../lib/constants";
 import axios from "axios";
 import { useQuery } from "react-query";
 import Loading from "./Loading";
+import { API_URL } from "../lib/constants";
 
 interface Props {
   data: EventForm;
@@ -13,7 +14,7 @@ interface Props {
 const AddAvailableFriends = ({ data, handleAddArrayGuests }: Props) => {
   const fetchAvailable = async () => {
     const response = await axios.get(
-      `http://localhost:3001/guests/available/${format(
+      `${API_URL}/guests/available/${format(
         new Date(`${data.date}T10:00:00.000Z`),
         "yyyy-MM-dd"
       )}`,

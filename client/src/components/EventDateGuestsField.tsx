@@ -3,7 +3,6 @@ import { useState } from "react";
 import * as Yup from "yup";
 import { EventForm } from "../lib/types";
 import EventGuestsContainer from "./EventGuestsContainer";
-import SuggestedDate from "./SuggestedDate";
 
 interface Props {
   data: EventForm;

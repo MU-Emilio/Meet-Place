@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
-import { add, format } from "date-fns";
-import { User, EventForm, SuggestedDateType } from "../lib/types";
-import { SESSION_KEY } from "../lib/constants";
+import { format } from "date-fns";
+import { User, EventForm } from "../lib/types";
+import { API_URL, SESSION_KEY } from "../lib/constants";
 import axios from "axios";
-import { useQuery, useQueryClient, useMutation } from "react-query";
+import { useQueryClient, useMutation } from "react-query";
 import Loading from "./Loading";
 
 interface Props {
@@ -14,7 +14,7 @@ interface Props {
 const SuggestedDate = ({ data, addedGuests }: Props) => {
   const fetchSuggested = async () => {
     const response = await axios.post(
-      `http://localhost:3001/guests/suggested`,
+      `${API_URL}/guests/suggested`,
       {
         guests: data.guests,
       },
@@ -43,7 +43,7 @@ const SuggestedDate = ({ data, addedGuests }: Props) => {
     mutate();
   }, [addedGuests]);
 
-  if (isLoading) {
+  if (isLoading || !suggestedDates) {
     return <Loading />;
   }
 

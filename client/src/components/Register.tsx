@@ -1,10 +1,8 @@
-import React from "react";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Formik, Field, Form } from "formik";
-
 import Logo from "./Logo";
+import { API_URL } from "../lib/constants";
 
 // Styles
 
@@ -36,7 +34,7 @@ const Register = () => {
   // Handlers
   const handleRegister = (values: any, callback: () => void) => {
     axios
-      .post(`http://localhost:3001/users/register`, {
+      .post(`${API_URL}/user/register`, {
         fullName: values.fullName,
         email: values.email,
         username: values.username,

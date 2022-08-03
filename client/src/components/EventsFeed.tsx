@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { User } from "../lib/types";
 import UserEventsContainer from "./UserEventsContainer";
 
 interface Props {

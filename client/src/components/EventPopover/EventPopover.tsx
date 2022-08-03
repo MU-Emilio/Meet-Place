@@ -26,7 +26,7 @@ const EventPopover = ({ event, isHover }: Props) => {
 
   const deleteEvent = async () => {
     const { data: response } = await axios.post(
-      `${API_URL}/event/delete`,
+      `${API_URL}/events/delete`,
       {
         event: event,
       },
