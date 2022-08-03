@@ -7,6 +7,7 @@ const {
   eraseGuest,
   availableFriends,
   eventGuests,
+  suggestDates,
 } = require("../controllers/guest.controller");
 
 const { getInformationUser } = require("../models/AuthClass");
@@ -17,5 +18,6 @@ router.post("/addGuest", newGuest);
 router.post("/deleteGuest", eraseGuest);
 router.get("/invited/:eventId", eventGuests);
 router.get("/available/:date", availableFriends);
+router.post("/suggested", suggestDates);
 
 module.exports = router;

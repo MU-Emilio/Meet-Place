@@ -3,6 +3,7 @@ const {
   deleteGuest,
   getAvaiableFriends,
   getGuests,
+  getSuggestedDates,
 } = require("../models/GuestClass");
 
 controller = {};
@@ -49,5 +50,15 @@ controller.availableFriends = async (req, res) => {
   const available = await getAvaiableFriends(date, user);
 
   res.send(available);
+};
+
+controller.suggestDates = async (req, res) => {
+  const user = req.user;
+
+  const guests = req.body.guests;
+
+  const dates = await getSuggestedDates(guests, user);
+
+  res.send(dates);
 };
 module.exports = controller;
