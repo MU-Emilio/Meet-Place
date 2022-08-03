@@ -7,11 +7,14 @@ import Profile from "./Profile";
 import { useParams } from "react-router-dom";
 import EventsFeedContainer from "./EventsFeedContainer";
 import { useState } from "react";
+import Users from "./Users";
 
 export const ProfileContainer = () => {
   const params = useParams();
 
   const [numberEvents, setNumberEvents] = useState(0);
+
+  const [selectedTab, setSelectedTab] = useState("profile");
 
   const fetchViewer = async () => {
     const response = await axios.get(`${API_URL}/user/viewer`, {
@@ -59,7 +62,37 @@ export const ProfileContainer = () => {
 
   return (
     <div className="flex justify-around">
-      <Profile user={data} numberEvents={numberEvents} />
+      <div className="w-2/6">
+        <div className="flex items-end">
+          <button
+            onClick={() => setSelectedTab("profile")}
+            className={`${
+              selectedTab === "profile"
+                ? "bg-secundary text-white h-[40px]"
+                : "bg-blue-50 text-gray-400 h-[30px]"
+            }  px-5 rounded-t-xl font-medium hover:scale-y-105 ease-in-out duration-300`}
+          >
+            Profile
+          </button>
+          <button
+            onClick={() => setSelectedTab("friends")}
+            className={`${
+              selectedTab === "friends"
+                ? "bg-secundary text-white h-[40px]"
+                : "bg-blue-100 text-gray-400 h-[30px]"
+            } px-5 rounded-t-xl font-medium hover:scale-y-105 ease-in-out duration-300`}
+          >
+            Friends
+          </button>
+        </div>
+
+        {selectedTab === "profile" ? (
+          <Profile user={data} numberEvents={numberEvents} />
+        ) : (
+          <Users />
+        )}
+      </div>
+
       {dataViewer && (
         <EventsFeedContainer
           username={params.username}
