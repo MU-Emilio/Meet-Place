@@ -4,9 +4,10 @@ import { User } from "../lib/types";
 interface Props {
   userCard: User;
   ButtonComponent: React.ReactNode | null;
+  status: string | null;
 }
 
-const UserCard = ({ userCard, ButtonComponent }: Props) => {
+const UserCard = ({ userCard, ButtonComponent, status }: Props) => {
   const navigate = useNavigate();
 
   let profileImage: string | null = "";
@@ -37,6 +38,7 @@ const UserCard = ({ userCard, ButtonComponent }: Props) => {
         )}
         <div className=" flex gap-3">
           <p>{userCard.username}</p>
+          <p>{status && status}</p>
         </div>
       </div>
       {ButtonComponent && ButtonComponent}

@@ -49,3 +49,8 @@ export interface EventFeedType {
   guest: { objectId: string };
   event: EventType;
 }
+
+export interface Guest {
+  guest: User;
+  status: string;
+}

@@ -98,7 +98,10 @@ class GuestClass {
 
       guests.map((item) => {
         if (item.get("guest")) {
-          guestsList.push(item.get("guest"));
+          guestsList.push({
+            guest: item.get("guest"),
+            status: item.get("status"),
+          });
         }
       });
 

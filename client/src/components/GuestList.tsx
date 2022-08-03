@@ -1,8 +1,8 @@
 import React from "react";
-import { User } from "../lib/types";
+import { User, Guest } from "../lib/types";
 import UserCard from "./UserCard";
 interface Props {
-  guests: User[];
+  guests: Guest[];
   horizontal: boolean;
 }
 
@@ -22,7 +22,11 @@ const GuestList = ({ guests, horizontal }: Props) => {
                 horizontal && "inline-block"
               } cursor-pointer hover:scale-105 ease-in-out duration-300 mr-2 px-2`}
             >
-              <UserCard userCard={item} ButtonComponent={null} />
+              <UserCard
+                userCard={item.guest}
+                ButtonComponent={null}
+                status={item.status}
+              />
             </div>
           </React.Fragment>
         ))}
