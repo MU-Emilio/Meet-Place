@@ -4,8 +4,6 @@ const {
   getInformationViewer,
   getUserDetails,
   getOwnerDetails,
-  getFriends,
-  getNotFriends,
 } = require("../models/UserClass");
 
 controller = {};
@@ -40,22 +38,6 @@ controller.ownerDetails = async (req, res) => {
   const user = await getOwnerDetails(req.params.userId);
 
   res.send(user);
-};
-
-controller.userFriends = async (req, res) => {
-  const user = req.user;
-
-  const friends = await getFriends(user);
-
-  res.send(friends);
-};
-
-controller.notUserFriends = async (req, res) => {
-  const user = req.user;
-
-  const friends = await getNotFriends(user);
-
-  res.send(friends);
 };
 
 module.exports = controller;

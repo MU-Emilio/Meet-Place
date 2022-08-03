@@ -8,8 +8,6 @@ const {
   viewerInfo,
   userDetailsByUsername,
   ownerDetails,
-  userFriends,
-  notUserFriends,
 } = require("../controllers/user.controller");
 
 const { getInformationUser } = require("../models/AuthClass");
@@ -21,7 +19,5 @@ router.use("*", getInformationUser);
 router.get("/viewer", viewerInfo);
 router.get("/username/:username", userDetailsByUsername);
 router.get("/owner/:userId", ownerDetails);
-router.get("/friends", userFriends);
-router.get("/friends/notFriends", notUserFriends);
 
 module.exports = router;

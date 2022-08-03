@@ -1,6 +1,27 @@
-const { addFriend, deleteFriend } = require("../models/FriendClass");
+const {
+  getFriends,
+  getNotFriends,
+  addFriend,
+  deleteFriend,
+} = require("../models/FriendClass");
 
 controller = {};
+
+controller.userFriends = async (req, res) => {
+  const user = req.user;
+
+  const friends = await getFriends(user);
+
+  res.send(friends);
+};
+
+controller.notUserFriends = async (req, res) => {
+  const user = req.user;
+
+  const friends = await getNotFriends(user);
+
+  res.send(friends);
+};
 
 controller.newFriend = async (req, res) => {
   const user = req.user;
