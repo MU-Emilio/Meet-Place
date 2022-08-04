@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import MessagePop from "../MessagePop";
 import "./InviteStatus.css";
 import {
   BsQuestionCircleFill,
   BsFillCheckCircleFill,
   BsXCircleFill,
 } from "react-icons/bs";
+import InviteStatusIcon from "../InviteStatusIcon/InviteStatusIcon";
 
 interface Props {
   status: string;
@@ -16,38 +16,24 @@ const InviteStatus = ({ status }: Props) => {
 
   if (status === "accepted") {
     return (
-      <div
-        className="bg-white rounded-2xl status"
-        onMouseEnter={() => setIsHover(true)}
-        onMouseLeave={() => setIsHover(false)}
-      >
-        <BsFillCheckCircleFill className=" text-green-500" />
-        <MessagePop isHover={isHover} message={"Going"} />
-      </div>
+      <InviteStatusIcon
+        message={"Going"}
+        icon={<BsFillCheckCircleFill className="text-green-500" />}
+      />
     );
   } else if (status === "pending") {
     return (
-      <div
-        className="bg-white rounded-2xl status"
-        onMouseEnter={() => setIsHover(true)}
-        onMouseLeave={() => setIsHover(false)}
-      >
-        <BsQuestionCircleFill className=" text-yellow-500" />
-        <div className="status-message relative">
-          <MessagePop isHover={isHover} message={"Pending"} />
-        </div>
-      </div>
+      <InviteStatusIcon
+        message={"Pending"}
+        icon={<BsQuestionCircleFill className="text-yellow-500" />}
+      />
     );
   } else if (status === "rejected") {
     return (
-      <div
-        className="bg-white rounded-2xl status"
-        onMouseEnter={() => setIsHover(true)}
-        onMouseLeave={() => setIsHover(false)}
-      >
-        <BsXCircleFill className=" text-red-500" />
-        <MessagePop isHover={isHover} message={"Not going"} />
-      </div>
+      <InviteStatusIcon
+        message={"Not Going"}
+        icon={<BsXCircleFill className="text-red-500" />}
+      />
     );
   }
 
