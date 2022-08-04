@@ -1,0 +1,9 @@
+.status {
+  position: absolute;
+  bottom: 0px;
+  right: 0px;
+}
+
+.status-message {
+  right: -40px;
+}
