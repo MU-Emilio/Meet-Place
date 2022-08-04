@@ -11,6 +11,7 @@ const {
   pageEvents,
   pendingEvents,
   acceptInvite,
+  rejectInvite,
 } = require("../controllers/event.controller");
 
 const { getInformationUser } = require("../models/AuthClass");
@@ -25,5 +26,6 @@ router.get("/pages/:username", eventsPages);
 router.get("/:username/:page", pageEvents);
 router.get("/pending", pendingEvents);
 router.post("/invite/accept", acceptInvite);
+router.post("/invite/reject", rejectInvite);
 
 module.exports = router;

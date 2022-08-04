@@ -319,7 +319,7 @@ class EventClass {
     }
   }
 
-  static async acceptInvitationEvent(event, user) {
+  static async changeInviteStatus(event, user, status) {
     try {
       const Guests = Parse.Object.extend("Guests");
       const query = new Parse.Query(Guests);
@@ -341,7 +341,7 @@ class EventClass {
 
       const relation = await query.first();
 
-      relation.set("status", "accepted");
+      relation.set("status", status);
       relation.save();
 
       return relation;

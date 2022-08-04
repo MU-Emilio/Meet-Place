@@ -6,7 +6,7 @@ const {
   getNumberOfPages,
   getEventsPage,
   getPendingInvitations,
-  acceptInvitationEvent,
+  changeInviteStatus,
 } = require("../models/EventClass");
 
 controller = {};
@@ -83,7 +83,17 @@ controller.acceptInvite = async (req, res) => {
 
   const event = req.body.event;
 
-  const relation = await acceptInvitationEvent(event, user);
+  const relation = await changeInviteStatus(event, user, "accepted");
+
+  res.send(relation);
+};
+
+controller.rejectInvite = async (req, res) => {
+  const user = req.user;
+
+  const event = req.body.event;
+
+  const relation = await changeInviteStatus(event, user, "rejected");
 
   res.send(relation);
 };
