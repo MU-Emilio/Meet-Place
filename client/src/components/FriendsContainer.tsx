@@ -23,7 +23,7 @@ const FriendsContainer = () => {
   );
 
   return (
-    <div className="border w-full h-[310px]">
+    <div className="border w-full h-[310px] bg-white">
       <div className="bg-secundary flex gap-2 items-center pl-3">
         <BiUser className=" font-medium text-white" />
         <h2 className=" p-2 text-white font-medium">Your Friends</h2>
