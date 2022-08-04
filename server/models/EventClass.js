@@ -318,6 +318,37 @@ class EventClass {
       return new BadRequestError(error.message, 404);
     }
   }
+
+  static async acceptInvitationEvent(event, user) {
+    try {
+      const Guests = Parse.Object.extend("Guests");
+      const query = new Parse.Query(Guests);
+
+      const guestPointer = {
+        __type: "Pointer",
+        className: "_User",
+        objectId: user.id,
+      };
+
+      const eventPointer = {
+        __type: "Pointer",
+        className: "Event",
+        objectId: event.objectId,
+      };
+
+      query.equalTo("guest", guestPointer);
+      query.equalTo("event", eventPointer);
+
+      const relation = await query.first();
+
+      relation.set("status", "accepted");
+      relation.save();
+
+      return relation;
+    } catch (error) {
+      return new BadRequestError(error.message);
+    }
+  }
 }
 
 module.exports = EventClass;
