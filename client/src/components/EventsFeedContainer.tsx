@@ -34,7 +34,9 @@ const EventsFeedContainer = ({ username, setNumberEvents }: Props) => {
   );
 
   if (isLoading) {
-    return <Loading />;
+    <div className="h-[800px] relative">
+      return <Loading />;
+    </div>;
   }
 
   if (error instanceof Error) {

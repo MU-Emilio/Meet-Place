@@ -4,6 +4,7 @@ import { EventType } from "../lib/types";
 import { API_URL, SESSION_KEY } from "../lib/constants";
 import { useMutation, useQueryClient } from "react-query";
 import { BsFillCheckCircleFill } from "react-icons/bs";
+import Loading from "./Loading/Loading";
 
 interface Props {
   event: EventType;
@@ -36,13 +37,17 @@ const AcceptInviteButton = ({ event }: Props) => {
       queryClient.invalidateQueries([`guests:${event?.objectId}`]);
     },
   });
+
   return (
-    <button
-      className=" bg-green-100 w-[30px] rounded-md p-2"
-      onClick={() => mutate()}
-    >
-      <BsFillCheckCircleFill className="text-green-700" />
-    </button>
+    <div>
+      {isLoading && <Loading />}
+      <button
+        className=" bg-green-100 w-[30px] rounded-md p-2 hover:scale-105 ease-in-out duration-300"
+        onClick={() => mutate()}
+      >
+        <BsFillCheckCircleFill className="text-green-700" />
+      </button>
+    </div>
   );
 };
 

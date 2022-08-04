@@ -11,7 +11,7 @@ interface Props {
 
 const InvitationCard = ({ event, owner }: Props) => {
   return (
-    <div className="bg-gray-50 h-[120px] shadow-md mb-2 items-center">
+    <div className="bg-gray-50 h-[120px] shadow-md mb-2 items-center relative">
       <div className="bg-secundary px-3 py-1 text-white text-center">
         <h3 className=" text-md font-medium">{event.title}</h3>
       </div>

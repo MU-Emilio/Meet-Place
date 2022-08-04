@@ -4,6 +4,7 @@ import { EventType } from "../lib/types";
 import { API_URL, SESSION_KEY } from "../lib/constants";
 import { useMutation, useQueryClient } from "react-query";
 import { BsXCircleFill } from "react-icons/bs";
+import Loading from "./Loading/Loading";
 
 interface Props {
   event: EventType;
@@ -37,12 +38,15 @@ const RejectInviteButton = ({ event }: Props) => {
     },
   });
   return (
-    <button
-      className=" bg-red-100 w-[30px] rounded-md p-2"
-      onClick={() => mutate()}
-    >
-      <BsXCircleFill className=" text-red-700" />
-    </button>
+    <div>
+      {isLoading && <Loading />}
+      <button
+        className=" bg-red-100 w-[30px] rounded-md p-2 hover:scale-105 ease-in-out duration-300"
+        onClick={() => mutate()}
+      >
+        <BsXCircleFill className=" text-red-700" />
+      </button>
+    </div>
   );
 };
 
