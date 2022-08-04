@@ -93,7 +93,7 @@ controller.rejectInvite = async (req, res) => {
 
   const event = req.body.event;
 
-  const relation = await changeInviteStatus(event, user, "reject");
+  const relation = await changeInviteStatus(event, user, "rejected");
 
   res.send(relation);
 };
