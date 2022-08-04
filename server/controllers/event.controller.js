@@ -5,6 +5,7 @@ const {
   getEventInfo,
   getNumberOfPages,
   getEventsPage,
+  getPendingInvitations,
 } = require("../models/EventClass");
 
 controller = {};
@@ -66,6 +67,14 @@ controller.pageEvents = async (req, res) => {
   const eventPage = await getEventsPage(username, page, user);
 
   res.send(eventPage);
+};
+
+controller.pendingEvents = async (req, res) => {
+  const user = req.user;
+
+  const eventsPendingList = await getPendingInvitations(user);
+
+  res.send(eventsPendingList);
 };
 
 module.exports = controller;

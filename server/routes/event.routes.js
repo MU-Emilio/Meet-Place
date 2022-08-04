@@ -9,6 +9,7 @@ const {
   eventInformation,
   eventsPages,
   pageEvents,
+  pendingEvents,
 } = require("../controllers/event.controller");
 
 const { getInformationUser } = require("../models/AuthClass");
@@ -21,5 +22,6 @@ router.post("/delete", eraseEvent);
 router.get("/details/:eventId", eventInformation);
 router.get("/pages/:username", eventsPages);
 router.get("/:username/:page", pageEvents);
+router.get("/pending", pendingEvents);
 
 module.exports = router;

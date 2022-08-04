@@ -290,6 +290,34 @@ class EventClass {
       return new BadRequestError(error.message);
     }
   }
+
+  static async getPendingInvitations(user) {
+    try {
+      const event_list = [];
+
+      const Guests = Parse.Object.extend("Guests");
+      const query = new Parse.Query(Guests);
+
+      if (!user) {
+        return new BadRequestError("Unauthorized", 401);
+      }
+
+      query.equalTo("guest", user);
+      query.equalTo("status", "pending");
+      query.include(["event"]);
+      const events = await query.find();
+
+      events.map((item) => {
+        if (item.get("event")) {
+          event_list.push(item.get("event"));
+        }
+      });
+
+      return event_list;
+    } catch (error) {
+      return new BadRequestError(error.message, 404);
+    }
+  }
 }
 
 module.exports = EventClass;
