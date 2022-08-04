@@ -1,13 +1,16 @@
+import { EventType } from "../../lib/types";
 import "./EventNotificationsPopover.css";
 
 interface Props {
   notificationIsOpen: boolean;
   handleClickNotifications: () => void;
+  pendingEvents: EventType[];
 }
 
 const EventNotificationsPopover = ({
   notificationIsOpen,
   handleClickNotifications,
+  pendingEvents,
 }: Props) => {
   return (
     <div
