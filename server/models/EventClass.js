@@ -202,7 +202,7 @@ class EventClass {
 
       return eventDetails;
     } catch (error) {
-      return new BadRequestError(error.message);
+      throw new BadRequestError(error.message);
     }
   }
 
