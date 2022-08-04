@@ -2,7 +2,7 @@ import ProfileButtonBar from "./ProfileButtonBar";
 import { User } from "../lib/types";
 import { useNavigate } from "react-router-dom";
 import { BiCalendar, BiUser } from "react-icons/bi";
-import EventNotificationsPopover from "./EventNotificationsPopover/EventNotificationsPopover";
+import NotificationsButton from "./NotificationsButton";
 
 const styles = {
   topBarButtons: {
@@ -21,7 +21,7 @@ const TopBarButtonContainer = ({ user }: Props) => {
   return (
     <div
       style={styles.topBarButtons}
-      className="bg-gray-100 flex justify-between gap-4 px-3 py-5 align-middle mb-5 rounded-md shadow-sm text-sm relative"
+      className="bg-gray-100 flex justify-between gap-4 px-3 py-5 align-middle mb-5 rounded-md shadow-sm text-sm"
     >
       <div
         onClick={() => {
@@ -41,9 +41,9 @@ const TopBarButtonContainer = ({ user }: Props) => {
         <BiUser /> <p>Profile</p>
       </div>
 
-      <ProfileButtonBar user={user} />
+      <NotificationsButton />
 
-      <EventNotificationsPopover />
+      <ProfileButtonBar user={user} />
     </div>
   );
 };

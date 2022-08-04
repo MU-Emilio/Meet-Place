@@ -1,13 +1,12 @@
-.eventPop {
+.notificationPop {
   position: absolute;
-  top: 70px;
-  right: 15px;
+  top: 50px;
+  right: 0;
   z-index: 1;
   width: 320px;
   height: 500px;
   color: black;
   font-weight: 400;
-  border-width: 1px;
 }
 .fadeOut {
   visibility: hidden;
