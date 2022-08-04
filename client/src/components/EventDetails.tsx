@@ -45,7 +45,7 @@ const EventDetails = ({ event }: Props) => {
           </div>
         </div>
 
-        <div className="mt-10 h-[350px] bg-white rounded-md hover:scale-105 ease-in-out duration-300">
+        <div className="mt-10 h-[320px] bg-white rounded-md hover:scale-105 ease-in-out duration-300">
           <div className=" bg-secundary p-3 flex">
             <div className="bg-white w-fit py-1 px-10 m-auto rounded-lg flex items-center gap-3 font-medium">
               <BiUser className=" text-primary" />
