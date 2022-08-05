@@ -24,7 +24,10 @@ const EventDetails = ({ event }: Props) => {
           </div>
           <div className=" bg-white py-7 rounded-md shadow-md text-left text-lg">
             <div className="items-center flex gap-3 m-auto">
-              <CategoryContainer categoryId={event.category.objectId} />
+              <CategoryContainer
+                categoryId={event.category.objectId}
+                complete={true}
+              />
             </div>
             <div className="items-center flex gap-3 m-auto mt-3">
               <BiCurrentLocation className=" text-primary w-1/6" />

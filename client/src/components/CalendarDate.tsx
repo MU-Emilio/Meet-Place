@@ -24,7 +24,7 @@ const CalendarDate = ({ date, startDate, events, changeDisplay }: Props) => {
   return (
     <div>
       <div
-        className="border h-24 px-1 pb-4"
+        className="border h-[105px] px-1 pb-4"
         style={
           isEqual(startOfDay(date), startOfDay(startDate))
             ? styles.today

@@ -7,9 +7,10 @@ import Category from "./Category";
 
 interface Props {
   categoryId: string;
+  complete: boolean;
 }
 
-const CategoryContainer = ({ categoryId }: Props) => {
+const CategoryContainer = ({ categoryId, complete }: Props) => {
   const fetchDetails = async () => {
     const response = await axios.get(`${API_URL}/category/${categoryId}`, {
       headers: {
@@ -25,10 +26,10 @@ const CategoryContainer = ({ categoryId }: Props) => {
   );
 
   if (isLoading || data == null) {
-    return <Loading />;
+    return <></>;
   }
 
-  return <Category category={data} />;
+  return <Category category={data} complete={complete} />;
 };
 
 export default CategoryContainer;

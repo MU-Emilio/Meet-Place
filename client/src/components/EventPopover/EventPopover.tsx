@@ -15,6 +15,7 @@ import { format } from "date-fns";
 import { useNavigate } from "react-router-dom";
 import { API_URL } from "../../lib/constants";
 import Loading from "../Loading/Loading";
+import CategoryContainer from "../CategoryContainer";
 
 interface Props {
   event: EventTypeStatus | null;
@@ -88,14 +89,22 @@ const EventPopover = ({ event, isHover }: Props) => {
     <div className={`eventPop ${isHover ? "fadeIn" : "fadeOut"} rounded-md`}>
       <div className="flex justify-between bg-blue-500 text-white font-medium items-center p-2 rounded-t-md">
         <h1
-          className="cursor-pointer"
+          className="cursor-pointer w-[260px]"
           onClick={() => navigate(`/event/${event.event.objectId}`)}
         >
           {event.event.title}
         </h1>
-        {isOwner(event.event) && (
-          <BiTrash onClick={() => mutate()} className="cursor-pointer" />
-        )}
+        <div className=" text-black w-[40px]">
+          <CategoryContainer
+            categoryId={event.event.category.objectId}
+            complete={false}
+          />
+        </div>
+        <div className="w-[20px]">
+          {isOwner(event.event) && (
+            <BiTrash onClick={() => mutate()} className="cursor-pointer" />
+          )}
+        </div>
       </div>
       <hr />
       <div className="border flex flex-col gap-4 bg-white py-2">
