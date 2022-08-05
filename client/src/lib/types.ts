@@ -37,6 +37,7 @@ export interface EventForm {
   description: string;
   title: string;
   location: string;
+  category: string;
   guests: User[];
   privacy: boolean;
 }
