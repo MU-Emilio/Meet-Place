@@ -35,7 +35,7 @@ const EventsFeedContainer = ({ username, setNumberEvents }: Props) => {
 
   if (isLoading) {
     <div className="h-[800px] relative">
-      return <Loading />;
+      <Loading />;
     </div>;
   }
 

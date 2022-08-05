@@ -37,7 +37,7 @@ const InviteStatus = ({ status }: Props) => {
     );
   }
 
-  return <div className=""></div>;
+  return <></>;
 };
 
 export default InviteStatus;
