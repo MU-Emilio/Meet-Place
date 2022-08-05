@@ -38,6 +38,7 @@ const AcceptInviteButton = ({ event }: Props) => {
     onSettled: () => {
       queryClient.invalidateQueries(["pending-events"]);
       queryClient.invalidateQueries([`guests:${event?.objectId}`]);
+      queryClient.invalidateQueries([`events`]);
     },
   });
 
