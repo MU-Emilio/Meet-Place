@@ -8,14 +8,23 @@ class EventClass {
 
       const Guests = Parse.Object.extend("Guests");
       const query = new Parse.Query(Guests);
+      const query1 = new Parse.Query(Guests);
+      const query2 = new Parse.Query(Guests);
 
       if (!user) {
         return new BadRequestError("Unauthorized", 401);
       }
 
-      query.equalTo("guest", user);
-      query.include(["event"]);
-      const events = await query.find();
+      query1.equalTo("guest", user);
+      query1.equalTo("status", "accepted");
+
+      query2.equalTo("guest", user);
+      query2.equalTo("status", "pending");
+
+      const compoundQuery = Parse.Query.or(query1, query2);
+
+      compoundQuery.include(["event"]);
+      const events = await compoundQuery.find();
 
       events.map((item) => {
         if (item.get("event")) {
