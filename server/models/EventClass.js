@@ -102,7 +102,6 @@ class EventClass {
           return obj;
         },
         error: (err) => {
-          console.log(err.message);
           return new BadRequestError(err.message, 409);
         },
       });
