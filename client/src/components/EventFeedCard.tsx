@@ -64,6 +64,7 @@ const EventFeedCard = ({ event, owner, username, page }: Prop) => {
     },
     onSettled: () => {
       queryClient.invalidateQueries(["events", `events-${username}-${page}`]);
+      queryClient.invalidateQueries(["events-all"]);
     },
   });
 

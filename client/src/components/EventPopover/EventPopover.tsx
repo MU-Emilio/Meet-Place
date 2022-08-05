@@ -69,6 +69,7 @@ const EventPopover = ({ event, isHover }: Props) => {
     },
     onSettled: () => {
       queryClient.invalidateQueries(["events"]);
+      queryClient.invalidateQueries(["events-all"]);
     },
   });
 

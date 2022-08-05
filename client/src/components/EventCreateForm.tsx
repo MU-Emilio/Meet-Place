@@ -49,6 +49,7 @@ const EventCreateForm = () => {
     },
     onSettled: () => {
       queryClient.invalidateQueries(["events"]);
+      queryClient.invalidateQueries(["events-all"]);
     },
   });
 
