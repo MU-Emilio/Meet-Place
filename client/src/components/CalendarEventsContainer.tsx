@@ -27,6 +27,10 @@ const CalendarEventsContainer = () => {
     return events_json;
   };
 
+  const handleSelectCategory = (categoryId: string) => {
+    setSelectedCategory(categoryId);
+  };
+
   const fetchEvents = async () => {
     const response = await axios.get(
       `${API_URL}/events/category/${selectedCategory}`,
@@ -48,7 +52,13 @@ const CalendarEventsContainer = () => {
     return <GeneralLoading />;
   }
 
-  return <Calendar events={data} />;
+  return (
+    <Calendar
+      events={data}
+      handleSelectCategory={handleSelectCategory}
+      selectedCategory={selectedCategory}
+    />
+  );
 };
 
 export default CalendarEventsContainer;
