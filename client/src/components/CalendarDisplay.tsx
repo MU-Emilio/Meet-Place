@@ -2,7 +2,7 @@ import React, { useMemo } from "react";
 import { WEEK_DAYS } from "../lib/constants";
 import { MonthContainer } from "./MonthContainer";
 import { WeekContainer } from "./WeekContainer";
-import { EventType } from "../lib/types";
+import { EventType, EventTypeStatus } from "../lib/types";
 
 // Styles
 const styles = {
@@ -16,7 +16,7 @@ interface Props {
   startDate: Date;
   monthView: boolean;
   calendarDate: Date;
-  events: { [key: string]: EventType[] };
+  events: { [key: string]: EventTypeStatus[] };
   changeDisplay: () => void;
 }
 

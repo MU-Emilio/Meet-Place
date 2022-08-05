@@ -1,11 +1,11 @@
 import { startOfDay, format, isEqual } from "date-fns";
-import { EventType } from "../lib/types";
+import { EventType, EventTypeStatus } from "../lib/types";
 import EventsContainer from "./EventsContainer";
 
 interface Props {
   date: Date;
   startDate: Date;
-  events: { [key: string]: EventType[] };
+  events: { [key: string]: EventTypeStatus[] };
   changeDisplay: () => void;
 }
 

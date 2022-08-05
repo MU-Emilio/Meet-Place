@@ -25,6 +25,11 @@ export interface EventType {
   privacy: boolean;
 }
 
+export interface EventTypeStatus {
+  event: EventType;
+  status: string;
+}
+
 export interface EventForm {
   date: string;
   time: string;

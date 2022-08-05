@@ -7,7 +7,6 @@ class EventClass {
       const event_list = [];
 
       const Guests = Parse.Object.extend("Guests");
-      const query = new Parse.Query(Guests);
       const query1 = new Parse.Query(Guests);
       const query2 = new Parse.Query(Guests);
 
@@ -28,7 +27,10 @@ class EventClass {
 
       events.map((item) => {
         if (item.get("event")) {
-          event_list.push(item.get("event"));
+          event_list.push({
+            event: item.get("event"),
+            status: item.get("status"),
+          });
         }
       });
 

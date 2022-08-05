@@ -1,10 +1,10 @@
 import { useState } from "react";
-import { EventType } from "../lib/types";
+import { EventType, EventTypeStatus } from "../lib/types";
 import EventPopover from "./EventPopover/EventPopover";
 import { useNavigate } from "react-router-dom";
 
 interface Props {
-  event: EventType;
+  event: EventTypeStatus;
 }
 
 const Event = ({ event }: Props) => {
@@ -19,12 +19,12 @@ const Event = ({ event }: Props) => {
     >
       <div
         className=" text-sm bg-green-200 border border-green-300 flex justify-between mb-2 hover:scale-105 ease-in-out duration-300 cursor-pointer"
-        onClick={() => navigate(`/event/${event.objectId}`)}
+        onClick={() => navigate(`/event/${event.event.objectId}`)}
       >
-        <p>{event.title}</p>
+        <p>{event.event.title}</p>
         <p className=" text-xs">{`${
-          event.date.iso.split("T")[1].split(":")[0]
-        }:${event.date.iso.split("T")[1].split(":")[1]}`}</p>
+          event.event.date.iso.split("T")[1].split(":")[0]
+        }:${event.event.date.iso.split("T")[1].split(":")[1]}`}</p>
       </div>
 
       <EventPopover event={event} isHover={isHover} />

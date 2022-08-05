@@ -5,7 +5,7 @@ import CalendarDisplay from "./CalendarDisplay";
 import { useQuery } from "react-query";
 import axios from "axios";
 import { API_URL, SESSION_KEY } from "../lib/constants";
-import { EventType } from "../lib/types";
+import { EventType, EventTypeStatus } from "../lib/types";
 import { Navigate, useNavigate } from "react-router-dom";
 import GeneralLoading from "./GeneralLoading";
 
@@ -71,21 +71,20 @@ const Calendar = () => {
     return eventsJson;
   };
 
-  const { isLoading, error, data } = useQuery<{ [key: string]: EventType[] }>(
-    ["events"],
-    fetchEvents
-  );
+  const { isLoading, error, data } = useQuery<{
+    [key: string]: EventTypeStatus[];
+  }>(["events"], fetchEvents);
 
-  const manageEvents = (data: EventType[]) => {
-    const events_json: { [key: string]: EventType[] } = {};
+  const manageEvents = (data: EventTypeStatus[]) => {
+    const events_json: { [key: string]: EventTypeStatus[] } = {};
     if (data) {
-      data.map((event: EventType) => {
-        const date = event.date.iso.split("T")[0];
+      data.map((item: EventTypeStatus) => {
+        const date = item.event.date.iso.split("T")[0];
         const dateSplit = date.split("-");
         if (events_json[date]) {
-          events_json[date] = [...events_json[date], event];
+          events_json[date] = [...events_json[date], item];
         } else {
-          events_json[date] = [event];
+          events_json[date] = [item];
         }
       });
     }

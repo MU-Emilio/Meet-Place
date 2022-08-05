@@ -1,12 +1,12 @@
 import React from "react";
 import { generateWeek } from "../utils/calendar_utils";
-import { EventType } from "../lib/types";
+import { EventType, EventTypeStatus } from "../lib/types";
 import WeekDate from "./WeekDate";
 
 interface Props {
   startDate: Date;
   calendarDate: Date;
-  events: { [key: string]: EventType[] };
+  events: { [key: string]: EventTypeStatus[] };
   changeDisplay: () => void;
 }
 

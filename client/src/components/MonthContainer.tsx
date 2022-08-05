@@ -1,12 +1,12 @@
 import React from "react";
 import CalendarDate from "./CalendarDate";
 import { generateMonth } from "../utils/calendar_utils";
-import { EventType } from "../lib/types";
+import { EventType, EventTypeStatus } from "../lib/types";
 
 interface Props {
   startDate: Date;
   calendarDate: Date;
-  events: { [key: string]: EventType[] };
+  events: { [key: string]: EventTypeStatus[] };
   changeDisplay: () => void;
 }
 
