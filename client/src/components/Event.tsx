@@ -11,8 +11,6 @@ const Event = ({ event }: Props) => {
   const [isHover, setIsHover] = useState(false);
   const navigate = useNavigate();
 
-  console.log(event);
-
   return (
     <div
       onMouseEnter={() => setIsHover(true)}
