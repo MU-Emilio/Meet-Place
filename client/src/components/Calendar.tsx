@@ -7,7 +7,6 @@ import axios from "axios";
 import { API_URL, SESSION_KEY } from "../lib/constants";
 import { EventType, EventTypeStatus } from "../lib/types";
 import { Navigate, useNavigate } from "react-router-dom";
-import GeneralLoading from "./GeneralLoading";
 
 const styles = {
   button: {
@@ -27,7 +26,13 @@ const styles = {
   },
 };
 
-const Calendar = () => {
+interface Props {
+  events: {
+    [key: string]: EventTypeStatus[];
+  };
+}
+
+const Calendar = ({ events }: Props) => {
   // States
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [startDate, setStartDate] = useState(selectedDate);
@@ -60,40 +65,6 @@ const Calendar = () => {
   const changeDisplay = () => {
     setMonthView(!monthView);
   };
-
-  const fetchEvents = async () => {
-    const response = await axios.get(`${API_URL}/events`, {
-      headers: {
-        authorization: localStorage.getItem(SESSION_KEY) || false,
-      },
-    });
-    const eventsJson = manageEvents(response.data);
-    return eventsJson;
-  };
-
-  const { isLoading, error, data } = useQuery<{
-    [key: string]: EventTypeStatus[];
-  }>(["events"], fetchEvents);
-
-  const manageEvents = (data: EventTypeStatus[]) => {
-    const events_json: { [key: string]: EventTypeStatus[] } = {};
-    if (data) {
-      data.map((item: EventTypeStatus) => {
-        const date = item.event.date.iso.split("T")[0];
-        const dateSplit = date.split("-");
-        if (events_json[date]) {
-          events_json[date] = [...events_json[date], item];
-        } else {
-          events_json[date] = [item];
-        }
-      });
-    }
-    return events_json;
-  };
-
-  if (isLoading) {
-    return <GeneralLoading />;
-  }
 
   return (
     <div>
@@ -151,19 +122,13 @@ const Calendar = () => {
           </div>
         </div>
 
-        {!isLoading && data != null ? (
-          <>
-            <CalendarDisplay
-              startDate={startDate}
-              monthView={monthView}
-              calendarDate={calendarDate}
-              events={data}
-              changeDisplay={changeDisplay}
-            />
-          </>
-        ) : (
-          <p>Loading...</p>
-        )}
+        <CalendarDisplay
+          startDate={startDate}
+          monthView={monthView}
+          calendarDate={calendarDate}
+          events={events}
+          changeDisplay={changeDisplay}
+        />
       </div>
       <footer className=" bg-primary h-8"></footer>
     </div>
