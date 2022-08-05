@@ -26,9 +26,12 @@ const Event = ({ event }: Props) => {
         onClick={() => navigate(`/event/${event.event.objectId}`)}
       >
         <p>{event.event.title}</p>
-        <p className=" text-xs">{`${
-          event.event.date.iso.split("T")[1].split(":")[0]
-        }:${event.event.date.iso.split("T")[1].split(":")[1]}`}</p>
+        <p className=" text-xs">
+          {event.event.date.iso.split("T")[1] != "00:00:00.000Z" &&
+            `${event.event.date.iso.split("T")[1].split(":")[0]}:${
+              event.event.date.iso.split("T")[1].split(":")[1]
+            }`}
+        </p>
       </div>
 
       <EventPopover event={event} isHover={isHover} />
