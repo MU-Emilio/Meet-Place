@@ -9,7 +9,7 @@ const {
   changeInviteStatus,
 } = require("../models/EventClass");
 
-const { getResponseOrError } = require("../utils/response_error");
+const getResponseOrError = require("../utils/response_error");
 
 controller = {};
 
@@ -46,18 +46,12 @@ controller.eventInformation = async (req, res) => {
 
   const eventId = req.params.eventId;
 
-  // const eventObject = await getEventInfo(eventId, user);
-
-  const [response, error] = await getResponseOrError(
-    async () => await getEventInfo(eventId, user)
-  );
-
-  if (error) {
+  try {
+    const eventObject = await getEventInfo(eventId, user);
+    res.send(eventObject);
+  } catch (error) {
     res.status(error.status).send(error.message);
-    return;
   }
-
-  res.send(eventObject);
 };
 
 controller.eventsPages = async (req, res) => {

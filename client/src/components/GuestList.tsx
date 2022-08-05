@@ -12,7 +12,7 @@ const GuestList = ({ guests, horizontal }: Props) => {
       <div
         id="slider"
         className={`w-full ${
-          horizontal ? "h-full" : " h-[270px]"
+          horizontal ? "h-full" : " h-[230px]"
         } overflow-y-auto whitespace-nowrap scroll-smooth`}
       >
         {guests.map(

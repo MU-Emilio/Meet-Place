@@ -196,12 +196,13 @@ class EventClass {
         const isGuest = await query2.find();
 
         if (isGuest.length < 1) {
-          return new BadRequestError("Event details are not available", 404);
+          throw new BadRequestError("Event details are not available", 404);
         }
       }
 
       return eventDetails;
     } catch (error) {
+      console.log(error.message);
       throw new BadRequestError(error.message);
     }
   }

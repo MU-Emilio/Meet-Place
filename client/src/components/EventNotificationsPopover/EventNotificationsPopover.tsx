@@ -26,7 +26,7 @@ const EventNotificationsPopover = ({
     <div
       className={`notificationPop ${
         notificationIsOpen ? "fadeIn" : "fadeOut"
-      } rounded-md bg-white border-2 border-black p-3`}
+      } rounded-md bg-white border-[1px] border-black p-3 shadow-lg`}
     >
       <div className="h-[470px] overflow-y-auto">{pendingEventsComponets}</div>
     </div>
