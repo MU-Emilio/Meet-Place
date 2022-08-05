@@ -8,7 +8,7 @@ interface Props {
   complete: boolean;
 }
 
-const styles = {
+const styles: { [key: string]: Object } = {
   green: {
     backgroundColor: "rgb(134 239 172)",
   },
@@ -23,7 +23,7 @@ const styles = {
   },
 };
 
-const icons = {
+const icons: { [key: string]: React.ReactNode } = {
   BiFootball: <BiFootball style={styles.icon} />,
   BiHappy: <BiHappy style={styles.icon} />,
   BiBriefcaseAlt: <BiBriefcaseAlt style={styles.icon} />,
@@ -39,8 +39,8 @@ const Category = ({ category, complete }: Props) => {
           style={styles[category.color]}
           className="flex items-center gap-2 w-[100px] mx-auto px-4 py-1 rounded-lg text-lg"
         >
-          {icons[category.icon]}
-          <p className="capitalize">{category.name}</p>
+          <div className="mx-auto">{icons[category.icon]}</div>
+          <p className="capitalize font-normal">{category.name}</p>
         </div>
       ) : (
         <div

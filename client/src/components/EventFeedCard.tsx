@@ -14,6 +14,7 @@ import { useQuery } from "react-query";
 import axios from "axios";
 import { API_URL, SESSION_KEY } from "../lib/constants";
 import { useMutation, useQueryClient } from "react-query";
+import CategoryContainer from "./CategoryContainer";
 
 interface Prop {
   event: EventType;
@@ -72,16 +73,26 @@ const EventFeedCard = ({ event, owner, username, page }: Prop) => {
 
   return (
     <div className=" m-auto bg-white w-[800px] h-[230px] mt-8">
-      <div className=" bg-secundary text-xl text-white font-medium px-3 py-2 flex justify-between">
+      <div className=" bg-secundary text-xl text-white font-medium px-3 py-2 flex justify-between items-center">
         <p
-          className="cursor-pointer hover:underline"
+          className="cursor-pointer hover:underline w-[600px]"
           onClick={() => navigate(`/event/${event.objectId}`)}
         >
           {event.title}
         </p>
-        {isOwner(event) && (
-          <BiTrash onClick={() => mutate()} className="cursor-pointer" />
-        )}
+        <div className=" text-black w-[100px]">
+          <CategoryContainer
+            categoryId={event.category.objectId}
+            complete={true}
+          />
+        </div>
+        <div className="w-[100px]">
+          {isOwner(event) && (
+            <div className="ml-auto mr-0 w-fit">
+              <BiTrash onClick={() => mutate()} className="cursor-pointer" />
+            </div>
+          )}
+        </div>
       </div>
       <div className="flex justify-around">
         {event.privacy ? (
