@@ -7,6 +7,7 @@ const {
   getEventsPage,
   getPendingInvitations,
   changeInviteStatus,
+  getEventsByCategory,
 } = require("../models/EventClass");
 
 const getResponseOrError = require("../utils/response_error");
@@ -17,6 +18,16 @@ controller.eventsList = async (req, res) => {
   const user = req.user;
 
   const events = await getEvents(user);
+
+  res.send(events);
+};
+
+controller.eventByCategory = async (req, res) => {
+  const user = req.user;
+
+  const categoryId = req.params.categoryId;
+
+  const events = await getEventsByCategory(categoryId, user);
 
   res.send(events);
 };

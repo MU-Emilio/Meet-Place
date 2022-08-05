@@ -12,6 +12,7 @@ const {
   pendingEvents,
   acceptInvite,
   rejectInvite,
+  eventByCategory,
 } = require("../controllers/event.controller");
 
 const { getInformationUser } = require("../models/AuthClass");
@@ -19,6 +20,7 @@ const { getInformationUser } = require("../models/AuthClass");
 // Core
 router.use("*", getInformationUser);
 router.get("/", eventsList);
+router.get("/category/:categoryId", eventByCategory);
 router.post("/add", postEvent);
 router.post("/delete", eraseEvent);
 router.get("/details/:eventId", eventInformation);
