@@ -54,12 +54,12 @@ const EventCreateForm = () => {
 
   const makeRequest = (formData: EventForm) => {
     mutate(formData);
-    navigate("/home");
+    console.log(formData);
+    // navigate("/home");
   };
 
   const handleNextField = (newData: EventForm) => {
     setData((prev) => ({ ...prev, ...newData }));
-    console.log(newData);
     if (currentField + 1 === fields.length) {
       makeRequest(newData);
       return;

@@ -89,6 +89,11 @@ class EventClass {
         description: event_info.description,
         location: event_info.location,
         owner: user,
+        category: {
+          __type: "Pointer",
+          className: "Category",
+          objectId: event.category,
+        },
         privacy: event_info.privacy,
       };
 
@@ -97,6 +102,7 @@ class EventClass {
           return obj;
         },
         error: (err) => {
+          console.log(err.message);
           return new BadRequestError(err.message, 409);
         },
       });
