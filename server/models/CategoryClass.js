@@ -7,11 +7,9 @@ class CategoryClass {
       const Category = Parse.Object.extend("Category");
       const query = new Parse.Query(Category);
 
-      query.equalTo("name", "sports");
+      query.equalTo("objectId", categoryId);
 
       const categoryResult = await query.first();
-
-      console.log(categoryResult);
 
       return categoryResult;
     } catch (error) {

@@ -215,7 +215,6 @@ class EventClass {
 
       return eventDetails;
     } catch (error) {
-      console.log(error.message);
       throw new BadRequestError(error.message);
     }
   }

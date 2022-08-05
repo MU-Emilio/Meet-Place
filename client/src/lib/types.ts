@@ -23,6 +23,7 @@ export interface EventType {
   owner: User;
   location: string;
   privacy: boolean;
+  category: CategoryType;
 }
 
 export interface EventTypeStatus {

@@ -11,14 +11,11 @@ interface Props {
 
 const CategoryContainer = ({ categoryId }: Props) => {
   const fetchDetails = async () => {
-    const response = await axios.get(
-      `${API_URL}/events/details/${categoryId}`,
-      {
-        headers: {
-          authorization: localStorage.getItem(SESSION_KEY) || false,
-        },
-      }
-    );
+    const response = await axios.get(`${API_URL}/category/${categoryId}`, {
+      headers: {
+        authorization: localStorage.getItem(SESSION_KEY) || false,
+      },
+    });
     return response.data;
   };
 

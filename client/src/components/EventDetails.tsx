@@ -7,6 +7,7 @@ import {
   BiUser,
 } from "react-icons/bi";
 import GuestContainer from "./GuestContainer";
+import CategoryContainer from "./CategoryContainer";
 import { format } from "date-fns";
 interface Props {
   event: EventType;
@@ -19,6 +20,7 @@ const EventDetails = ({ event }: Props) => {
         <div className=" bg-secundary w-[400px] h-fit p-8 text-center shadow-md rounded-sm hover:scale-105 ease-in-out duration-300">
           <div className="bg-white p-2 mb-2 rounded-md hover:scale-105 ease-in-out duration-300 shadow-md">
             <h1 className=" text-4xl font-medium">{event.title}</h1>
+            <CategoryContainer categoryId={event.category.objectId} />
           </div>
           <div className=" bg-white p-2 rounded-md shadow-md text-left">
             <div className="items-center flex gap-3 m-auto">
@@ -57,7 +59,6 @@ const EventDetails = ({ event }: Props) => {
           </div>
         </div>
       </div>
-
       <div className="flex m-auto gap-4 w-fit">
         <GoogleMapContainer direction={event.location} />
       </div>
