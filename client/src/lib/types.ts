@@ -59,3 +59,10 @@ export interface Guest {
   guest: User;
   status: string;
 }
+
+export interface CategoryType {
+  objectId: string;
+  name: string;
+  icon: string;
+  color: string;
+}
