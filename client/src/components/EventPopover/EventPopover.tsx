@@ -28,7 +28,7 @@ const EventPopover = ({ event, isHover }: Props) => {
     const { data: response } = await axios.post(
       `${API_URL}/events/delete`,
       {
-        event: event,
+        event: event?.event,
       },
       {
         headers: {

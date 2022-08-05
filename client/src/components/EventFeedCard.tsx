@@ -143,7 +143,7 @@ const EventFeedCard = ({ event, owner, username, page }: Prop) => {
           <h1 className="font-medium text-xl">Owner:</h1>
           {owner && (
             <div className="hover:scale-105 ease-in-out duration-300 mr-2 px-2">
-              <UserCard userCard={owner} ButtonComponent={null} />
+              <UserCard userCard={owner} ButtonComponent={null} status={null} />
             </div>
           )}
         </div>

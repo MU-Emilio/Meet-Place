@@ -28,7 +28,15 @@ const EventNotificationsPopover = ({
         notificationIsOpen ? "fadeIn" : "fadeOut"
       } rounded-md bg-white border-[1px] border-black p-3 shadow-lg`}
     >
-      <div className="h-[470px] overflow-y-auto">{pendingEventsComponets}</div>
+      <div className="h-[470px] overflow-y-auto">
+        {pendingEventsComponets.length > 0 ? (
+          pendingEventsComponets
+        ) : (
+          <div className="h-full flex items-center">
+            <h3 className="mx-auto text-lg">No notifications yet...</h3>
+          </div>
+        )}
+      </div>
     </div>
   );
 };

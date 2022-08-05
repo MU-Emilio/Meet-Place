@@ -101,6 +101,8 @@ class EventClass {
           guest.set("event", eventPointer);
           guest.set("guest", guestPointer);
 
+          item.objectId === user.id && guest.set("status", "accepted");
+
           guest.save();
 
           const query1 = new Parse.Query(Friends);
