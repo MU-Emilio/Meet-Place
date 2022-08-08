@@ -46,7 +46,7 @@ const CalendarEventsContainer = () => {
 
   const { isLoading, error, data } = useQuery<{
     [key: string]: EventTypeStatus[];
-  }>([`events-${selectedCategory}`], fetchEvents);
+  }>([`events`, { selectedCategory }], fetchEvents);
 
   if (isLoading || !data) {
     return <GeneralLoading />;

@@ -55,7 +55,7 @@ const EventDescriptionField = ({
 
               <div className="w-[50px]">
                 <Field as="select" name="category" className=" border-2">
-                  <option value="">Selecciona una opción</option>
+                  <option value="">Select a category</option>
                   <option value="NGS8wCuqGp">Work</option>
                   <option value="1HncAqKnRf">Social</option>
                   <option value="pBcDBoupKP">Sports</option>
