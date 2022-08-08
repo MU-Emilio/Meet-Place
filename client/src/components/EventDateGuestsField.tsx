@@ -3,6 +3,7 @@ import { useState } from "react";
 import * as Yup from "yup";
 import { EventForm } from "../lib/types";
 import EventGuestsContainer from "./EventGuestsContainer";
+import { BiCaretRight, BiCaretLeft } from "react-icons/bi";
 
 interface Props {
   data: EventForm;
@@ -34,7 +35,7 @@ const EventDateGuestsField = ({
       >
         {({ values }) => (
           <Form className="block">
-            <div className="w-[650px] m-auto">
+            <div className="w-[580px] m-auto">
               <div className="mb-12 w-[600px]">
                 <div className="flex gap-10">
                   <div className="w-full">
@@ -77,17 +78,16 @@ const EventDateGuestsField = ({
               </div>
             </div>
 
-            <div className="flex w-fit gap-6 m-auto">
+            <div className="flex justify-between mx-auto w-[150px] mt-[50px]">
               <button
+                className="block mt-4 bg-secundary px-5 py-2 text-white font-medium rounded-md hover:opacity-50 hover:text-gray-800 hover:scale-105 ease-in-out duration-300"
                 type="button"
-                className="mt-4"
                 onClick={() => handlePrevField(values)}
               >
-                Back
+                <BiCaretLeft />
               </button>
               <button
-                type="button"
-                className="mt-4"
+                type="submit"
                 onClick={() => {
                   if (dateState != "") {
                     handleNextField(values);
@@ -95,8 +95,9 @@ const EventDateGuestsField = ({
                     setMessage("You have to select a date to continue");
                   }
                 }}
+                className="block mt-4 bg-secundary px-5 py-2 text-white font-medium rounded-md hover:opacity-50 hover:text-gray-800 hover:scale-105 ease-in-out duration-300"
               >
-                Next
+                <BiCaretRight />
               </button>
             </div>
           </Form>
