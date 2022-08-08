@@ -50,13 +50,15 @@ const Register = () => {
   };
 
   return (
-    <div className="h-[800px] p-[200px]">
+    <div className="h-[900px] p-[170px]">
       <div
-        className="block bg-primary rounded-lg  mx-auto mb-0"
+        className="rounded-lg mx-auto mb-0 shadow-lg border-t-8 border-primary"
         style={styles.formContainer}
       >
-        <Logo />
-        <h1 className="text-center">Register</h1>
+        <div className=" bg-white p-5">
+          <Logo />
+          <h1 className="text-center font-medium text-4xl">Sign Up</h1>
+        </div>
         <Formik
           initialValues={{
             fullName: "",
@@ -72,7 +74,7 @@ const Register = () => {
             <div className="mb-5" style={styles.field}>
               <label htmlFor="email">Email</label>
               <Field
-                className="block w-full"
+                className="block mb-5 w-full p-1 rounded-sm border-2"
                 id="email"
                 name="email"
                 placeholder="email@email.com"
@@ -85,7 +87,7 @@ const Register = () => {
                 Full Name
               </label>
               <Field
-                className="block w-full"
+                className="block mb-5 w-full p-1 rounded-sm border-2"
                 id="fullName"
                 name="fullName"
                 placeholder="Full Name"
@@ -97,7 +99,7 @@ const Register = () => {
                 Username
               </label>
               <Field
-                className="block w-full"
+                className="block mb-5 w-full p-1 rounded-sm border-2"
                 id="username"
                 name="username"
                 placeholder="Username"
@@ -107,7 +109,7 @@ const Register = () => {
             <div className="mb-5" style={styles.field}>
               <label htmlFor="password">Password</label>
               <Field
-                className="block w-full"
+                className="block mb-5 w-full p-1 rounded-sm border-2"
                 id="password"
                 name="password"
                 placeholder="Password"
@@ -115,9 +117,14 @@ const Register = () => {
               />
             </div>
 
-            <button className="bg-white px-3" type="submit">
-              Submit
-            </button>
+            <div className="mx-auto w-fit">
+              <button
+                className="bg-primary p-2 px-3 w-[150px] rounded-md text-white font-medium transition ease-in-out hover:scale-110 duration-300"
+                type="submit"
+              >
+                Register
+              </button>
+            </div>
           </Form>
         </Formik>
         {submitMessage && <p>{submitMessage}</p>}

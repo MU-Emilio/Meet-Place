@@ -56,9 +56,9 @@ const Login = () => {
   };
 
   return (
-    <div className="h-[900px] p-[200px] border-t-8 border-secundary rounded-md">
+    <div className="h-[900px] p-[170px]">
       <div
-        className="bloc rounded-lg mx-auto mb-0 shadow-lg border-t-8 border-primary"
+        className="rounded-lg mx-auto mb-0 shadow-lg border-t-8 border-primary"
         style={styles.formContainer}
       >
         <div className=" bg-white p-5">
@@ -97,12 +97,15 @@ const Login = () => {
                 placeholder="Password"
                 type="password"
               />
+              {submitMessage && (
+                <p className=" text-red-600">{submitMessage}</p>
+              )}
             </div>
 
             <div>
               <div className="mx-auto w-fit">
                 <button
-                  className="bg-primary p-2 px-3 w-[150px] rounded-md text-white font-medium"
+                  className="bg-primary p-2 px-3 w-[150px] rounded-md text-white font-medium transition ease-in-out hover:scale-110 duration-300"
                   type="submit"
                 >
                   Enter
@@ -113,7 +116,7 @@ const Login = () => {
                   <hr className="border-[1px] w-[50px]" />
                 </div>
                 <button
-                  className="bg-primary p-2 px-3 w-[150px] rounded-md text-white font-medium mt-4"
+                  className="bg-primary p-2 px-3 w-[150px] rounded-md text-white font-medium mt-4 transition ease-in-out hover:scale-110 duration-300"
                   type="button"
                   onClick={() => navigate("/register")}
                 >
@@ -123,7 +126,6 @@ const Login = () => {
             </div>
           </Form>
         </Formik>
-        {submitMessage && <p>{submitMessage}</p>}
       </div>
     </div>
   );
