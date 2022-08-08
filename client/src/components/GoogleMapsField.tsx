@@ -8,8 +8,12 @@ import {
 import { geocodeByAddress, getLatLng } from "react-google-places-autocomplete";
 import Loading from "./Loading/Loading";
 import { Location, EventForm } from "../lib/types";
-import { BiCurrentLocation } from "react-icons/bi";
-import { BiCaretRight, BiCaretLeft } from "react-icons/bi";
+import {
+  BiCaretRight,
+  BiCaretLeft,
+  BiBadgeCheck,
+  BiCurrentLocation,
+} from "react-icons/bi";
 
 const mapContainerStyle = {
   width: "600px",
@@ -120,7 +124,7 @@ const GoogleMapsField = ({ data, handleNextField, handlePrevField }: Props) => {
         </button>
       </div>
 
-      <div className="flex justify-between mx-auto w-[150px] mt-[100px]">
+      <div className="flex justify-between mx-auto w-[180px] mt-[100px]">
         <button
           className="block mt-4 bg-secundary px-5 py-2 text-white font-medium rounded-md hover:opacity-50 hover:text-gray-800 hover:scale-105 ease-in-out duration-300"
           type="button"
@@ -144,7 +148,7 @@ const GoogleMapsField = ({ data, handleNextField, handlePrevField }: Props) => {
           }}
           className="block mt-4 bg-secundary px-5 py-2 text-white font-medium rounded-md hover:opacity-50 hover:text-gray-800 hover:scale-105 ease-in-out duration-300"
         >
-          <BiCaretRight />
+          Submit
         </button>
       </div>
     </div>
