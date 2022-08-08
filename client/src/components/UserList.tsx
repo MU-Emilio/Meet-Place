@@ -20,6 +20,7 @@ const UserList = ({ users, ButtonComponent }: Props) => {
               <UserCard
                 userCard={user}
                 ButtonComponent={ButtonComponent(user)}
+                status={null}
               />
             </div>
           </React.Fragment>

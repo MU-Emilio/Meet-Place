@@ -1,8 +1,8 @@
 import React from "react";
-import { User } from "../lib/types";
+import { User, Guest } from "../lib/types";
 import UserCard from "./UserCard";
 interface Props {
-  guests: User[];
+  guests: Guest[];
   horizontal: boolean;
 }
 
@@ -12,20 +12,27 @@ const GuestList = ({ guests, horizontal }: Props) => {
       <div
         id="slider"
         className={`w-full ${
-          horizontal ? "h-full" : " h-[250px]"
+          horizontal ? "h-full" : " h-[230px]"
         } overflow-y-auto whitespace-nowrap scroll-smooth`}
       >
-        {guests.map((item, index) => (
-          <React.Fragment key={index}>
-            <div
-              className={`${
-                horizontal && "inline-block"
-              } cursor-pointer hover:scale-105 ease-in-out duration-300 mr-2 px-2`}
-            >
-              <UserCard userCard={item} ButtonComponent={null} />
-            </div>
-          </React.Fragment>
-        ))}
+        {guests.map(
+          (item, index) =>
+            item && (
+              <React.Fragment key={index}>
+                <div
+                  className={`${
+                    horizontal && "inline-block"
+                  } cursor-pointer hover:scale-105 ease-in-out duration-300 mr-2 px-2`}
+                >
+                  <UserCard
+                    userCard={item.guest}
+                    ButtonComponent={null}
+                    status={item.status}
+                  />
+                </div>
+              </React.Fragment>
+            )
+        )}
       </div>
     </div>
   );

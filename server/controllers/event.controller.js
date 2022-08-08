@@ -5,7 +5,12 @@ const {
   getEventInfo,
   getNumberOfPages,
   getEventsPage,
+  getPendingInvitations,
+  changeInviteStatus,
+  getEventsByCategory,
 } = require("../models/EventClass");
+
+const getResponseOrError = require("../utils/response_error");
 
 controller = {};
 
@@ -13,6 +18,16 @@ controller.eventsList = async (req, res) => {
   const user = req.user;
 
   const events = await getEvents(user);
+
+  res.send(events);
+};
+
+controller.eventByCategory = async (req, res) => {
+  const user = req.user;
+
+  const categoryId = req.params.categoryId;
+
+  const events = await getEventsByCategory(categoryId, user);
 
   res.send(events);
 };
@@ -42,9 +57,12 @@ controller.eventInformation = async (req, res) => {
 
   const eventId = req.params.eventId;
 
-  const eventObject = await getEventInfo(eventId, user);
-
-  res.send(eventObject);
+  try {
+    const eventObject = await getEventInfo(eventId, user);
+    res.send(eventObject);
+  } catch (error) {
+    res.status(error.status).send(error.message);
+  }
 };
 
 controller.eventsPages = async (req, res) => {
@@ -66,6 +84,34 @@ controller.pageEvents = async (req, res) => {
   const eventPage = await getEventsPage(username, page, user);
 
   res.send(eventPage);
+};
+
+controller.pendingEvents = async (req, res) => {
+  const user = req.user;
+
+  const eventsPendingList = await getPendingInvitations(user);
+
+  res.send(eventsPendingList);
+};
+
+controller.acceptInvite = async (req, res) => {
+  const user = req.user;
+
+  const event = req.body.event;
+
+  const relation = await changeInviteStatus(event, user, "accepted");
+
+  res.send(relation);
+};
+
+controller.rejectInvite = async (req, res) => {
+  const user = req.user;
+
+  const event = req.body.event;
+
+  const relation = await changeInviteStatus(event, user, "rejected");
+
+  res.send(relation);
 };
 
 module.exports = controller;

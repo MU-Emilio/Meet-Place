@@ -6,7 +6,7 @@ import { User } from "../lib/types";
 import Profile from "./Profile";
 import { useParams } from "react-router-dom";
 import EventsFeedContainer from "./EventsFeedContainer";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Users from "./Users";
 
 export const ProfileContainer = () => {
@@ -47,6 +47,10 @@ export const ProfileContainer = () => {
     [`user-${params.username}`],
     fetchData
   );
+
+  useEffect(() => {
+    setSelectedTab("profile");
+  }, [data]);
 
   if (isLoading || isLoadingUser) {
     return <Loading />;

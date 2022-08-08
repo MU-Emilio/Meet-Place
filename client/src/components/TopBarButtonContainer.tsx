@@ -2,6 +2,7 @@ import ProfileButtonBar from "./ProfileButtonBar";
 import { User } from "../lib/types";
 import { useNavigate } from "react-router-dom";
 import { BiCalendar, BiUser } from "react-icons/bi";
+import NotificationsButton from "./NotificationsButton";
 
 const styles = {
   topBarButtons: {
@@ -39,6 +40,8 @@ const TopBarButtonContainer = ({ user }: Props) => {
       >
         <BiUser /> <p>Profile</p>
       </div>
+
+      <NotificationsButton />
 
       <ProfileButtonBar user={user} />
     </div>

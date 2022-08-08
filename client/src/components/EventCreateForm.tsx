@@ -8,6 +8,7 @@ import { API_URL, SESSION_KEY } from "../lib/constants";
 import { useMutation, useQueryClient } from "react-query";
 import { useNavigate } from "react-router-dom";
 import GoogleMapsField from "./GoogleMapsField";
+import { string } from "yup";
 
 const EventCreateForm = () => {
   const [data, setData] = useState<EventForm>({
@@ -17,6 +18,7 @@ const EventCreateForm = () => {
     description: "",
     location: "",
     privacy: false,
+    category: "",
     guests: [],
   });
 
@@ -47,6 +49,7 @@ const EventCreateForm = () => {
     },
     onSettled: () => {
       queryClient.invalidateQueries(["events"]);
+      queryClient.invalidateQueries(["events-all"]);
     },
   });
 
@@ -57,7 +60,6 @@ const EventCreateForm = () => {
 
   const handleNextField = (newData: EventForm) => {
     setData((prev) => ({ ...prev, ...newData }));
-
     if (currentField + 1 === fields.length) {
       makeRequest(newData);
       return;

@@ -32,7 +32,11 @@ const EventDetailsContainer = () => {
   }
 
   if (isLoading || !data) {
-    return <Loading />;
+    return (
+      <div className="h-[800px]">
+        <Loading />
+      </div>
+    );
   }
 
   return (

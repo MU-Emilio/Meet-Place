@@ -26,10 +26,18 @@ const UserEventsContainer = ({ username, page }: Props) => {
     fetchPages
   );
 
-  if (isLoading || !data) {
+  if (isLoading) {
     return (
       <div className="bg-gray-100 h-[600px] w-[850px] m-auto">
         <Loading />
+      </div>
+    );
+  }
+
+  if (!data) {
+    return (
+      <div className="bg-gray-100 h-[600px] w-[850px] mx-auto text-center pt-[250px] text-3xl">
+        <h1 className=""> No events yet...</h1>
       </div>
     );
   }

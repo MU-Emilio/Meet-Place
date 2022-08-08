@@ -77,7 +77,7 @@ class GuestClass {
   }
 
   static async getGuests(eventId, user) {
-    const guestsList = [];
+    const guestsList = {};
 
     const eventPointer = {
       __type: "Pointer",
@@ -98,11 +98,31 @@ class GuestClass {
 
       guests.map((item) => {
         if (item.get("guest")) {
-          guestsList.push(item.get("guest"));
+          if (guestsList[item.get("status")]) {
+            guestsList[item.get("status")].push({
+              guest: item.get("guest"),
+              status: item.get("status"),
+            });
+          } else {
+            guestsList[item.get("status")] = [
+              {
+                guest: item.get("guest"),
+                status: item.get("status"),
+              },
+            ];
+          }
         }
       });
 
-      return guestsList;
+      const sortedGuestsList = [
+        guestsList?.accepted,
+        guestsList?.pending,
+        guestsList?.rejected,
+      ];
+
+      const merged = [].concat.apply([], sortedGuestsList);
+
+      return merged;
     } catch (error) {
       return new BadRequestError(error.message, 404);
     }

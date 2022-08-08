@@ -2,7 +2,7 @@ import axios from "axios";
 import { API_URL, SESSION_KEY } from "../lib/constants";
 import { useQuery } from "react-query";
 import GuestList from "./GuestList";
-import { EventType, User } from "../lib/types";
+import { EventType, User, Guest, EventTypeStatus } from "../lib/types";
 import Loading from "./Loading/Loading";
 
 interface Props {
@@ -23,7 +23,7 @@ const GuestContainer = ({ event, horizontal }: Props) => {
     return response.data;
   };
 
-  const { isLoading, error, data } = useQuery<User[]>(
+  const { isLoading, error, data } = useQuery<Guest[]>(
     [`guests:${event?.objectId}`],
     fetchGuests
   );

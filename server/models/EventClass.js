@@ -7,25 +7,63 @@ class EventClass {
       const event_list = [];
 
       const Guests = Parse.Object.extend("Guests");
-      const query = new Parse.Query(Guests);
+      const query1 = new Parse.Query(Guests);
+      const query2 = new Parse.Query(Guests);
 
       if (!user) {
         return new BadRequestError("Unauthorized", 401);
       }
 
-      query.equalTo("guest", user);
-      query.include(["event"]);
-      const events = await query.find();
+      query1.equalTo("guest", user);
+      query1.equalTo("status", "accepted");
+
+      query2.equalTo("guest", user);
+      query2.equalTo("status", "pending");
+
+      const compoundQuery = Parse.Query.or(query1, query2);
+
+      compoundQuery.include(["event"]);
+      const events = await compoundQuery.find();
 
       events.map((item) => {
         if (item.get("event")) {
-          event_list.push(item.get("event"));
+          event_list.push({
+            event: item.get("event"),
+            status: item.get("status"),
+          });
         }
       });
 
       return event_list;
     } catch (error) {
       return new BadRequestError(error.message, 404);
+    }
+  }
+
+  static async getEventsByCategory(categoryId, user) {
+    try {
+      const Event = Parse.Object.extend("Event");
+      const query = new Parse.Query(Event);
+
+      const events = await EventClass.getEvents(user);
+
+      let eventsList = [];
+
+      if (categoryId === "all") {
+        return events;
+      } else {
+        events.map((item) => {
+          if (item.event.get("category").id === categoryId) {
+            eventsList.push({
+              event: item.event,
+              status: item.status,
+            });
+          }
+        });
+      }
+      return eventsList;
+    } catch (error) {
+      return new BadRequestError(error.message);
     }
   }
 
@@ -51,6 +89,11 @@ class EventClass {
         description: event_info.description,
         location: event_info.location,
         owner: user,
+        category: {
+          __type: "Pointer",
+          className: "Category",
+          objectId: event.category,
+        },
         privacy: event_info.privacy,
       };
 
@@ -89,6 +132,8 @@ class EventClass {
 
           guest.set("event", eventPointer);
           guest.set("guest", guestPointer);
+
+          item.objectId === user.id && guest.set("status", "accepted");
 
           guest.save();
 
@@ -196,13 +241,13 @@ class EventClass {
         const isGuest = await query2.find();
 
         if (isGuest.length < 1) {
-          return new BadRequestError("Event details are not available", 404);
+          throw new BadRequestError("Event details are not available", 404);
         }
       }
 
       return eventDetails;
     } catch (error) {
-      return new BadRequestError(error.message);
+      throw new BadRequestError(error.message);
     }
   }
 
@@ -286,6 +331,65 @@ class EventClass {
       const isLastPage = page == events_pages.length;
 
       return events_pages[page];
+    } catch (error) {
+      return new BadRequestError(error.message);
+    }
+  }
+
+  static async getPendingInvitations(user) {
+    try {
+      const event_list = [];
+
+      const Guests = Parse.Object.extend("Guests");
+      const query = new Parse.Query(Guests);
+
+      if (!user) {
+        return new BadRequestError("Unauthorized", 401);
+      }
+
+      query.equalTo("guest", user);
+      query.equalTo("status", "pending");
+      query.include(["event"]);
+      const events = await query.find();
+
+      events.map((item) => {
+        if (item.get("event")) {
+          event_list.push(item.get("event"));
+        }
+      });
+
+      return event_list;
+    } catch (error) {
+      return new BadRequestError(error.message, 404);
+    }
+  }
+
+  static async changeInviteStatus(event, user, status) {
+    try {
+      const Guests = Parse.Object.extend("Guests");
+      const query = new Parse.Query(Guests);
+
+      const guestPointer = {
+        __type: "Pointer",
+        className: "_User",
+        objectId: user.id,
+      };
+
+      const eventPointer = {
+        __type: "Pointer",
+        className: "Event",
+        objectId: event.objectId,
+      };
+
+      query.equalTo("guest", guestPointer);
+      query.equalTo("event", eventPointer);
+
+      const relation = await query.first();
+
+      relation.set("status", status);
+      relation.save();
+
+      return relation;
     } catch (error) {
       return new BadRequestError(error.message);
     }

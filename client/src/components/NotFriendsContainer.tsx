@@ -20,7 +20,7 @@ const NotFriendsContainer = () => {
   const { isLoading, error, data } = useQuery<User[]>(["users"], fetchUsers);
 
   return (
-    <div className="border w-full h-[310px]">
+    <div className="border w-full h-[310px] bg-white relative">
       <div className="bg-secundary flex gap-2 items-center pl-3">
         <BiGroup className=" font-medium text-white" />
         <h2 className=" p-2 text-white font-medium">Other Users</h2>

@@ -1,11 +1,11 @@
 import format from "date-fns/format";
 import React from "react";
 import Event from "./Event";
-import { EventType } from "../lib/types";
+import { EventType, EventTypeStatus } from "../lib/types";
 import MoreEventsMessage from "./MoreEventsMessage";
 
 interface Props {
-  events: { [key: string]: EventType[] };
+  events: { [key: string]: EventTypeStatus[] };
   date: Date;
   complete: boolean;
   changeDisplay: () => void;
@@ -22,7 +22,7 @@ const EventsContainer = ({ events, date, complete, changeDisplay }: Props) => {
   if (complete) {
     return (
       <div>
-        {events[today].map((event: EventType, event_index: number) => {
+        {events[today].map((event: EventTypeStatus, event_index: number) => {
           return (
             <React.Fragment key={`${today}-${event_index}`}>
               <Event event={event} />
@@ -52,7 +52,7 @@ const EventsContainer = ({ events, date, complete, changeDisplay }: Props) => {
       <>
         {events[today]
           .slice(0, 2)
-          .map((event: EventType, event_index: number) => {
+          .map((event: EventTypeStatus, event_index: number) => {
             return (
               <React.Fragment key={`${today}-${event_index}`}>
                 <Event event={event} />

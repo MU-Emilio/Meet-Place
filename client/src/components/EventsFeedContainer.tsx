@@ -34,7 +34,9 @@ const EventsFeedContainer = ({ username, setNumberEvents }: Props) => {
   );
 
   if (isLoading) {
-    return <Loading />;
+    <div className="h-[800px] relative">
+      <Loading />;
+    </div>;
   }
 
   if (error instanceof Error) {
@@ -42,7 +44,7 @@ const EventsFeedContainer = ({ username, setNumberEvents }: Props) => {
   }
 
   return (
-    <div className="h-[800px]">
+    <div className="h-[800px] relative">
       {username && <EventsFeed username={username} pages={data ? data : 1} />}
     </div>
   );
