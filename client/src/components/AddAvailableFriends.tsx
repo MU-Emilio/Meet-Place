@@ -46,7 +46,7 @@ const AddAvailableFriends = ({ data, handleAddArrayGuests }: Props) => {
   }
 
   return (
-    <div className="flex gap-6 m-auto w-fit">
+    <div className="flex gap-6 m-auto w-fit items-center">
       <p>
         Add all friends available on
         {data.date != "" ? (
@@ -61,7 +61,7 @@ const AddAvailableFriends = ({ data, handleAddArrayGuests }: Props) => {
       {availableFriends && (
         <button
           type="button"
-          className=" bg-blue-300 px-5"
+          className=" bg-secundary px-5 py-1 text-white font-medium rounded-lg"
           onClick={() => {
             handleAddArrayGuests(availableFriends);
           }}

@@ -17,7 +17,11 @@ const FormGuestsList = ({ users, ButtonComponent }: Props) => {
       {users.map((user: User, index: number) => {
         return (
           <React.Fragment key={index}>
-            <UserCard userCard={user} ButtonComponent={ButtonComponent(user)} />
+            <UserCard
+              userCard={user}
+              ButtonComponent={ButtonComponent(user)}
+              status={null}
+            />
           </React.Fragment>
         );
       })}

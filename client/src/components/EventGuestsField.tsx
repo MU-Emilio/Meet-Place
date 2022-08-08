@@ -48,42 +48,56 @@ const EventGuestsField = ({ friends, data }: Props) => {
   }, [data]);
 
   return (
-    <div className="block">
-      <div className="flex justify-between">
-        <div className="flex">
-          <div>
-            <p>Not Added</p>
-            <FormGuestsList
-              users={notAddedGuests}
-              ButtonComponent={(userInfo: User) => (
-                <AddGuestButton
-                  userCard={userInfo}
-                  handleAddGuest={handleAddGuest}
-                />
-              )}
-            />
-          </div>
-
-          <div>
-            <p>Added</p>
-            <FormGuestsList
-              users={addedGuests}
-              ButtonComponent={(userInfo: User) => (
-                <DeleteGuestButton
-                  userCard={userInfo}
-                  handleDeleteButton={handleDeleteGuest}
-                />
-              )}
-            />
-          </div>
-        </div>
-
+    <div className="m-auto w-fit">
+      <div className="mt-8 mb-8 h-[110px]">
         <SuggestedDate data={data} addedGuests={addedGuests} />
       </div>
-      <AddAvaiableFriends
-        data={data}
-        handleAddArrayGuests={handleAddArrayGuests}
-      />
+      <div className="mb-5">
+        <hr className="border-2 mb-2" />
+        <AddAvaiableFriends
+          data={data}
+          handleAddArrayGuests={handleAddArrayGuests}
+        />
+        <hr className="border-2 mt-2" />
+      </div>
+
+      <div className="">
+        <div className="flex justify-around w-[500px]">
+          <div className="w-[300px] m-auto border-2">
+            <div className="bg-secundary text-white px-3 py-1 font-medium">
+              <p>Not Added</p>
+            </div>
+            <div className="h-[200px] overflow-y-auto px-2">
+              <FormGuestsList
+                users={notAddedGuests}
+                ButtonComponent={(userInfo: User) => (
+                  <AddGuestButton
+                    userCard={userInfo}
+                    handleAddGuest={handleAddGuest}
+                  />
+                )}
+              />
+            </div>
+          </div>
+
+          <div className="w-[300px] m-auto border-2">
+            <div className="bg-secundary text-white px-3 py-1 font-medium">
+              <p>Not Added</p>
+            </div>
+            <div className="h-[200px] overflow-y-auto px-2">
+              <FormGuestsList
+                users={addedGuests}
+                ButtonComponent={(userInfo: User) => (
+                  <DeleteGuestButton
+                    userCard={userInfo}
+                    handleDeleteButton={handleDeleteGuest}
+                  />
+                )}
+              />
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

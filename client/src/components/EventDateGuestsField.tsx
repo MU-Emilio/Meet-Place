@@ -34,15 +34,19 @@ const EventDateGuestsField = ({
       >
         {({ values }) => (
           <Form className="block">
-            <div className="flex justify-between">
-              <div className="mb-12 flex gap-5 w-[200px]">
+            <div className="w-[650px] m-auto">
+              <div className="mb-12 w-[600px]">
                 <div className="flex gap-10">
-                  <div>
-                    <label className="block text-4xl mx-auto" htmlFor="date">
-                      When?
+                  <div className="w-full">
+                    <label
+                      className="block text-4xl mx-auto font-medium"
+                      htmlFor="date"
+                    >
+                      <span className="text-primary font-bold">When</span> is
+                      your event?
                     </label>
                     <input
-                      className="block w-48 h-10 border-2 m-auto mt-4"
+                      className="block w-full h-10 border-2 m-auto mt-4"
                       type="date"
                       name="date"
                       value={dateState}
@@ -53,7 +57,7 @@ const EventDateGuestsField = ({
                       }}
                     />
                     <input
-                      className="block w-48 h-10 border-2 m-auto mt-4"
+                      className="block w-full h-10 border-2 m-auto mt-4"
                       name="time"
                       type="time"
                       placeholder="Date"
@@ -67,7 +71,8 @@ const EventDateGuestsField = ({
                   </div>
                 </div>
               </div>
-              <div className="w-[900px]">
+
+              <div className="w-[600px]">
                 <EventGuestsContainer data={data} />
               </div>
             </div>
