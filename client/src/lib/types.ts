@@ -23,6 +23,7 @@ export interface EventType {
   owner: User;
   location: string;
   privacy: boolean;
+  category: CategoryType;
 }
 
 export interface EventTypeStatus {
@@ -36,6 +37,7 @@ export interface EventForm {
   description: string;
   title: string;
   location: string;
+  category: string;
   guests: User[];
   privacy: boolean;
 }
@@ -58,4 +60,11 @@ export interface EventFeedType {
 export interface Guest {
   guest: User;
   status: string;
+}
+
+export interface CategoryType {
+  objectId: string;
+  name: string;
+  icon: string;
+  color: string;
 }

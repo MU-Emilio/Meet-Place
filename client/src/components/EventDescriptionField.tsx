@@ -11,6 +11,7 @@ interface Props {
 
 const descriptionFieldValSchema = Yup.object({
   description: Yup.string().required().label("This"),
+  category: Yup.string().required().label("Category"),
 });
 
 const EventDescriptionField = ({
@@ -29,20 +30,41 @@ const EventDescriptionField = ({
       >
         {({ values }) => (
           <Form className="block">
-            <label className="block text-4xl mx-auto" htmlFor="description">
+            <label
+              className="block text-4xl mx-auto text-center"
+              htmlFor="description"
+            >
               What is it{" "}
               <span className=" text-primary font-semibold">about</span> ?...
             </label>
-            <Field
-              className="block text-2xl border-2 mx-auto mt-[50px] w-[500px] px-5 py-2"
-              id="description"
-              name="description"
-              placeholder="Give it a nice description!"
-              autoComplete="off"
-            />
 
-            <div className=" text-red-400 w-[500px] mx-auto">
-              <ErrorMessage name="description" />
+            <div className="flex w-[1000px] justify-around items-center">
+              <div className="w-[750px]">
+                <Field
+                  className="block text-2xl border-2 mx-auto mt-[50px] w-[600px] px-5 py-2"
+                  id="description"
+                  name="description"
+                  placeholder="Give it a nice description!"
+                  autoComplete="off"
+                />
+
+                <div className=" text-red-400 w-[500px] mx-auto">
+                  <ErrorMessage name="description" />
+                </div>
+              </div>
+
+              <div className="w-[50px]">
+                <Field as="select" name="category" className=" border-2">
+                  <option value="">Select a category</option>
+                  <option value="NGS8wCuqGp">Work</option>
+                  <option value="1HncAqKnRf">Social</option>
+                  <option value="pBcDBoupKP">Sports</option>
+                </Field>
+
+                <div className=" text-red-400 w-[500px] mx-auto">
+                  <ErrorMessage name="category" />
+                </div>
+              </div>
             </div>
 
             <div className="mx-auto flex gap-6 w-fit mt-[100px]">

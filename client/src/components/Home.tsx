@@ -5,7 +5,9 @@ import { User } from "../lib/types";
 import GeneralLoading from "./GeneralLoading";
 import React, { Suspense } from "react";
 
-const Calendar = React.lazy(() => import("./Calendar"));
+const CalendarEventsContainer = React.lazy(
+  () => import("./CalendarEventsContainer")
+);
 
 const Home = () => {
   const fetchData = async () => {
@@ -34,7 +36,7 @@ const Home = () => {
   return (
     <div className="h-[800px]">
       <Suspense fallback={<GeneralLoading />}>
-        <Calendar />
+        <CalendarEventsContainer />
       </Suspense>
     </div>
   );

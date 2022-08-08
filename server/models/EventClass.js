@@ -40,6 +40,33 @@ class EventClass {
     }
   }
 
+  static async getEventsByCategory(categoryId, user) {
+    try {
+      const Event = Parse.Object.extend("Event");
+      const query = new Parse.Query(Event);
+
+      const events = await EventClass.getEvents(user);
+
+      let eventsList = [];
+
+      if (categoryId === "all") {
+        return events;
+      } else {
+        events.map((item) => {
+          if (item.event.get("category").id === categoryId) {
+            eventsList.push({
+              event: item.event,
+              status: item.status,
+            });
+          }
+        });
+      }
+      return eventsList;
+    } catch (error) {
+      return new BadRequestError(error.message);
+    }
+  }
+
   static async addEvent(event, user) {
     const Event = Parse.Object.extend("Event");
     const newEvent = new Event();
@@ -62,6 +89,11 @@ class EventClass {
         description: event_info.description,
         location: event_info.location,
         owner: user,
+        category: {
+          __type: "Pointer",
+          className: "Category",
+          objectId: event.category,
+        },
         privacy: event_info.privacy,
       };
 
@@ -215,7 +247,6 @@ class EventClass {
 
       return eventDetails;
     } catch (error) {
-      console.log(error.message);
       throw new BadRequestError(error.message);
     }
   }
