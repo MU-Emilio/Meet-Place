@@ -27,8 +27,11 @@ const EventGuestsContainer = ({ data }: Props) => {
 
   return (
     <div>
-      <label className="block text-4xl mx-auto mb-[50px]" htmlFor="description">
-        Whos's going?...
+      <label
+        className="block text-4xl mx-auto font-medium"
+        htmlFor="description"
+      >
+        <span className="font-bold text-primary">Who</span> is going?...
       </label>
       {friends ? (
         <EventGuestsField friends={friends} data={data} />

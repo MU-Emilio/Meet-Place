@@ -49,7 +49,11 @@ const CalendarEventsContainer = () => {
   }>([`events`, { selectedCategory }], fetchEvents);
 
   if (isLoading || !data) {
-    return <GeneralLoading />;
+    if (selectedCategory === "all") {
+      return <GeneralLoading />;
+    } else {
+      return <Loading />;
+    }
   }
 
   return (

@@ -95,7 +95,9 @@ const EventCreateForm = () => {
     />,
   ];
 
-  return <div className="h-[800px] p-[150px]">{fields[currentField]}</div>;
+  return (
+    <div className="h-[950px] pt-[50px] p-[150px]">{fields[currentField]}</div>
+  );
 };
 
 export default EventCreateForm;

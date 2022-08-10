@@ -31,13 +31,11 @@ const EventDetails = ({ event }: Props) => {
             </div>
             <div className="items-center flex gap-3 m-auto mt-3">
               <BiCurrentLocation className=" text-primary w-1/6" />
-              <h2 className=" hover:scale-105 ease-in-out duration-300 w-5/6">
-                {event.location}
-              </h2>
+              <h2 className="w-5/6">{event.location}</h2>
             </div>
             <div className="mt-3 items-center flex gap-3 m-auto">
               <BiCalendar className=" text-primary w-1/6" />
-              <h2 className="hover:scale-105 ease-in-out duration-300 w-5/6">
+              <h2 className="w-5/6">
                 {format(
                   new Date(`${event.date.iso.split("T")[0]}T10:00:00.000Z`),
                   "MMMMMM, dd"
@@ -46,9 +44,7 @@ const EventDetails = ({ event }: Props) => {
             </div>
             <div className="mt-3 items-center flex gap-3 m-auto">
               <BiComment className=" text-primary w-1/6" />
-              <h2 className="hover:scale-105 ease-in-out duration-300 w-5/6">
-                {event.description}
-              </h2>
+              <h2 className="w-5/6">{event.description}</h2>
             </div>
           </div>
         </div>

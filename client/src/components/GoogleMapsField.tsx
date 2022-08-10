@@ -8,12 +8,24 @@ import {
 import { geocodeByAddress, getLatLng } from "react-google-places-autocomplete";
 import Loading from "./Loading/Loading";
 import { Location, EventForm } from "../lib/types";
-import { BiCurrentLocation } from "react-icons/bi";
+import {
+  BiCaretRight,
+  BiCaretLeft,
+  BiBadgeCheck,
+  BiCurrentLocation,
+} from "react-icons/bi";
 
 const mapContainerStyle = {
-  width: "30vw",
-  height: "35vh",
+  width: "600px",
+  height: "400px",
   borderRadius: "20px",
+};
+
+const options = {
+  disableDefaultUI: true,
+  zoomControl: true,
+  scrollwheel: false,
+  gestureHandling: "none",
 };
 
 interface Props {
@@ -42,13 +54,20 @@ const GoogleMapsField = ({ data, handleNextField, handlePrevField }: Props) => {
 
   return (
     <div className="w-full h-full">
-      Google Maps
-      <form action="">
-        <div className="flex items-center">
+      <label
+        className="block text-4xl mx-auto text-center font-medium"
+        htmlFor="description"
+      >
+        Tell your friends the{" "}
+        <span className=" text-primary font-medium">location</span> for your
+        event...
+      </label>
+      <form action="" className="mx-auto mt-[50px] w-[650px]">
+        <div className="flex items-center w-fit m-auto">
           <Autocomplete>
             <input
               type="text"
-              className="block w-96 h-10 border-2"
+              className="block text-2xl border-2 mx-auto w-[600px] px-5 py-2"
               placeholder="Direction"
               value={direction}
               onChange={(e) => {
@@ -79,48 +98,45 @@ const GoogleMapsField = ({ data, handleNextField, handlePrevField }: Props) => {
                   });
               }
             }}
-            className="bg-green-200 h-10"
+            className="bg-secundary h-[50px] w-[30px] p-2 text-white"
           >
             <BiCurrentLocation />
           </button>
         </div>
         <p>{message}</p>
       </form>
-      <div className="">
-        <div className="">
-          <GoogleMap
-            mapContainerStyle={mapContainerStyle}
-            center={center}
-            zoom={15}
-            options={{ fullscreenControl: false }}
-            onLoad={(map) => setMap(map)}
-          >
-            {" "}
-            <Marker position={center} />
-          </GoogleMap>
-        </div>
-      </div>
-      <button
-        onClick={() => {
-          map?.panTo(center);
-        }}
-      >
-        Center
-      </button>
-      <div className="flex w-fit gap-6 m-auto">
+      <div className="mx-auto mt-10 w-fit">
+        <GoogleMap
+          mapContainerStyle={mapContainerStyle}
+          center={center}
+          zoom={15}
+          options={options}
+          onLoad={(map) => setMap(map)}
+        >
+          <Marker position={center} />
+        </GoogleMap>
         <button
+          onClick={() => {
+            map?.panTo(center);
+          }}
+        >
+          Center
+        </button>
+      </div>
+
+      <div className="flex justify-between mx-auto w-[180px] mt-[100px]">
+        <button
+          className="block mt-4 bg-secundary px-5 py-2 text-white font-medium rounded-md hover:opacity-50 hover:text-gray-800 hover:scale-105 ease-in-out duration-300"
           type="button"
-          className="mt-4"
           onClick={() => {
             data.location = direction;
             handlePrevField(data);
           }}
         >
-          Back
+          <BiCaretLeft />
         </button>
         <button
           type="submit"
-          className="mt-4"
           onClick={() => {
             if (direction === "") {
               setMessage("Location is required");
@@ -130,6 +146,7 @@ const GoogleMapsField = ({ data, handleNextField, handlePrevField }: Props) => {
               handleNextField(data);
             }
           }}
+          className="block mt-4 bg-secundary px-5 py-2 text-white font-medium rounded-md hover:opacity-50 hover:text-gray-800 hover:scale-105 ease-in-out duration-300"
         >
           Submit
         </button>

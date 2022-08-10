@@ -48,18 +48,21 @@ const SuggestedDate = ({ data, addedGuests }: Props) => {
   }
 
   return (
-    <div className="text-center">
-      <div className=" bg-green-200 w-[100px]">
-        <h1>Don't feel confident?...</h1>
-        <p>
-          Here you have some suggested dates based on your friend's availability
-        </p>
+    <div className="text-center shadow-md">
+      <div className=" bg-secundary w-[500px] p-4 font-medium text-white rounded-t-lg">
+        <p>Suggested dates based on your friend's availability</p>
       </div>
 
-      <div className="w-[100px] h-[100px] overflow-y-auto">
+      <div className="w-[500px] h-[70px] overflow-y-auto flex gap-3 px-3">
         {suggestedDates?.map((item: any, index: number) => (
           <React.Fragment key={index}>
-            <p>{format(new Date(item.date + "T10:00"), "MMMMMM, dd")}</p>
+            <p
+              className={`text-sm ${
+                item.date === data.date && "font-bold text-primary"
+              }`}
+            >
+              {format(new Date(item.date + "T10:00"), "MMMMMM, dd")}
+            </p>
           </React.Fragment>
         ))}
       </div>

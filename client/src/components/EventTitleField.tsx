@@ -18,7 +18,7 @@ const titleFieldValSchema = Yup.object({
 
 const EventTitleField = ({ data, handleNextField }: Props) => {
   return (
-    <div className=" w-fit m-auto">
+    <div className=" w-fit m-auto mt-[150px]">
       <Formik
         validationSchema={titleFieldValSchema}
         initialValues={data}
@@ -32,9 +32,9 @@ const EventTitleField = ({ data, handleNextField }: Props) => {
               className="block text-4xl mx-auto font-medium"
               htmlFor="title"
             >
-              Give it a good{" "}
-              <span className=" text-primary font-semibold">title</span> for
-              your friends
+              Give a good{" "}
+              <span className=" text-primary font-semibold">title</span> to your
+              event
             </label>
 
             <Field
