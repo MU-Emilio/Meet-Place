@@ -48,7 +48,7 @@ const Profile = ({ user, numberEvents }: Props) => {
 
             <div className=" bg-gray-50 mb-5 hover:scale-105 ease-in-out duration-300 rounded-sm px-4 hover:bg-blue-100">
               <div className=" text-xs">
-                <p>Created:</p>
+                <p>Events:</p>
               </div>
               <div className=" font-medium">
                 <p>{numberEvents} events</p>

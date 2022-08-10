@@ -6,7 +6,7 @@ import NotificationsButton from "./NotificationsButton";
 
 const styles = {
   topBarButtons: {
-    width: "470px",
+    width: "400px",
     height: "100%",
   },
 };
@@ -23,6 +23,8 @@ const TopBarButtonContainer = ({ user }: Props) => {
       style={styles.topBarButtons}
       className="bg-gray-100 flex justify-between gap-4 px-3 py-5 align-middle mb-5 rounded-md shadow-sm text-sm"
     >
+      <NotificationsButton />
+
       <div
         onClick={() => {
           navigate("/home");
@@ -32,16 +34,14 @@ const TopBarButtonContainer = ({ user }: Props) => {
         <BiCalendar /> <p>Calendar</p>
       </div>
 
-      <div
+      {/* <div
         onClick={() => {
           navigate(`/users/${user.username}`);
         }}
         className=" h-full w-[140px] cursor-pointer bg-gray-200 p-1 rounded-md shadow-md hover:scale-105 ease-in-out duration-300 items-center flex justify-around"
       >
         <BiUser /> <p>Profile</p>
-      </div>
-
-      <NotificationsButton />
+      </div> */}
 
       <ProfileButtonBar user={user} />
     </div>

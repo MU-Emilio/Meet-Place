@@ -60,8 +60,10 @@ const EventDescriptionField = ({
 
               <div className="w-[400px] flex justify-around gap-3 items-center mx-auto mt-10">
                 <div
-                  className={`transition ease-in-out hover:scale-110 duration-300 cursor-pointer ${
-                    values.category === "NGS8wCuqGp" && "scale-150"
+                  className={`transition ease-in-out duration-100 cursor-pointer ${
+                    values.category === "NGS8wCuqGp"
+                      ? "scale-125"
+                      : "hover:scale-110"
                   }`}
                   onClick={() => {
                     setSelectedCategory("NGS8wCuqGp");
@@ -75,8 +77,10 @@ const EventDescriptionField = ({
                   />
                 </div>
                 <div
-                  className={`transition ease-in-out hover:scale-110 duration-300 cursor-pointer ${
-                    values.category === "1HncAqKnRf" && "scale-150"
+                  className={`transition ease-in-out duration-100 cursor-pointer ${
+                    values.category === "1HncAqKnRf"
+                      ? "scale-125"
+                      : "hover:scale-110"
                   }`}
                   onClick={() => {
                     setSelectedCategory("1HncAqKnRf");
@@ -90,8 +94,10 @@ const EventDescriptionField = ({
                   />
                 </div>
                 <div
-                  className={`transition ease-in-out hover:scale-110 duration-300 cursor-pointer ${
-                    values.category === "pBcDBoupKP" && "scale-150"
+                  className={`transition ease-in-out duration-100 cursor-pointer ${
+                    values.category === "pBcDBoupKP"
+                      ? "scale-125"
+                      : "hover:scale-110"
                   }`}
                   onClick={() => {
                     setSelectedCategory("pBcDBoupKP");
